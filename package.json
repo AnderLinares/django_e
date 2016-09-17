@@ -1,0 +1,9 @@
+{
+  "name": "pck_django_erp",
+  "scripts": {
+    "postinstall": "bower install"
+  },
+  "dependencies": {
+    "bower": "latest"
+  }
+}

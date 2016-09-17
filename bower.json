@@ -1,0 +1,37 @@
+{
+  "name": "bw_django_erp",
+  "version": "0.1.0",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/"
+  },
+  "authors": [
+    "Jonathan Quiza <jony327@gmail.com>"
+  ],
+  "description": "Django bower",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "*",
+    "bootstrap": "*",
+    "jquery-slimscroll": "*",
+    "metisMenu": "*",
+    "jquery.switcher": "*",
+    "datatables": "*",
+    "datatables-buttons": "*",
+    "datatables.net-bs": "*",
+    "datatables.net-buttons-bs": "*",
+    "pdfmake": "*",
+    "Stuk/jszip": "*",
+    "sweetalert": "*",
+    "bootstrap-datepicker": "*",
+    "bootstrap-colorpicker":"*",
+    "bootstrap-touchspin":"*"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}
