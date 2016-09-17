@@ -102,3 +102,5 @@ static/themes/global/
 
 run/static/
 /run/static/
+/config/wsgi.py
+/manage.py
