@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import View
 
 
 class TemplateLoginRequiredMixin(LoginRequiredMixin, View):
