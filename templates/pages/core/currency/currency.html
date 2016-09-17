@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block js %}
+    <script>
+        var URL_CURRENCY_ADD = "{% url 'admin-currency:add' %}";
+        var URL_CURRENCY_EDIT = "{% url 'admin-currency:edit' %}";
+        var URL_CURRENCY_LIST = "{% url 'admin-currency:list' %}";
+    </script>
+{% endblock js %}
+
+
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="col-lg-2 col-sm-4 col-xs-12">
+                    <button id="add_currency" class="btn btn-block btn-outline btn-primary waves-effect">{%  trans 'Add Currency' %}</button>
+                </div>
+                <div class="clear"></div>
+                <br>
+                <div id="list_table" class="table-responsive">
+                    {% include 'pages/core/currency/currency_list.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="modal_currency" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;"></div>
+    </div>
+{% endblock container %}

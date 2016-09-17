@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static from staticfiles %}
+
+{% block js %}
+    <script>
+        var URL_SUBSIDIARY_ADD = "{% url 'admin-subsidiary:add' %}";
+        var URL_SUBSIDIARY_EDIT = "{% url 'admin-subsidiary:edit' %}";
+        var URL_SUBSIDIARY_LIST = "{% url 'admin-subsidiary:list' %}";
+    </script>
+{% endblock js %}
+
+
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="col-lg-2 col-sm-4 col-xs-12">
+                    <button id="add_subsidiary" class="btn btn-block btn-outline btn-primary waves-effect">{%  trans 'Add Subsidiary' %}</button>
+                </div>
+                <div class="clear"></div>
+                <br>
+                <div id="list_table" class="table-responsive">
+                    {% include 'pages/core/subsidiary/subsidiary_list.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="modal_subsidiary" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;"></div>
+    </div>
+{% endblock container %}

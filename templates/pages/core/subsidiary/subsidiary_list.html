@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load static from staticfiles %}
+<script src="{% static "themes/js/pages/core/subsidiary/subsidiary.js" %}"></script>
+<table id="myTable" class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Organization</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for subsidiary in subsidiary_list %}
+        <tr>
+            <td><strong>{{ forloop.counter }}</strong>.-</td>
+            <td>{{ subsidiary.organization }}</td>
+            <td>{{ subsidiary.name }}</td>
+            <td>{{ subsidiary.address }}</td>
+            <td>
+                <button data-id="{{ subsidiary.id }}" class="btn btn-info btn-circle waves-effect subsidiary_edit">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                {# button data-id="{{ client.id }}" class="btn btn-danger btn-circle waves-effect client_remove"><i class="fa fa-trash"></i></button>#}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

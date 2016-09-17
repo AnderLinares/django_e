@@ -1,0 +1,52 @@
+#Core
+Django
+
+# WSGI HTTP Server
+#gunicorn
+
+
+# Debugging
+ipdb
+ipython
+django-debug-toolbar
+
+
+# Configuration
+#django-sites==0.9
+django-environ
+pytz
+
+# Models
+psycopg2
+Pillow
+
+# Cache
+django-redis
+
+
+# Staticfiles
+django-storages
+boto
+
+
+#Documentation
+#mkdocs
+
+
+#testing
+coverage
+
+#logging
+
+
+
+#format code
+pep8
+pyflakes
+pylint
+
+
+
+
+
+

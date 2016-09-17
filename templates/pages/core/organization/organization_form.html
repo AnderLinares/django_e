@@ -1,0 +1,134 @@
+{% load i18n %}
+{% load static %}
+<link href="{% static "themes/global/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" %}" rel="stylesheet">
+<script src="{% static "themes/global/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" %}"></script>
+<script src="{% static "themes/global/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js" %}"></script>
+<script>
+    jQuery('#id_organization_initial_exercise').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+    jQuery('#id_organization_final_exercise').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+</script>
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Add Organization New</h4>
+        </div>
+        <div class="modal-body">
+            <div class="col-sm-6 col-md-12">
+                <div class="row">
+                    <form id="form_organization" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Name' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.name }}
+                                    <span class="help-block">{{ form_organization.name.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Reason Social' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.reason_social }}
+                                    <span class="help-block">{{ form_organization.reason_social.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'address' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.address }}
+                                    <span class="help-block">{{ form_organization.address.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Initial Exercise' %}</label>
+                                <div class="col-md-7">
+                                    <div class="input-group">
+                                     {{ form_organization.initial_exercise }}
+                                      <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                    <span class="help-block">{{ form_organization.initial_exercise.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Final Exercise' %}</label>
+                                <div class="col-md-7">
+                                    <div class="input-group">
+                                      {{ form_organization.final_exercise }}
+                                      <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                    <span class="help-block">{{ form_organization.final_exercise.errorsform_vehicle.expiration_soat.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Nit' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.nit }}
+                                    <span class="help-block">{{ form_organization.nit.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'primary currency' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.primary_currency }}
+                                    <span class="help-block">{{ form_organization.primary_currency.errors }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Legal Representative' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.legal_representative }}
+                                    <span class="help-block">{{ form_organization.legal_representative.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Accountant' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.accountant }}
+                                    <span class="help-block">{{ form_organization.accountant.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Register Accountant' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.register_accountant }}
+                                    <span class="help-block">{{ form_organization.register_accountant.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Phone' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.phone }}
+                                    <span class="help-block">{{ form_organization.phone.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Mobile phone' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.mobile_phone }}
+                                    <span class="help-block">{{ form_organization.mobile_phone.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'logo url' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_organization.logo_url }}
+                                    <span class="help-block">{{ form_organization.logo_url.errors }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">{% trans "Cancel" %}</button>
+             {% if not btn_edit %}
+                <button type="button" id="save_organization" class="btn btn-danger waves-effect waves-ligh">{% trans "Submit" %}</button>
+            {% else %}
+                <button type="button" id="update_organization" data-id="{{ form_pk }}" class="btn btn-danger waves-effect waves-ligh">{% trans "Update" %}</button>
+            {% endif %}
+        </div>
+    </div>
+</div>

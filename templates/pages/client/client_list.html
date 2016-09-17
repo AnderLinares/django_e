@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load static from staticfiles %}
+<script src="{% static "themes/js/pages/client/client.js" %}"></script>
+<table id="myTable" class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Identification</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Address</th>
+        <th>Client Type</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for client in client_list %}
+        <tr>
+            <td><strong>{{ forloop.counter }}</strong>.-</td>
+            <td>{{ client.get_document_type_display }}: {{ client.document_number }}</td>
+            <td>{{ client.first_name }}</td>
+            <td>{{ client.last_name }}</td>
+            <td>{{ client.address }}</td>
+            <td>{{ client.get_person_type_display }}</td>
+            <td>
+                <button data-id="{{ client.id }}" class="btn btn-info btn-circle waves-effect person_edit">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                {# button data-id="{{ client.id }}" class="btn btn-danger btn-circle waves-effect client_remove"><i class="fa fa-trash"></i></button>#}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,48 @@
+{% load static %}
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+      <ul class="nav" id="side-menu">
+        <li class="sidebar-search hidden-sm hidden-md hidden-lg">
+          <!-- input-group -->
+          <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
+            </span> </div>
+          <!-- /input-group -->
+        </li>
+        <li class="nav-small-cap m-t-10">--- Main Menu</li>
+        <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Administracion <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+            <li> <a href="{% url 'admin-client:index' %}">Client</a> </li>
+            <li> <a href="javascript:void(0)">Empleados</a> </li>
+            <li> <a href="{% url 'admin-brand:index' %}">Marcas</a> </li>
+            <li> <a href="{% url 'admin-typejob:index' %}">Tipo de trabajo</a> </li>
+            <li> <a href="{% url 'admin-labour:index' %}">Trabajo</a> </li>
+            <li> <a href="{% url 'admin-vehicle:index' %}">Vehiculos</a>
+            <li> <a href="{% url 'admin-organization:index' %}">Empresa</a> </li>
+            <li> <a href="{% url 'admin-subsidiary:index' %}">Sucursales</a> </li>
+            <li> <a href="{% url 'admin-currency:index' %}">Mondeda</a> </li>
+            <li> <a href="{% url 'admin-exchangerate:index' %}">Tipo de cambio</a> </li>
+            <li> <a href="{% url 'admin-measurement:index' %}">Unidad medicion</a> </li>
+          </ul>
+        </li>
+        <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Cheklist <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+            <li> <a href="javascript:void(0)">Alquiler</a> </li>
+            <li> <a href="javascript:void(0)">Mantenimiento</a> </li>
+          </ul>
+        </li>
+        <li> <a href="javascript:void(0)" class="waves-effect"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i> <span class="hide-menu">Informe</span></a> </li>
+        <li> <a href="javascript:void(0)" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Cotizacion <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+            <li> <a href="{% url 'quotation-solicitude:index' %}">Solicitud</a> </li>
+          </ul>
+        </li>
+        <li><a href="/logout" class="waves-effect"><i class="zmdi zmdi-power zmdi-hc-fw fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
+        <li class="nav-small-cap">--- Support</li>
+        <li><a href="javascript:void(0)" class="waves-effect"><i class="fa fa-circle-o text-danger"></i> <span class="hide-menu">Documentation</span></a></li>
+
+      </ul>
+    </div>
+  </div>

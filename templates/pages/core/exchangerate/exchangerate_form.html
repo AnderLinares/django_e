@@ -1,0 +1,66 @@
+{% load i18n %}
+{% load static %}
+<link href="{% static "themes/global/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" %}" rel="stylesheet">
+<script src="{% static "themes/global/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" %}"></script>
+<script src="{% static "themes/global/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js" %}"></script>
+<script>
+    jQuery('#id_exchange_rate_start_date').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+    jQuery('#id_exchange_rate_end_date').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+</script>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Add Exchange Rate New</h4>
+        </div>
+        <div class="modal-body">
+            <div class="col-sm-6 col-md-12">
+                <form id="form_exchangerate" class="form-horizontal">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="control-label col-md-3">{% trans 'Currency' %}</label>
+                        <div class="col-md-9">
+                            {{ form_exchangerate.currency }}
+                            <span class="help-block">{{ form_exchangerate.currency.errors }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">{% trans 'Exchange rate' %}</label>
+                        <div class="col-md-9">
+                            {{ form_exchangerate.exchange_rate }}
+                            <span class="help-block">{{ form_exchangerate.exchange_rate.errors }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">{% trans 'Start date' %}</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                {{ form_exchangerate.start_date }}
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                            </div>
+                            <span class="help-block">{{ form_exchangerate.start_date.errors }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">{% trans 'End date' %}</label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                {{ form_exchangerate.end_date }}
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                            </div>
+                            <span class="help-block">{{ form_exchangerate.end_date.errors }}</span>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">{% trans "Cancel" %}</button>
+             {% if not btn_edit %}
+                <button type="button" id="save_exchangerate" class="btn btn-danger waves-effect waves-ligh">{% trans "Submit" %}</button>
+            {% else %}
+                <button type="button" id="update_exchangerate" data-id="{{ form_pk }}" class="btn btn-danger waves-effect waves-ligh">{% trans "Update" %}</button>
+            {% endif %}
+        </div>
+    </div>
+</div>

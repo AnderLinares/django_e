@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% load filter %}
+{% load static %}
+{% load cache %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<!--[if IE 8]> <html lang="{{LANGUAGE_CODE}}" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="{{LANGUAGE_CODE}}" class="ie9 no-js"> <![endif]-->
+
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "themes/img/favicon.png" %}">
+    <title>ERP</title>
+
+    <link href="{% static "themes/global/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    {% block css_plugins %}
+    {% endblock css_plugins %}
+
+    <link href="{% static "themes/global/metisMenu/dist/metisMenu.min.css" %}" rel="stylesheet">
+    <link href="{% static "themes/css/animate.css" %}" rel="stylesheet">
+    <link href="{% static "themes/css/style.css" %}" rel="stylesheet">
+
+    {% block css_themes_color %}
+        <link href="{% static "themes/css/colors/default.css" %}" id="theme" rel="stylesheet">
+    {% endblock css_themes_color %}
+
+    <script src="{% static "themes/global/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "themes/js/crsftoken.js" %}"></script>
+    <script src="{% static "themes/global/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+
+    {% block js %}
+    {% endblock js %}
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body class="{% block class_body  %}fix-sidebar{% endblock class_body  %}" >
+{% block preloader %}
+    {% include 'partials/preloader.html' %}
+{% endblock preloader %}
+
+{% block wrapper %}
+    <div id="wrapper">
+        {% block navbar_top %}
+            {% include 'partials/navbar_top.html' %}
+        {% endblock navbar_top %}
+
+        {% block navbar_left %}
+            {% include 'partials/navbar_left.html' %}
+        {% endblock navbar_left %}
+
+{#        {% block page_wraper %}#}
+            <div id="page-wrapper">
+                <div class="container-fluid">
+
+                    {% block breadcrumb %}
+                        {% include 'partials/breadcrumb.html' %}
+                    {% endblock breadcrumb %}
+
+                    {% block container %}
+{#                        {% include 'partials/container.html' %}#}
+                    {% endblock container %}
+                </div>
+            </div>
+{#        {% endblock page_wraper %}#}
+
+        {% block footer %}
+            {% include 'partials/footer.html' %}
+        {% endblock footer %}
+    </div>
+{% endblock wrapper %}
+
+<script src="{% static "themes/global/metisMenu/dist/metisMenu.min.js" %}"></script>
+<script src="{% static "themes/global/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
+<script src="{% static "themes/js/waves.js" %}"></script>
+<script src="{% static "themes/js/custom.min.js" %}"></script>
+<script src="{% static "themes/js/g_functions.js" %}"></script>
+
+{% block js_plugins %}
+{% endblock js_plugins %}
+
+{% block js_app %}
+{% endblock js_app %}
+
+
+</body>
+</html>

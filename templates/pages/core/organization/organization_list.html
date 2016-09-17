@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load static %}
+<script src="{% static "themes/js/pages/core/organization/organization.js" %}"></script>
+<table id="myTable" class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for organization in organization_list %}
+        <tr>
+            <td><strong>{{ forloop.counter }}</strong>.-</td>
+            <td>{{ organization.name }}</td>
+            <td>
+                <button data-id="{{ organization.id }}" class="btn btn-info btn-circle waves-effect organization_edit">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                {# button data-id="{{ client.id }}" class="btn btn-danger btn-circle waves-effect client_remove"><i class="fa fa-trash"></i></button>#}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

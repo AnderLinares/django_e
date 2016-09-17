@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load filter %}
+{% load static from staticfiles %}
+
+{% block css_plugins %}
+{% endblock css_plugins %}
+
+
+{% block wrapper %}
+    <section id="wrapper" class="login-register">
+  <div class="login-box">
+    <div class="white-box">
+      <form method="post" class="form-horizontal form-material" id="loginform" action="">
+        {% csrf_token %}
+        <h3 class="font-green">{% trans "Enter your login information"  %}</h3>
+        <p class="text-error">{{ form.non_field_errors.as_text }}.</p>
+        <div class="form-group">
+            <div class="col-xs-12">
+                 {{ form.email|addcss:"form-control" }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                {{ form.password|addcss:"form-control" }}
+            </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12">
+            <div class="checkbox checkbox-primary pull-left p-t-0">
+              <input id="checkbox-signup" type="checkbox">
+              <label for="checkbox-signup"> Remember me </label>
+            </div>
+            <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> </div>
+        </div>
+        <div class="form-group text-center m-t-20">
+          <div class="col-xs-12">
+            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+            <input type="hidden" name="next" value="{{ next }}" />
+          </div>
+        </div>
+      </form>
+
+      <form method="post" class="form-horizontal" id="recoverform" action="">
+        <div class="form-group ">
+          <div class="col-xs-12">
+            <h3>Recover Password</h3>
+            <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
+          </div>
+        </div>
+        <div class="form-group ">
+          <div class="col-xs-12">
+            <input class="form-control" type="text" required="" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group text-center m-t-20">
+          <div class="col-xs-12">
+            <button class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock wrapper %}
+
+{% block js_plugins %}
+{% endblock js_plugins %}
