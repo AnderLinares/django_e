@@ -2,8 +2,10 @@
 {% load static %}
 
 {% block css_plugins %}
-    <link href="http://eliteadmin.themedesigner.in/demos/plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="{% static "themes/global/datatables/media/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
+{#    <link href="http://eliteadmin.themedesigner.in/demos/plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css">#}
+      <link href="{% static "themes/js/global/datatables-buttons/css/buttons.dataTables.min.css" %}" rel="stylesheet" type="text/css">
+{#    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />#}
     <link href="{% static "themes/global/sweetalert/dist/sweetalert.css" %}" rel="stylesheet" type="text/css">
 
 {% endblock css_plugins %}
