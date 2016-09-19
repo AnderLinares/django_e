@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block js %}
+    <script>
+        var URL_TYPEVEHICLE_ADD = "{% url 'admin-typevehicle:add' %}";
+        var URL_TYPEVEHICLE_EDIT = "{% url 'admin-typevehicle:edit' %}";
+        var URL_TYPEVEHICLE_LIST = "{% url 'admin-typevehicle:list' %}";
+    </script>
+{% endblock js %}
+
+
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="col-lg-2 col-sm-4 col-xs-12">
+                    <button id="add_typevehicle" class="btn btn-block btn-outline btn-primary waves-effect">{%  trans 'Add Type Vehicle' %}</button>
+                </div>
+                <div class="clear"></div>
+                <br>
+                <div id="list_table" class="table-responsive">
+                    {% include 'pages/taller/typevehicle/typevehicle_list.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="modal_typevehicle" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;"></div>
+    </div>
+{% endblock container %}

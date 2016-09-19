@@ -17,8 +17,10 @@
             <li> <a href="{% url 'admin-client:index' %}">Client</a> </li>
             <li> <a href="javascript:void(0)">Empleados</a> </li>
             <li> <a href="{% url 'admin-brand:index' %}">Marcas</a> </li>
+            <li> <a href="{% url 'admin-typechecklist:index' %}">Tipos de Checklist</a> </li>
             <li> <a href="{% url 'admin-typejob:index' %}">Tipo de trabajo</a> </li>
             <li> <a href="{% url 'admin-labour:index' %}">Trabajo</a> </li>
+            <li> <a href="{% url 'admin-typevehicle:index' %}">Tipo de Vehiculo</a> </li>
             <li> <a href="{% url 'admin-vehicle:index' %}">Vehiculos</a>
             <li> <a href="{% url 'admin-organization:index' %}">Empresa</a> </li>
             <li> <a href="{% url 'admin-subsidiary:index' %}">Sucursales</a> </li>
@@ -29,11 +31,11 @@
         </li>
         <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Cheklist <span class="fa arrow"></span> </span></a>
           <ul class="nav nav-second-level">
-            <li> <a href="javascript:void(0)">Alquiler</a> </li>
+            <li> <a href="{% url 'order-alquiler:index' %}">Alquiler</a> </li>
             <li> <a href="javascript:void(0)">Mantenimiento</a> </li>
           </ul>
         </li>
-        <li> <a href="javascript:void(0)" class="waves-effect"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i> <span class="hide-menu">Informe</span></a> </li>
+        <li> <a href="{% url 'report-solicitude:index' %}" class="waves-effect"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i> <span class="hide-menu">Informe</span></a> </li>
         <li> <a href="javascript:void(0)" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Cotizacion <span class="fa arrow"></span> </span></a>
           <ul class="nav nav-second-level">
             <li> <a href="{% url 'quotation-solicitude:index' %}">Solicitud</a> </li>

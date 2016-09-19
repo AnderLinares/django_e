@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block js %}
+    <script>
+        var URL_REPORT_ADD = "{% url 'report-solicitude:add' %}";
+        var URL_REPORT_EDIT = "{% url 'report-solicitude:edit' %}";
+        var URL_REPORT_LIST = "{% url 'report-solicitude:list' %}";
+    </script>
+{% endblock js %}
+
+
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="col-lg-2 col-sm-4 col-xs-12">
+                    <button id="add_report" class="btn btn-block btn-outline btn-primary waves-effect">{%  trans 'Add Report' %}</button>
+                </div>
+                <div class="clear"></div>
+                <br>
+                <div id="list_table" class="table-responsive">
+                    {% include 'pages/taller/report/report_list.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="modal_report" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;"></div>
+    </div>
+{% endblock container %}

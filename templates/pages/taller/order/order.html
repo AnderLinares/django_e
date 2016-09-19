@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block js %}
+    <script>
+        var URL_ORDER_ALQUILER_ADD = "{% url 'order-alquiler:add' %}";
+        var URL_ORDER_ALQUILER_EDIT = "{% url 'order-alquiler:edit' %}";
+        var URL_ORDER_ALQUILER_LIST = "{% url 'order-alquiler:list' %}";
+    </script>
+{% endblock js %}
+
+
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="row">
+                     <div class="row">
+                    <form id="form_order_rental" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">{% trans 'Type checklist' %}</label>
+                                <div class="col-md-9">
+                                    {{ form_order_rental.type_checklist }}
+                                    <span class="help-block">{{ form_order_rental.type_checklist.errors }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">{% trans 'Client Type' %}</label>
+                                <div class="col-md-9">
+                                    {{ form_order_rental.client}}
+                                    <span class="help-block">{{ form_order_rental.client.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">{% trans 'Taxi Driver' %}</label>
+                                <div class="col-md-9">
+                                    {{ form_order_rental.taxi_driver }}
+                                    <span class="help-block">{{ form_order_rental.taxi_driver.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">{% trans 'Km exit' %}</label>
+                                <div class="col-md-9">
+                                    {{ form_order_rental.km_exit }}
+                                    <span class="help-block">{{ form_order_rental.km_exit.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">{% trans 'Date Exit' %}</label>
+                                <div class="col-md-9">
+                                    {{ form_order_rental.date_exit }}
+                                    <span class="help-block">{{ form_order_rental.date_exit.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">{% trans 'Fuel exit' %}</label>
+                                <div class="col-md-9">
+                                    {{ form_order_rental.fuel_exit }}
+                                    <span class="help-block">{{ form_order_rental.fuel_exit.errors }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Vehicle' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_order_rental.vehicle }}
+                                    <span class="help-block">{{ form_order_rental.vehicle.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Destination' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_order_rental.destination }}
+                                    <span class="help-block">{{ form_order_rental.destination.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'kms next maintenance' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_order_rental.kms_next_maintenance }}
+                                    <span class="help-block">{{ form_order_rental.kms_next_maintenance.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Hour exit' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_order_rental.hour_exit }}
+                                    <span class="help-block">{{ form_order_rental.hour_exit.errors }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">{% trans 'Unit number exit' %}</label>
+                                <div class="col-md-7">
+                                    {{ form_order_rental.unit_number_exit }}
+                                    <span class="help-block">{{ form_order_rental.unit_number_exit.errors }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock container %}

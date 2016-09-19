@@ -2,7 +2,7 @@ from django.db import models
 
 from apps.client.models import Person
 from apps.employee.models import Employee
-from core.models import Subsidiary, Currency
+from core.models import Subsidiary, Currency, ExchangeRate
 from core.utils.fields import BaseModel
 from .constants import (
     STATUS_VEHICLE_OPTIONS, TYPE_COMBUSTIBLE_OPTIONS, TYPE_ORDER_OPTIONS,
@@ -55,8 +55,8 @@ class Labour(BaseModel):
     """ model Labour(labores) """
     type_job = models.ForeignKey(TypeJob, related_name="%(app_label)s_%(class)s_type_job")
     name = models.CharField(max_length=200, null=True, blank=True)
-    cost_price = models.DecimalField(max_digits=18, decimal_places=4, default=0)
-    sale_price = models.DecimalField(max_digits=18, decimal_places=4, default=0)
+    cost_price = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    sale_price = models.DecimalField(max_digits=18, decimal_places=2, default=0)
 
     def __str__(self):
         return self.type_job.name
@@ -98,10 +98,11 @@ class Quotation(BaseModel):
     client = models.ForeignKey(Person, related_name="%(app_label)s_%(class)s_person")
     vehicle = models.ForeignKey(Vehicle, related_name="%(app_label)s_%(class)s_vehicle")
     labour = models.ForeignKey(Labour, related_name="%(app_label)s_%(class)s_labour")
-    currency = models.ForeignKey(Currency, related_name="%(app_label)s_%(class)s_currency")
-    igv_tax = models.DecimalField(max_digits=18, decimal_places=4, default=0)
-    sub_total = models.DecimalField(max_digits=18, decimal_places=4, default=0)
-    total_paid = models.DecimalField(decimal_places=4, max_digits=18)
+    exchange_rate = models.ForeignKey(ExchangeRate, blank=True, null=True,
+                                      related_name="%(app_label)s_%(class)s_exchange_rate")
+    igv_tax = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    sub_total = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    total_paid = models.DecimalField(max_digits=18, decimal_places=2, default=0)
     current_date = models.DateField()
 
     def __str__(self):
@@ -112,9 +113,9 @@ class QuotationDetail(BaseModel):
     """ model QuotationDetail(cotizacion detalle) """
     quotation = models.ForeignKey(Quotation, related_name="%(app_label)s_%(class)s_quotation")
     description = models.CharField(max_length=255, null=True, blank=True)
-    quantity = models.DecimalField(max_digits=18, decimal_places=4, default=0)
-    unit_price = models.DecimalField(max_digits=18, decimal_places=4, default=0)
-    amount_price = models.DecimalField(max_digits=18, decimal_places=4, default=0)
+    quantity = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    unit_price = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    amount_price = models.DecimalField(max_digits=18, decimal_places=2, default=0)
 
     def __str__(self):
         return "{0}-{1}".format(str(self.cotization.client), str(self.cotization.vehicle))
@@ -138,8 +139,8 @@ class Order(BaseModel):
     hour_exit = models.TimeField(blank=True, null=True)
     fuel_exit = models.PositiveSmallIntegerField(blank=True, null=True)
     unit_number_exit = models.CharField(max_length=45, blank=True, null=True)
-    km_exit = models.DecimalField(max_digits=14, decimal_places=2, blank=True, null=True)
-    kms_next_maintenance = models.DecimalField(max_digits=14, decimal_places=2, blank=True, null=True)
+    km_exit = models.DecimalField(max_digits=14, decimal_places=2, blank=True, null=True, default=0)
+    kms_next_maintenance = models.DecimalField(max_digits=14, decimal_places=2, blank=True, null=True, default=0)
     number_billing = models.PositiveIntegerField(blank=True, null=True)
     number_contract = models.CharField(max_length=45, blank=True, null=True)
     status_order = models.CharField(max_length=10, choices=STATUS_GLOBAL_OPTION)
@@ -173,9 +174,28 @@ class OrderDocument(BaseModel):
 
 class OrderSupervision(BaseModel):
     order_detail = models.ForeignKey(OrderDetail, related_name="%(app_label)s_%(class)s_order_detail")
-    Employee = models.ForeignKey(Employee, related_name="%(app_label)s_%(class)s_employee")
+    employee = models.ForeignKey(Employee, related_name="%(app_label)s_%(class)s_employee")
     observation = models.TextField()
     job_rating = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
         return "{0}".format(str(self.order_detail))
+
+
+class Report(BaseModel):
+    client = models.ForeignKey(Person, related_name="%(app_label)s_%(class)s_client")
+    vehicle = models.ForeignKey(Vehicle, related_name="%(app_label)s_%(class)s_vehicle")
+    subsidiary = models.ForeignKey(Subsidiary, related_name="%(app_label)s_%(class)s_subsidiary")
+    current_date = models.DateTimeField(blank=True, null=True)
+    observation = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return "{0}".format(str(self.client))
+
+
+class ReportDocument(BaseModel):
+    report = models.ForeignKey(Report, related_name="%(app_label)s_%(class)s_report")
+    file_image = models.FileField(upload_to='report/%Y/%m/%d/', blank=True, null=True)
+
+    def __str__(self):
+        return "{0}".format(str(self.report))

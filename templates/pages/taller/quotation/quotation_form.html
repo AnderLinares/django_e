@@ -32,98 +32,144 @@
         <div class="modal-header">
             <h4 class="modal-title">Add Quotation New</h4>
         </div>
-        <div class="modal-body">
+        <div id="print_doc" class="modal-body">
             <div class="row">
                 <form id="form_quotation" class="form-horizontal">
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">{% trans 'Date' %}</label>
-                                <div class="col-md-9">
-                                    <div class="input-group">
-                                        {{ form_quotation.current_date }}
-                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                    <span class="help-block">{{ form_quotation.current_date.errors }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">{% trans 'Vehicle' %}</label>
-                                <div class="col-md-9">
-                                    {{ form_quotation.vehicle }}
-                                    <span class="help-block">{{ form_quotation.vehicle.errors }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6 .col-md-offset-6">
+                        {% if not btn_edit %}
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3">{% trans 'Client' %}</label>
+                                    <label class="control-label col-md-3">{% trans 'Date' %}</label>
                                     <div class="col-md-9">
-                                        {{ form_quotation.client }}
-                                        <span class="help-block">{{ form_quotation.client.errors }}</span>
+                                        <div class="input-group">
+                                            {{ form_quotation.current_date }}
+                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                        <span class="help-block">{{ form_quotation.current_date.errors }}</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">{% trans 'Labour' %}</label>
-                                <div class="col-md-9">
-                                    {{ form_quotation.labour }}
-                                    <span class="help-block">{{ form_quotation.labour.errors }}</span>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">{% trans 'Vehicle' %}</label>
+                                    <div class="col-md-9">
+                                        {{ form_quotation.vehicle }}
+                                        <span class="help-block">{{ form_quotation.vehicle.errors }}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">{% trans 'Price venta' %}</label>
-                                <div class="col-md-9">
-                                    {{ form_quotation.sale_price }}
-                                    <span class="help-block">{{ form_quotation.sale_price.errors }}</span>
+                            <div class="col-md-12">
+                                <div class="col-md-6 .col-md-offset-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">{% trans 'Client' %}</label>
+                                        <div class="col-md-9">
+                                            {{ form_quotation.client }}
+                                            <span class="help-block">{{ form_quotation.client.errors }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-2 col-md-offset-10">
-                                <button class="btn btn-info waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-plus-square"></i></span>Add new</button>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">{% trans 'Labour' %}</label>
+                                    <div class="col-md-9">
+                                        {{ form_quotation.labour }}
+                                        <span class="help-block">{{ form_quotation.labour.errors }}</span>
+                                        <input id="id_rate" type="hidden" value="1.00"/>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">{% trans 'Price venta' %}</label>
+                                    <div class="col-md-9">
+                                        {{ form_quotation.sale_price }}
+                                        <span class="help-block">{{ form_quotation.sale_price.errors }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2 col-md-offset-10">
+                                    <button id="add_quotation_row" class="btn btn-info waves-effect waves-light" type="button">Add new</button>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">{% trans 'Date' %}</label>
+                                        <div class="col-md-9">
+                                            <p class="form-control-static">{{ form_quotation.current_date }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">{% trans 'Vehicle' %}</label>
+                                        <div class="col-md-9">
+                                            <p class="form-control-static">{{ form_quotation.vehicle }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">{% trans 'Client' %}</label>
+                                        <div class="col-md-9">
+                                            <p class="form-control-static">{{ form_quotation.client.first_name }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="col-md-12">
                        <div class="table-responsive m-t-20">
                           <table class="table table-hover">
                             <thead>
                               <tr>
-                                <th class="text-left">#</th>
-                                <th>Description</th>
+                                <th class="text-center">Description</th>
                                 <th class="text-center">Quantity</th>
-                                <th class="text-center">Unit Cost</th>
-                                <th class="text-right">Total</th>
+                                <th class="text-center">Unit Price</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center"></th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr>
-                                <td class="text-left"><strong>1.-</strong></td>
-                                <td>Milk Powder</td>
-                                <td class="text-center"><div class="col-sm-6 col-md-offset-4"> <input  class="vertical-spin" type="text" data-bts-button-down-class="btn btn-default btn-outline"   data-bts-button-up-class="btn btn-default btn-outline" value="0" name="vertical-spin"></div></td>
-                                <td class="text-center">14.51 </td>
-                                <td class="text-center">25.52 </td>
-                              </tr>
-                            </tbody>
+
+                            {% if not btn_edit %}
+                                 <tbody id="tbody_quotation_row"></tbody>
+                            {% else %}
+                                <tbody>
+                                    {% for detail in form_quotation_detail %}
+                                        <tr>
+                                            <td class="text-center">{{ detail.description }}</td>
+                                            <td class="text-center">{{ detail.quantity }}</td>
+                                            <td class="text-center">{{ detail.unit_price }}</td>
+                                            <td class="text-center">{{ detail.amount_price }}</td>
+                                            <td class="text-center"></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            {% endif %}
+
                           </table>
                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-12">
-                            <div class="pull-right m-t-30 text-right">
-                              <p>Sub - Total amount: $13,848</p>
-                              <p>vat (10%) : $138 </p>
-                              <hr>
-                              <h3><b>Total :</b> $13,986</h3>
+                            <div class="pull-right m-t-20 text-right">
+                              {% if not btn_edit %}
+                                  <p>Sub - Total amount: <span id="tr_row_sub_total"></span></p>
+                                  <p>vat (18%) : <span id="tr_row_igv"></span></p>
+                                  <hr>
+                                  <h3><b>Total :</b> <span id="tr_row_total"></span></h3>
+                              {% else %}
+                                  <p>Sub - Total amount: {{ form_quotation.sub_total }}</p>
+                                  <p>vat (18%) : {{ form_quotation.igv_tax }}</p>
+                                  <hr>
+                                  <h3><b>Total :</b> {{ form_quotation.total_paid }}</h3>
+                              {% endif %}
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -136,7 +182,8 @@
              {% if not btn_edit %}
                 <button type="button" id="save_quotation" class="btn btn-danger waves-effect waves-ligh">{% trans "Submit" %}</button>
             {% else %}
-                <button type="button" id="update_quotation" data-id="{{ form_pk }}" class="btn btn-danger waves-effect waves-ligh">{% trans "Update" %}</button>
+                 <button type="button" id="print_quotation" class="btn btn-danger waves-effect waves-ligh">{% trans "Printer" %}</button>
+{#                <button type="button" id="update_quotation" class="btn btn-danger waves-effect waves-ligh">{% trans "Update" %}</button>#}
             {% endif %}
         </div>
     </div>
