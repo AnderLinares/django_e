@@ -4,8 +4,10 @@
 <script src="{% static "themes/global/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" %}"></script>
 <script src="{% static "themes/global/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js" %}"></script>
 <script>
-    jQuery('#id_organization_initial_exercise').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
-    jQuery('#id_organization_final_exercise').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+   (function($) {
+        $('#id_organization_initial_exercise').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+        $('#id_organization_final_exercise').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+   })(jQuery);
 </script>
 <div class="modal-dialog modal-lg">
     <div class="modal-content">

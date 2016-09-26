@@ -2,12 +2,8 @@
 {% load static %}
 
 {% block css_plugins %}
-    <link href="{% static "themes/global/datatables/media/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
-{#    <link href="http://eliteadmin.themedesigner.in/demos/plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css">#}
-      <link href="{% static "themes/js/global/datatables-buttons/css/buttons.dataTables.min.css" %}" rel="stylesheet" type="text/css">
-{#    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />#}
-    <link href="{% static "themes/global/sweetalert/dist/sweetalert.css" %}" rel="stylesheet" type="text/css">
-
+    <link href="{% static "themes/js/global/datatables/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "themes/js/global/datatables/css/buttons.dataTables.min.css" %}" rel="stylesheet" type="text/css">
 {% endblock css_plugins %}
 
 {% block js %}
@@ -38,26 +34,13 @@
 
 {% block js_plugins %}
     <script src="{% static "themes/global/datatables/media/js/jquery.dataTables.min.js" %}"></script>
-
-{#   <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>#}
     <script src="{% static "themes/global/datatables.net-buttons/js/dataTables.buttons.min.js" %}"></script>
-
     <script src="{% static "themes/global/datatables.net-buttons/js/buttons.flash.min.js" %}"></script>
     <script src="{% static "themes/global/jszip/dist/jszip.min.js" %}"></script>
     <script src="{% static "themes/global/datatables.net-buttons/js/buttons.html5.min.js" %}"></script>
     <script src="{% static "themes/global/datatables.net-buttons/js/buttons.print.min.js" %}"></script>
-     <script src="{% static "themes/global/pdfmake/build/pdfmake.min.js" %}"></script>
+    <script src="{% static "themes/global/pdfmake/build/pdfmake.min.js" %}"></script>
     <script src="{% static "themes/global/pdfmake/build/vfs_fonts.js" %}"></script>
-
-{#    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>#}
-{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>#}
-{#    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>#}
-{#    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>#}
-{#    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>#}
-{#    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>#}
-
-    <script src="{% static "themes/global/sweetalert/dist/sweetalert.min.js" %}"></script>
-{#    <script src="../plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>#}
 {% endblock js_plugins %}
 
 

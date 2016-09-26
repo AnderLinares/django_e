@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load filter %}
+{% load static %}
+
+{% block css_plugins %}
+    <link href="{% static "themes/global/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" %}" rel="stylesheet">
+{% endblock css_plugins %}
+
+{% block js %}
+    <script>
+        var URL_CHECKLIST_ADD_LABOUR = "{% url 'checklist:add-task-labour' %}";
+    </script>
+{% endblock js %}
+
+
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#mateintenance_list" role="tab" data-toggle="tab" aria-expanded="true">
+                                    <span class="visible-xs"><i class="ti-home"></i></span>
+                                    <span class="hidden-xs"> Matenimiento</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="mateintenance_list">
+                                <div class="col-md-12">
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>N° Billing</td>
+                                                <td>Vehicle</td>
+                                                <td>Placa</td>
+                                                <td>Type Checklist</td>
+                                                <td>Action</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for maintenace in form_checklist_maintenance %}
+                                                <tr>
+                                                    <td><strong>{{ forloop.counter }}</strong>.-</td>
+                                                    <td>{{ maintenace.checklist.number_billing }}</td>
+                                                    <td>{{ maintenace.type_vehicle }}</td>
+                                                    <td>{{ maintenace.checklist.vehicle.plaque }}</td>
+                                                    <td>{{ maintenace.type_checklist }}</td>
+                                                    <td>
+                                                        <button data-id="{{ maintenace.id }}" class="fcbtn btn btn-primary btn-outline btn-1f maintenance_add_task">{% trans 'add task' %}</button>
+                                                        <button data-id="{{ maintenace.id }}" class="fcbtn btn btn-primary btn-outline btn-1f maintenance_finish_task">{% trans 'finisdhed ' %}</button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="modal_checklist" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;"></div>
+    </div>
+{% endblock container %}
+
+{% block js_plugins %}
+    <script src="{% static "themes/global/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js" %}"></script>
+    <script src="{% static "themes/global/clockpicker/dist/bootstrap-clockpicker.min.js" %}"></script>
+{% endblock js_plugins %}
+
+{% block js_app %}
+    <script src="{% static "themes/js/pages/taller/checklist/checklist_maintenance.js" %}"></script>
+{% endblock js_app %}

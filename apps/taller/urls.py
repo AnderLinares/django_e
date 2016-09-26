@@ -3,14 +3,15 @@ from django.conf.urls import url, include
 from .views import (
     BrandView, BrandCreateView, BrandEditView, BrandListView,
     LabourView, LabourCreateView, LabourEditView, LabourListView,
-    TypeJobCreateView, TypeJobView, TypeJobEditView, TypeJobListView,
+    TypeLabourCreateView, TypeLabourView, TypeLabourEditView, TypeLabourListView,
     VehicleView, VehicleCreateView, VehicleEditView, VehicleListView,
     QuotationView, QuotationCreateView, QuotationEditView, QuotationListView,
     ReportView, ReportCreateView, ReportEditView, ReportListView,
-    OrderRentalView,
+    # OrderRentalView,
     TypeCheckListView, TypeCheckListCreateView, TypeCheckListEditView, TypeCheckListListView,
-    TypeVehicleCreateView, TypeVehicleView, TypeVehicleEditView, TypeVehicleListView,
-)
+    TypeTransportCreateView, TypeTransportView, TypeTransportEditView, TypeTransportListView,
+    ChecklistCreateView, ChecklistMaintenanceView,
+    LabourEmployeeView, LabourEmployeeListView, LabourEmployeeTaskView)
 
 brand_patterns = ([
    url(r'^$', BrandView.as_view(), name="index"),
@@ -20,18 +21,18 @@ brand_patterns = ([
 ], 'admin-brand')
 
 type_job_patterns = ([
-   url(r'^$', TypeJobView.as_view(), name="index"),
-   url(r'^add/', TypeJobCreateView.as_view(), name="add"),
-   url(r'^edit/', TypeJobEditView.as_view(), name="edit"),
-   url(r'^list/', TypeJobListView.as_view(), name="list"),
+   url(r'^$', TypeLabourView.as_view(), name="index"),
+   url(r'^add/', TypeLabourCreateView.as_view(), name="add"),
+   url(r'^edit/', TypeLabourEditView.as_view(), name="edit"),
+   url(r'^list/', TypeLabourListView.as_view(), name="list"),
 ], 'admin-typejob')
 
 type_vehicle_patterns = ([
-   url(r'^$', TypeVehicleView.as_view(), name="index"),
-   url(r'^add/', TypeVehicleCreateView.as_view(), name="add"),
-   url(r'^edit/', TypeVehicleEditView.as_view(), name="edit"),
-   url(r'^list/', TypeVehicleListView.as_view(), name="list"),
-], 'admin-typevehicle')
+   url(r'^$', TypeTransportView.as_view(), name="index"),
+   url(r'^add/', TypeTransportCreateView.as_view(), name="add"),
+   url(r'^edit/', TypeTransportEditView.as_view(), name="edit"),
+   url(r'^list/', TypeTransportListView.as_view(), name="list"),
+], 'admin-typetransport')
 
 labour_patterns = ([
    url(r'^$', LabourView.as_view(), name="index"),
@@ -69,23 +70,30 @@ report_patterns = ([
    url(r'^list/', ReportListView.as_view(), name="list"),
 ], 'report-solicitude')
 
-order_alquiler_patterns = ([
-   url(r'^$', OrderRentalView.as_view(), name="index"),
-   url(r'^add/', ReportCreateView.as_view(), name="add"),
-   url(r'^edit/', ReportEditView.as_view(), name="edit"),
-   url(r'^list/', ReportListView.as_view(), name="list"),
-], 'order-alquiler')
+checklist_patterns = ([
+   url(r'^$', ChecklistCreateView.as_view(), name="index"),
+   url(r'^list-maintenance/', ChecklistMaintenanceView.as_view(), name="maintenance-solicitude"),
+   url(r'^list-labour/', LabourEmployeeView.as_view(), name="list-labour"),
+   # url(r'^list/', ReportListView.as_view(), name="list"),
+], 'checklist')
+
+checklist_labour_patterns = ([
+   url(r'^$', LabourEmployeeView.as_view(), name="index"),
+   url(r'^list/', LabourEmployeeListView.as_view(), name="list"),
+   url(r'^add-task/', LabourEmployeeTaskView.as_view(), name="add-task"),
+], 'checklist-labour')
 
 
 urlpatterns = [
     url(r'^brand/', include(brand_patterns)),
     url(r'^labour/', include(labour_patterns)),
-    url(r'^typejob/', include(type_job_patterns)),
-    url(r'^typevehicle/', include(type_vehicle_patterns)),
+    url(r'^typelabour/', include(type_job_patterns)),
+    url(r'^typetransport/', include(type_vehicle_patterns)),
     url(r'^typechecklist/', include(type_checklist_patterns)),
     url(r'^vehicle/', include(vehicle_patterns)),
     url(r'^quotation/', include(quotation_patterns)),
     url(r'^report/', include(report_patterns)),
-    url(r'^order-alquiler/', include(order_alquiler_patterns)),
+    url(r'^checklist/', include(checklist_patterns)),
+    url(r'^checklist-labour/', include(checklist_labour_patterns)),
 ]
 

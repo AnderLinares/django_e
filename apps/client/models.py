@@ -18,8 +18,7 @@ class Person(BaseModel):
     address = models.CharField(max_length=100, blank=True, null=True)
     home_phone = models.CharField(max_length=50, blank=True, null=True)
     mobile_phone = models.CharField(max_length=50, blank=True, null=True)
-    subsidiary = models.ForeignKey(Subsidiary, default='', blank=True, null=True,
-                                   related_name="%(app_label)s_%(class)s_subsidiary")
+    subsidiary = models.ForeignKey(Subsidiary, related_name="%(app_label)s_%(class)s_subsidiary")
     document_type = models.CharField(
         max_length=20, null=True, blank=True,
         choices=core_constants.SELECT_DEFAULT + core_constants.TYPE_IDENTITY_DOCUMENT_OPTIONS)

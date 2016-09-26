@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load static from staticfiles %}
+{% load static %}
 <script src="{% static "themes/js/pages/taller/typechecklist/typechecklist.js" %}"></script>
 <table id="myTable" class="table table-striped">
     <thead>
@@ -13,7 +13,7 @@
     {% for typechecklist in typechecklist_list %}
         <tr>
             <td><strong>{{ forloop.counter }}</strong>.-</td>
-            <td>{{ typechecklist.name }}</td>
+            <td>{{ typechecklist.service_checklist }}-{{ typechecklist.type_transport }}-{{ typechecklist.solicitude_checklist }}</td>
             <td>
                 <button data-id="{{ typechecklist.id }}" class="btn btn-info btn-circle waves-effect typechecklist_edit">
                     <i class="fa fa-pencil"></i>

@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load static from staticfiles %}
+{% load static %}
 
+{% block js %}
+    <script>
+        var URL_CLIENT_ADD = "{% url 'admin-client:add' %}";
+        var URL_CLIENT_EDIT = "{% url 'admin-client:edit' %}";
+        var URL_CLIENT_LIST = "{% url 'admin-client:list' %}";
+    </script>
+{% endblock js %}
 
 {% block container %}
     <div class="row">
@@ -22,14 +29,3 @@
         <div id="modal_person" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;"></div>
     </div>
 {% endblock container %}
-
-
-{% block js_app %}
-    <script>
-        var URL_CLIENT_ADD = "{% url 'admin-client:add' %}";
-        var URL_CLIENT_EDIT = "{% url 'admin-client:edit' %}";
-        var URL_CLIENT_LIST = "{% url 'admin-client:list' %}";
-
-    </script>
-    <script src="{% static "themes/js/pages/client/client.js" %}"></script>
-{% endblock js_app %}

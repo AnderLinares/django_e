@@ -1,37 +1,44 @@
 from __future__ import unicode_literals
 
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, modelformset_factory
 
 from .forms import (
-    ReportDocumentForm,
-    OrderDetailForm, OrderDocumentForm, OrderSupervisionForm
-)
+    ReportDocumentForm, InventoryCheckListForm, PhotoCheckListForm,
+    LabourCheckListForm,
+    LabourEmployeeCheckListForm)
 from .models import (
     Report, ReportDocument,
-    Order, OrderDetail, OrderDocument, OrderSupervision
-)
+    CheckListDetail, InventoryCheckList, PhotoCheckList, LabourCheckList,
+    LabourEmployeeCheckList)
 
 # report
 ReportDocumentFormSet = inlineformset_factory(
     Report, ReportDocument, form=ReportDocumentForm,
-    min_num=1, extra=0,  can_delete=True, can_order=True
+    min_num=1, extra=0, can_delete=True, can_order=True
 )
 
-# order
-OrderDocumentFormSet = inlineformset_factory(
-    Order, OrderDocument, form=OrderDocumentForm,
-    min_num=1, extra=0,  can_delete=True, can_order=True
+# inventory CheckList
+CheckListInventoryFormSet = inlineformset_factory(
+    CheckListDetail, InventoryCheckList, form=InventoryCheckListForm,
+    min_num=1, extra=0, can_delete=True, can_order=True
 )
 
-OrderDetailFormSet = inlineformset_factory(
-    Order, OrderDetail, form=OrderDetailForm,
-    min_num=1, extra=0,  can_delete=True, can_order=True
+# photo CheckList
+CheckListPhotoFormSet = inlineformset_factory(
+    CheckListDetail, PhotoCheckList, form=PhotoCheckListForm,
+    min_num=1, extra=0, can_delete=True, can_order=True
 )
 
-# order detail
-OrderSupervisionFormSet = inlineformset_factory(
-    OrderDetail, OrderSupervision, form=OrderSupervisionForm,
-    min_num=1, extra=0,  can_delete=True, can_order=True
+# labour CheckList
+CheckListLabourFormSet = inlineformset_factory(
+    CheckListDetail, LabourCheckList, form=LabourCheckListForm,
+    min_num=1, extra=0, can_delete=True, can_order=True
 )
 
+
+# labour employee CheckList
+CheckListLabourEmployeeFormSet = inlineformset_factory(
+    LabourCheckList, LabourEmployeeCheckList, form=LabourEmployeeCheckListForm,
+    min_num=1, extra=0, can_delete=True, can_order=True
+)
 

@@ -20,6 +20,7 @@
     <title>ERP</title>
 
     <link href="{% static "themes/global/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "themes/global/sweetalert/dist/sweetalert.css" %}" rel="stylesheet" type="text/css">
 
     {% block css_plugins %}
     {% endblock css_plugins %}
@@ -35,6 +36,7 @@
     <script src="{% static "themes/global/jquery/dist/jquery.min.js" %}"></script>
     <script src="{% static "themes/js/crsftoken.js" %}"></script>
     <script src="{% static "themes/global/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+
     {% block js %}
     {% endblock js %}
 
@@ -83,11 +85,14 @@
 <script src="{% static "themes/global/metisMenu/dist/metisMenu.min.js" %}"></script>
 <script src="{% static "themes/global/jquery-slimscroll/jquery.slimscroll.min.js" %}"></script>
 <script src="{% static "themes/js/waves.js" %}"></script>
-<script src="{% static "themes/js/custom.min.js" %}"></script>
-<script src="{% static "themes/js/g_functions.js" %}"></script>
+<script src="{% static "themes/global/sweetalert/dist/sweetalert.min.js" %}"></script>
 
 {% block js_plugins %}
 {% endblock js_plugins %}
+
+<script src="{% static "themes/js/custom.min.js" %}"></script>
+<script src="{% static "themes/js/g_functions.js" %}"></script>
+<script src="{% static "themes/js/formset.js" %}"></script>
 
 {% block js_app %}
 {% endblock js_app %}

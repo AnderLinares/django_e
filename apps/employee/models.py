@@ -22,21 +22,27 @@ class Employee(models.Model):
     gender = models.CharField(max_length=10, choices=core_constants.TYPE_GENDER_OPTIONS)
     stature = models.DecimalField(max_digits=8, decimal_places=4, blank=True, null=True)
     peso = models.IntegerField(blank=True, null=True)
-    type_brevete = models.CharField(max_length=10, choices=core_constants.TYPE_BREVETE_OPTIONS)
+    type_brevete = models.CharField(max_length=10, null=True, blank=True, choices=core_constants.TYPE_BREVETE_OPTIONS)
     number_license_brevete = models.CharField(max_length=20, blank=True, null=True)
-    type_pension = models.ForeignKey(TypeContributionSystem, related_name="%(app_label)s_%(class)s_type_pension")
-    pension = models.ForeignKey(ContributionSystem, related_name="%(app_label)s_%(class)s_pension")
+    type_pension = models.ForeignKey(
+        TypeContributionSystem, related_name="%(app_label)s_%(class)s_type_pension", null=True, blank=True)
+    pension = models.ForeignKey(
+        ContributionSystem, related_name="%(app_label)s_%(class)s_pension", null=True, blank=True)
     number_pension = models.CharField(max_length=12, blank=True, verbose_name='CUSPP')
-    salud = models.ForeignKey(ContributionSystem, related_name="%(app_label)s_%(class)s_salud")
-    sctr = models.ForeignKey(ContributionSystem, related_name="%(app_label)s_%(class)s_sctr")
+    salud = models.ForeignKey(
+        ContributionSystem, related_name="%(app_label)s_%(class)s_salud", null=True, blank=True)
+    sctr = models.ForeignKey(
+        ContributionSystem, related_name="%(app_label)s_%(class)s_sctr", null=True, blank=True)
     is_affiliate_surefire = models.BooleanField(default=False)
     is_affiliate_syndicate = models.BooleanField(default=False)
-    type_via = models.CharField(max_length=10, choices=core_constants.TYPE_TYPE_VIA_OPTIONS)
+    type_via = models.CharField(
+        max_length=10, choices=core_constants.TYPE_TYPE_VIA_OPTIONS, null=True, blank=True)
     name_via = models.CharField(max_length=150, blank=True)
     nro_via = models.CharField(max_length=10, blank=True, null=True)
     interior = models.CharField(max_length=10, blank=True, null=True)
     manzana = models.CharField(max_length=20, blank=True, null=True)
-    type_zone = models.CharField(max_length=10, choices=core_constants.TYPE_TYPE_ZONE_OPTIONS)
+    type_zone = models.CharField(
+        max_length=10, choices=core_constants.TYPE_TYPE_ZONE_OPTIONS, null=True, blank=True)
     name_zone = models.CharField(max_length=100, blank=True, null=True)
     residence = models.CharField(max_length=255, blank=True)
     observations = models.TextField(null=True, blank=True)
@@ -45,8 +51,10 @@ class Employee(models.Model):
     qualification = models.CharField(max_length=10, default='3',
                                      choices=core_constants.TYPE_QUALIFICATION_OPTIONS)
     email = models.EmailField(blank=True, null=True)
-    specialty = models.ForeignKey(Specialty, related_name="%(app_label)s_%(class)s_specialty")
-    bank = models.ForeignKey(Bank, related_name="%(app_label)s_%(class)s_bank")
+    specialty = models.ForeignKey(
+        Specialty, related_name="%(app_label)s_%(class)s_specialty", null=True, blank=True)
+    bank = models.ForeignKey(
+        Bank, related_name="%(app_label)s_%(class)s_bank", null=True, blank=True)
     number_bank_account = models.CharField(max_length=20, blank=True, null=True)
     number_interbanking = models.CharField(max_length=20, blank=True, null=True)
 

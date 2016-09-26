@@ -1,13 +1,14 @@
 from django import forms
 from django.forms import ClearableFileInput
+from pylint.test.functional.singleton_comparison import f
 
 from core.models import ExchangeRate
-from .constants import CODE_STATUS_AVAILABLE, CODE_STATUS_NULL
 from .models import (
-    Brand, Labour, TypeJob, Vehicle, Quotation, QuotationDetail,
+    Brand, Labour, TypeLabour, Vehicle, Quotation, QuotationDetail,
     Report, ReportDocument,
-    Order, OrderDocument, OrderDetail, OrderSupervision,
-    TypeCheckList, TypeVehicle)
+    TypeCheckList, TypeTransport,
+    CheckList, CheckListDetail, LabourCheckList,
+    PhotoCheckList, InventoryCheckList, LabourEmployeeCheckList)
 
 
 class BrandForm(forms.ModelForm):
@@ -25,7 +26,7 @@ class BrandForm(forms.ModelForm):
 class LabourForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['type_job'].widget.attrs.update(
+        self.fields['type_labour'].widget.attrs.update(
             {'required': True, 'class': 'form-control'})
         self.fields['name'].widget.attrs.update(
             {'placeholder': 'Name', 'required': True,
@@ -39,10 +40,10 @@ class LabourForm(forms.ModelForm):
 
     class Meta:
         model = Labour
-        fields = ["type_job", "name", "cost_price", "sale_price"]
+        fields = ["type_labour", "name", "cost_price", "sale_price"]
 
 
-class TypeJobForm(forms.ModelForm):
+class TypeLabourForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update(
@@ -50,11 +51,11 @@ class TypeJobForm(forms.ModelForm):
              'class': 'form-control'})
 
     class Meta:
-        model = TypeJob
+        model = TypeLabour
         fields = ['name']
 
 
-class TypeVehicleForm(forms.ModelForm):
+class TypeTransportForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update(
@@ -62,27 +63,26 @@ class TypeVehicleForm(forms.ModelForm):
              'class': 'form-control'})
 
     class Meta:
-        model = TypeVehicle
+        model = TypeTransport
         fields = ['name']
-
 
 
 class TypeCheckListForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update(
-            {'placeholder': 'Name', 'required': True,
-             'class': 'form-control'})
+        # self.fields['name'].widget.attrs.update(
+        #     {'placeholder': 'Name', 'required': True,
+        #      'class': 'form-control'})
 
     class Meta:
         model = TypeCheckList
-        fields = ['name']
+        fields = '__all__'
 
 
 class VehicleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['type_vehicle'].widget.attrs.update(
+        self.fields['type_transport'].widget.attrs.update(
             {'placeholder': 'Type vehicle', 'required': True, 'class': 'form-control'})
         self.fields['brand'].widget.attrs.update(
             {'placeholder': 'brand', 'required': True, 'class': 'form-control'})
@@ -123,7 +123,7 @@ class VehicleForm(forms.ModelForm):
 
     class Meta:
         model = Vehicle
-        fields = ["type_vehicle", "brand", "plaque", "model",
+        fields = ["type_transport", "brand", "plaque", "model",
                   "year_car", "vin", "color", "serie_motor", "soat", "expiration_soat",
                   "poliza", "expiration_poliza", "technical_review",
                   "expiration_technical_review", "opacity_test", "expiration_opacity_test",
@@ -131,15 +131,9 @@ class VehicleForm(forms.ModelForm):
 
     def save(self, user=None, commit=True):
         vehicle = super().save(commit=False)
-        if not commit:
-            if self.cleaned_data["is_flotilla"]:
-                vehicle.status_vehicle = CODE_STATUS_AVAILABLE
-            else:
-                vehicle.status_vehicle = CODE_STATUS_NULL
+        if user:
             vehicle.subsidiary = user.get_subsidiary()
-            vehicle.save()
-        else:
-            vehicle.save()
+        vehicle.save()
         return vehicle
 
 
@@ -158,14 +152,6 @@ class QuotationForm(forms.ModelForm):
             {'placeholder': 'Sale price', 'class': 'form-control'})
         self.fields['current_date'].widget.attrs.update(
             {'placeholder': 'Current date', 'class': 'form-control'})
-        # self.fields['exchange_rate'].widget.attrs.update(
-        #     {'placeholder': 'Exchange rate', 'class': 'form-control'})
-        # self.fields['igv_tax'].widget.attrs.update(
-        #     {'placeholder': 'igv tax', 'class': 'form-control'})
-        # self.fields['sub_total'].widget.attrs.update(
-        #     {'placeholder': 'Sub total', 'class': 'form-control'})
-        # self.fields['total_paid'].widget.attrs.update(
-        #     {'placeholder': 'Total paid', 'class': 'form-control'})
 
     class Meta:
         model = Quotation
@@ -173,7 +159,7 @@ class QuotationForm(forms.ModelForm):
 
     def save(self, data_form_quo=None, data_form_detail=None, commit=True):
         quotation = super().save(commit=False)
-        quotation.exchange_rate = ExchangeRate.objects.get(pk=1)
+        quotation.exchange_rate = ExchangeRate.objects.get(service=1)
         quotation.igv_tax = data_form_quo["igv_tax"]
         quotation.sub_total = data_form_quo["sub_total"]
         quotation.total_paid = data_form_quo["total_paid"]
@@ -267,137 +253,145 @@ class ReportDocumentForm(forms.ModelForm):
         return report_document
 
 
-class OrderForm(forms.ModelForm):
+class CheckListForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['client'].widget.attrs.update(
             {'placeholder': 'Client', 'class': 'form-control'})
         self.fields['vehicle'].widget.attrs.update(
             {'placeholder': 'Vehicle', 'class': 'form-control'})
-        self.fields['type_checklist'].widget.attrs.update(
-            {'placeholder': 'Type checklist', 'class': 'form-control'})
-        self.fields['number'].widget.attrs.update(
-            {'placeholder': 'Number', 'class': 'form-control'})
-        self.fields['date'].widget.attrs.update(
-            {'placeholder': 'Date', 'class': 'form-control'})
-        self.fields['taxi_driver'].widget.attrs.update(
-            {'placeholder': 'Taxi driver', 'class': 'form-control'})
         self.fields['destination'].widget.attrs.update(
-            {'placeholder': 'Destination', 'class': 'form-control'})
-        self.fields['date_arrival'].widget.attrs.update(
-            {'placeholder': 'Date arrival', 'class': 'form-control'})
-        self.fields['hour_arrival'].widget.attrs.update(
-            {'placeholder': 'Hour arrival', 'class': 'form-control'})
-        self.fields['fuel_arrival'].widget.attrs.update(
-            {'placeholder': 'Fuel arrival', 'class': 'form-control'})
-        self.fields['unit_number_arrival'].widget.attrs.update(
-            {'placeholder': 'Unit number arrival', 'class': 'form-control'})
-        self.fields['km_arrival'].widget.attrs.update(
-            {'placeholder': 'Km arrival', 'class': 'form-control'})
-        self.fields['date_exit'].widget.attrs.update(
-            {'placeholder': 'Date exit', 'class': 'form-control'})
-        self.fields['hour_exit'].widget.attrs.update(
-            {'placeholder': 'Hour exit', 'class': 'form-control'})
-        self.fields['fuel_exit'].widget.attrs.update(
-            {'placeholder': 'Fuel exit', 'class': 'form-control'})
-        self.fields['unit_number_exit'].widget.attrs.update(
-            {'placeholder': 'Unit number exit', 'class': 'form-control'})
-        self.fields['km_exit'].widget.attrs.update(
-            {'placeholder': 'Km exit', 'class': 'form-control'})
-        self.fields['kms_next_maintenance'].widget.attrs.update(
-            {'placeholder': 'Kms next maintenance', 'class': 'form-control'})
+            {'placeholder': 'destination', 'class': 'form-control'})
         self.fields['number_billing'].widget.attrs.update(
-            {'placeholder': 'Number billing', 'class': 'form-control'})
+            {'placeholder': 'Number billing', 'class': 'form-control',
+             'readonly': True})
         self.fields['number_contract'].widget.attrs.update(
             {'placeholder': 'Number contract', 'class': 'form-control'})
-        self.fields['status_order'].widget.attrs.update(
-            {'placeholder': 'Status order', 'class': 'form-control'})
-        self.fields['type_order'].widget.attrs.update(
-            {'placeholder': 'Type order', 'class': 'form-control'})
-        self.fields['observation_delivery'].widget.attrs.update(
-            {'placeholder': 'Observation delivery', 'class': 'form-control'})
-        self.fields['observation_refund'].widget.attrs.update(
-            {'placeholder': 'Observation refund', 'class': 'form-control'})
-        self.fields['observation_inspection'].widget.attrs.update(
-            {'placeholder': 'Observation inspection', 'class': 'form-control'})
 
     class Meta:
-        model = Order
-        fields = ["client", "vehicle", "type_checklist",
-                  "number", "date", "taxi_driver", "destination",
-                  "date_arrival", "hour_arrival", "fuel_arrival", "unit_number_arrival",
-                  "km_arrival", "date_exit", "hour_exit", "fuel_exit",
-                  "unit_number_exit", "km_exit", "kms_next_maintenance", "number_billing",
-                  "number_contract", "status_order", "type_order", "observation_delivery",
-                  "observation_refund", "observation_inspection"]
+        model = CheckList
+        fields = ["client", "vehicle", "destination", "number_billing", "number_contract"]
 
-    def save(self, user=None, commit=True):
-        order = super().save(commit=False)
+    def save(self, user=None, *args, **kwargs):
+        checklist = super().save(*args, **kwargs)
         if user:
-            order.subsidiary = user.get_subsidiary()
-            order.save()
-        return order
+            checklist.subsidiary = user.get_subsidiary()
+        checklist.save()
+        return checklist
 
 
-class OrderDocumentForm(forms.ModelForm):
+class CheckListDetailForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['file_image'].widget.attrs.update(
-            {'placeholder': 'File image', 'class': 'form-control'})
+        self.fields['service_checklist'].widget.attrs.update(
+            {'placeholder': 'service ', 'class': 'form-control'})
+        self.fields['type_transport'].widget.attrs.update(
+            {'placeholder': 'Type Vehicle', 'class': 'form-control'})
+        self.fields['type_checklist'].widget.attrs.update(
+            {'placeholder': 'type checklist', 'class': 'form-control'})
+        self.fields['taxi_driver'].widget.attrs.update(
+            {'placeholder': 'Taxi driver', 'class': 'form-control'})
+        self.fields['date_initial'].widget.attrs.update(
+            {'placeholder': 'date initial', 'class': 'form-control'})
+        self.fields['hour_initial'].widget.attrs.update(
+            {'placeholder': 'hour initial', 'class': 'form-control'})
+        self.fields['fuel_initial'].widget.attrs.update(
+            {'placeholder': 'Fuel initial', 'class': 'form-control'})
+        self.fields['km_initial'].widget.attrs.update(
+            {'placeholder': 'km_initial', 'class': 'form-control'})
+        self.fields['kms_next_maintenance'].widget.attrs.update(
+            {'placeholder': 'Kms next maintenance', 'class': 'form-control'})
+        self.fields['observation'].widget.attrs.update(
+            {'placeholder': 'Observation', 'class': 'form-control', 'rows': "5"})
 
     class Meta:
-        model = OrderDocument
-        fields = ["file_image"]
+        model = CheckListDetail
+        fields = ["service_checklist", "type_checklist", "type_transport", "km_initial",
+                  "taxi_driver", "date_initial", "hour_initial", "fuel_initial",
+                  "kms_next_maintenance", "observation"]
 
-    def save(self, order=None, commit=True):
-        order_doc = super().save(commit=False)
-        if order:
-            order_doc.order = order
-            order_doc.save()
-        return order_doc
+    def save(self, checklist=None, commit=True):
+        checklist_detail = super().save(commit=False)
+        if checklist:
+            checklist_detail.checklist = checklist
+        checklist_detail.save()
+        return checklist_detail
 
 
-class OrderDetailForm(forms.ModelForm):
+class InventoryCheckListForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['type_vehicle'].widget.attrs.update(
-            {'placeholder': 'Type vehicle', 'class': 'form-control'})
+        self.fields['inventory_checklist'].widget.attrs.update(
+            {'placeholder': 'Inventory checklist', 'class': 'form-control'})
+
+    class Meta:
+        model = InventoryCheckList
+        fields = ["inventory_checklist"]
+
+    def save(self, checklist_detail=None, commit=True):
+        inventory_checklist = super().save(commit=False)
+        if checklist_detail:
+            inventory_checklist.checklist_detail = checklist_detail
+        inventory_checklist.save()
+        return inventory_checklist
+
+
+class PhotoCheckListForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['photo_checklist'].widget.attrs.update(
+            {'placeholder': 'photo checklist', 'class': 'form-control'})
+
+    class Meta:
+        model = PhotoCheckList
+        fields = ["photo_checklist"]
+
+    def save(self, checklist_detail=None, commit=True):
+        photo_checklist = super().save(commit=False)
+        if checklist_detail:
+            photo_checklist.checklist_detail = checklist_detail
+        photo_checklist.save()
+        return photo_checklist
+
+
+class LabourCheckListForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.fields['labour'].widget.attrs.update(
             {'placeholder': 'Labour', 'class': 'form-control'})
         self.fields['employee'].widget.attrs.update(
             {'placeholder': 'Employee', 'class': 'form-control'})
-        self.fields['status_order'].widget.attrs.update(
-            {'placeholder': 'Status', 'class': 'form-control'})
 
     class Meta:
-        model = OrderDetail
-        fields = ["type_vehicle", "labour", "employee", "status_order"]
+        model = LabourCheckList
+        fields = ["labour", "employee"]
 
-    def save(self, order=None, commit=True):
-        order_detail = super().save(commit=False)
-        if order:
-            order_detail.order = order
-            order_detail.save()
-        return order_detail
+    def save(self, checklist_detail=None, commit=True):
+        labour_checklist = super().save(commit=False)
+        if checklist_detail:
+            labour_checklist.checklist_detail = checklist_detail
+        labour_checklist.save()
+        return labour_checklist
 
 
-class OrderSupervisionForm(forms.ModelForm):
+class LabourEmployeeCheckListForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['employee'].widget.attrs.update(
-            {'placeholder': 'Employee', 'class': 'form-control'})
-        self.fields['observation'].widget.attrs.update(
-            {'placeholder': 'Observation', 'class': 'form-control'})
-        self.fields['job_rating'].widget.attrs.update(
-            {'placeholder': 'Job rating', 'class': 'form-control'})
+        self.fields['task'].widget.attrs.update(
+            {'placeholder': 'Task', 'class': 'form-control'})
+        self.fields['is_status'].widget.attrs.update(
+            {'placeholder': 'is status', 'class': 'form-control'})
 
     class Meta:
-        model = OrderSupervision
-        fields = ["employee", "observation", "job_rating"]
+        model = LabourEmployeeCheckList
+        fields = ["task", "is_status"]
 
-    def save(self, order_detail=None, commit=True):
-        order_supervision = super().save(commit=False)
-        if order_detail:
-            order_supervision.order_detail = order_detail
-            order_supervision.save()
-        return order_supervision
+    def save(self, labour_checklist=None, commit=True):
+        labour_checklist_employee = super().save(commit=False)
+        if labour_checklist:
+            labour_checklist_employee.labour_checklist = labour_checklist
+        labour_checklist_employee.save()
+        return labour_checklist_employee

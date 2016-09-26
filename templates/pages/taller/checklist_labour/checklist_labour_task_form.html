@@ -1,0 +1,59 @@
+{% load i18n %}
+{% load filter %}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Add task New</h4>
+        </div>
+        <div class="modal-body">
+            <div class="col-sm-6 col-md-12">
+                <form id="form_checklist_labour_employee" class="form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-3 col-md-push-9">
+                            <button type="button"
+                                    onclick="add_formset_global('{{ formset_labour_employee.prefix }}')"
+                                    class="fcbtn btn btn-primary btn-outline btn-1c waves-effect">Add
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br><br>
+                        <div class="form-group">
+                            <div class="col-md-12" id="content_{{ formset_labour_employee.prefix }}">
+                                {% if formset_labour_employee %}
+                                    {% for form in formset_labour_employee %}
+                                        <div class="form-group dynamic-form" id="{{ form.prefix }}-row">
+                                            {{ form.id|addcss:"hidden" }}
+                                            {{ form.DELETE|addcss:"hidden" }}
+                                            {{ form.ORDER|addcss:"hidden" }}
+                                            <label class="col-sm-2">task</label>
+                                            <div class="col-sm-8">
+                                                {{ form.task }}
+                                            </div>
+                                            <div class="col-sm-2 formset-icon-remove">
+                                                <button type="button"
+                                                        onclick="remove_formset_global(this, '{{ formset_labour_employee.prefix }}')"
+                                                        class="btn btn-danger btn-circle waves-effect">
+                                                    <i class="fa fa-times"></i></button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            {{ formset_labour_employee.non_form_errors }}
+                            {{ formset_labour_employee.management_form }}
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default waves-effect"
+                    data-dismiss="modal">{% trans "Cancel" %}</button>
+            <button type="button" id="save_checklist_labour_task" data-id="{{ form_pk }}"
+                        class="btn btn-danger waves-effect waves-ligh">{% trans "save" %}</button>
+
+        </div>
+    </div>
+</div>

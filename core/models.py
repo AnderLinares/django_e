@@ -118,7 +118,7 @@ class Subsidiary(BaseModel):
 
 
 class TypeContributionSystem(BaseModel):
-    type_contribution = models.CharField(max_length=1, choices=core_constants.TYPE_CONTRIBUTION_SYSTEM__OPTIONS)
+    type_contribution = models.CharField(max_length=10, choices=core_constants.TYPE_CONTRIBUTION_SYSTEM__OPTIONS)
     name = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
@@ -155,7 +155,7 @@ class Specialty(BaseModel):
 class Correlative(BaseModel):
     subsidiary = models.ForeignKey(Subsidiary,
                                    related_name="%(app_label)s_%(class)s_subsidiary")
-    type_correlative = models.CharField(max_length=2, choices=core_constants.TYPE_CORRELATIVE_OPTIONS)
+    type_correlative = models.CharField(max_length=10, choices=core_constants.TYPE_CORRELATIVE_OPTIONS)
     prefix = models.CharField(max_length=20, null=True, blank=True)
     postfix = models.CharField(max_length=20, null=True, blank=True)
     format = models.CharField(max_length=20, null=True, blank=True)
@@ -163,6 +163,23 @@ class Correlative(BaseModel):
     increment = models.IntegerField(default=1)
     final = models.IntegerField(null=True, blank=True)
     actual = models.IntegerField(default=0)
+
+    @staticmethod
+    def get_current_correlative_checklist(subsidiary, type_correlative):
+        correlative = Correlative.objects.get(subsidiary=subsidiary, type_correlative=type_correlative)
+        actual_correlative = correlative.actual + correlative.increment
+        current_format = "{0}-{1}".format(str(correlative.prefix), str(correlative.format))
+        exact_number = "{0}{1}".format(current_format.strip(), str(actual_correlative))
+        post_correlative = int(actual_correlative) + int(correlative.increment)
+        result = dict(actual_correlative=actual_correlative, exact_number=exact_number,
+                      current_format=current_format, post_correlative=post_correlative)
+        return result
+
+    @staticmethod
+    def get_correlative_update(subsidiary, type_correlative, actual_number):
+        correlative = Correlative.objects.get(subsidiary=subsidiary, type_correlative=type_correlative)
+        correlative.actual = actual_number
+        correlative.save()
 
     def __str__(self):
         return "{0}-{1}-{2}".format(str(self.prefix), str(self.postfix), str(self.actual))
@@ -174,4 +191,4 @@ class UnitMeasurement(BaseModel):
     symbol = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return "{0}-{1}".format(str(self.get_type_measurement_display()), str(self.name))

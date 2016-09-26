@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load filter %}
+{% load static %}
+
+{% block css_plugins %}
+{% endblock css_plugins %}
+
+{% block js %}
+
+{% endblock js %}
+
+
+{% block container %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="row">
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>Labour</td>
+                            <td>Description</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for labour_employee in labour_employees %}
+                            <tr>
+                                <td><strong>{{ forloop.counter }}</strong>.-</td>
+                                <td>{{ labour_employee.labour.name }}</td>
+                                <td>{{ labour_employee.description|default_if_none:"" }}</td>
+                                <td>{{ labour_employee.get_status_labour_display }}</td>
+                                <td>
+                                    <button data-id="{{ labour_employee.id }}"
+                                            class="fcbtn btn btn-primary btn-outline btn-1f labour_employees_add_task">{% trans 'add task' %}</button>
+                                    <button data-id="{{ labour_employee.id }}"
+                                            class="fcbtn btn btn-primary btn-outline btn-1f labour_employees_finish_task">{% trans 'finisdhed ' %}</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div id="modal_labour" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock container %}
+
+{% block js_plugins %}
+{% endblock js_plugins %}
+
+{% block js_app %}
+        <script src="{% static "themes/js/pages/taller/checklist/checklist_labour.js" %}"></script>
+{% endblock js_app %}

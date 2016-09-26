@@ -15,12 +15,11 @@
         <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Administracion <span class="fa arrow"></span> </span></a>
           <ul class="nav nav-second-level">
             <li> <a href="{% url 'admin-client:index' %}">Client</a> </li>
-            <li> <a href="javascript:void(0)">Empleados</a> </li>
             <li> <a href="{% url 'admin-brand:index' %}">Marcas</a> </li>
             <li> <a href="{% url 'admin-typechecklist:index' %}">Tipos de Checklist</a> </li>
             <li> <a href="{% url 'admin-typejob:index' %}">Tipo de trabajo</a> </li>
             <li> <a href="{% url 'admin-labour:index' %}">Trabajo</a> </li>
-            <li> <a href="{% url 'admin-typevehicle:index' %}">Tipo de Vehiculo</a> </li>
+            <li> <a href="{% url 'admin-typetransport:index' %}">Tipo de Transporte</a> </li>
             <li> <a href="{% url 'admin-vehicle:index' %}">Vehiculos</a>
             <li> <a href="{% url 'admin-organization:index' %}">Empresa</a> </li>
             <li> <a href="{% url 'admin-subsidiary:index' %}">Sucursales</a> </li>
@@ -31,14 +30,73 @@
         </li>
         <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Cheklist <span class="fa arrow"></span> </span></a>
           <ul class="nav nav-second-level">
-            <li> <a href="{% url 'order-alquiler:index' %}">Alquiler</a> </li>
-            <li> <a href="javascript:void(0)">Mantenimiento</a> </li>
+            <li> <a href="{% url 'checklist:index' %}">Generar Solicitud</a> </li>
+            <li> <a href="{% url 'checklist:maintenance-solicitude' %}">Listado Mantenimiento</a> </li>
+            <li> <a href="{% url 'checklist-labour:index' %}">Listado labores</a> </li>
           </ul>
         </li>
         <li> <a href="{% url 'report-solicitude:index' %}" class="waves-effect"><i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i> <span class="hide-menu">Informe</span></a> </li>
         <li> <a href="javascript:void(0)" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Cotizacion <span class="fa arrow"></span> </span></a>
           <ul class="nav nav-second-level">
             <li> <a href="{% url 'quotation-solicitude:index' %}">Solicitud</a> </li>
+          </ul>
+        </li>
+        <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Talento Humano <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+            <li> <a href="javascript:void(0)">Empleados</a> </li>
+            <li> <a href="javascript:void(0)">ContributionSystem</a> </li>
+            <li> <a href="javascript:void(0)">Specialty</a> </li>
+            <li> <a href="javascript:void(0)">Bank</a> </li>
+            <li> <a href="javascript:void(0)">pagos a empleados</a> </li>
+            <li> <a href="javascript:void(0)">txt para bancos</a> </li>
+          </ul>
+        </li>
+         <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Almacen <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+              <li> <a href="javascript:void(0)">tipo de Proveedores</a> </li>
+              <li> <a href="javascript:void(0)">Proveedores</a> </li>
+              <li> <a href="javascript:void(0)">categoria</a> </li>
+              <li> <a href="javascript:void(0)">subcategoria</a> </li>
+              <li> <a href="javascript:void(0)">productos</a> </li>
+              <li> <a href="javascript:void(0)">productos agotados</a> </li>
+              <li> <a href="javascript:void(0)">productos stock</a> </li>
+          </ul>
+        </li>
+        <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Logistica <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+              <li> <a href="javascript:void(0)">planificacion aprobacion</a> </li>
+              <li> <a href="javascript:void(0)">solicitud de compra</a> </li>
+              <li> <a href="javascript:void(0)">orden de compra</a> </li>
+              <li> <a href="javascript:void(0)">entrega de compra</a> </li>
+              <li> <a href="javascript:void(0)">pedido confirmacion</a> </li>
+              <li> <a href="javascript:void(0)">facturas a proveedores</a> </li>
+              <li> <a href="javascript:void(0)">pagos </a> </li>
+          </ul>
+        </li>
+          <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Tesoreria <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+              <li> <a href="javascript:void(0)">pedido confirmacion</a> </li>
+              <li> <a href="javascript:void(0)">envio de dinero</a> </li>
+              <li> <a href="javascript:void(0)">documento de autorizacion</a> </li>
+          </ul>
+        </li>
+        <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Contabilidad <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+              <li> <a href="javascript:void(0)">Enlace y metadatos</a> </li>
+              <li> <a href="javascript:void(0)">catalogos de cuentas</a> </li>
+              <li> <a href="javascript:void(0)">Asientos Contables</a></li>
+              <li> <a href="javascript:void(0)">Cuentas por pagar</a> </li>
+               <li> <a href="javascript:void(0)">Cuentas por Cobrar</a> </li>
+
+          </ul>
+        </li>
+         <li> <a href="index-2.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Reportes <span class="fa arrow"></span> </span></a>
+          <ul class="nav nav-second-level">
+              <li> <a href="javascript:void(0)">Reporte compras </a> </li>
+              <li> <a href="javascript:void(0)">reporte financiero</a> </li>
+              <li> <a href="javascript:void(0)">reporte checklist</a> </li>
+              <li> <a href="javascript:void(0)">reporte gastos</a> </li>
+              <li> <a href="javascript:void(0)">reporte envio dinero</a> </li>
           </ul>
         </li>
         <li><a href="/logout" class="waves-effect"><i class="zmdi zmdi-power zmdi-hc-fw fa-fw"></i> <span class="hide-menu">Log out</span></a></li>

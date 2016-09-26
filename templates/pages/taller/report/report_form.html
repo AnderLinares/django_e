@@ -9,7 +9,9 @@
 
 
 <script>
-    jQuery('#id_report_current_date').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+     (function($) {
+        $('#id_report_current_date').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+     })(jQuery);
 </script>
 <div class="modal-dialog">
     <div class="modal-content">

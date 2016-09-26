@@ -12,7 +12,7 @@ from .serializers import (
 class CurrencyAPIView(APIView):
     def get_object(self, pk):
         try:
-            return Currency.objects.get(pk=pk)
+            return Currency.objects.get(service=pk)
         except Currency.DoesNotExist:
             raise Http404
 
@@ -52,7 +52,7 @@ class CurrencyAPIListView(APIView):
 class ExchangeRateAPIView(APIView):
     def get_object(self, pk):
         try:
-            return ExchangeRate.objects.get(pk=pk)
+            return ExchangeRate.objects.get(service=pk)
         except ExchangeRate.DoesNotExist:
             raise Http404
 

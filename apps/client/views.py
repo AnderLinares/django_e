@@ -25,12 +25,12 @@ class ClientListView(TemplateLoginRequiredMixin, TemplateView):
     template_name = 'pages/client/client_list.html'
 
     def get(self, request, *args, **kwargs):
-        self.person_all = Person.objects.all()
+        self.client_all = Person.objects.all()
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['client_list'] = self.person_all
+        context['client_list'] = self.client_all
         return context
 
 
@@ -38,48 +38,42 @@ class ClientCreateView(TemplateLoginRequiredMixin, TemplateView):
     template_name = 'pages/client/client_form.html'
 
     def get(self, request, *args, **kwargs):
-        self.form_person = PersonForm(auto_id='id_person_%s')
+        self.form_client = PersonForm(auto_id='id_client_%s')
         return super().render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         data = loads(request.body.decode('utf-8'))
-        data_form_person = data['form']
-        self.form_person = PersonForm(data=data_form_person, auto_id='id_person_%s')
-        if self.form_person.is_valid():
-            self.form_person.save()
+        data_form_client = data['form']
+        self.form_client = PersonForm(data=data_form_client, auto_id='id_client_%s')
+        if self.form_client.is_valid():
+            self.form_client.save()
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form_person"] = self.form_person
+        context["form_client"] = self.form_client
         return context
 
 
 class ClientEditView(TemplateLoginRequiredMixin, TemplateView):
     template_name = 'pages/client/client_form.html'
 
-    def __init__(self, **kwargs):
-        self.form_person = None
-        self.person = None
-        super().__init__(**kwargs)
-
     def get(self, request, *args, **kwargs):
-        person = request.GET['person_id']
-        self.person = Person.objects.get(pk=person)
-        self.form_person = PersonForm(
-            auto_id='id_client_%s', instance=self.person)
+        client = request.GET['person_id']
+        self.client = Person.objects.get(pk=client)
+        self.form_client = PersonForm(
+            auto_id='id_client_%s', instance=self.client)
         return super().render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         data = loads(request.body.decode('utf-8'))
-        data_person_pk = data['form_pk']
-        data_form_person = data['form']
-        self.person = Person.objects.get(pk=data_person_pk)
-        self.form_person = PersonForm(
-            data_form_person, auto_id='id_person_%s', instance=self.person)
-
-        if self.form_person.is_valid():
-            self.form_person.save()
+        data_client_pk = data['form_pk']
+        data_form_client = data['form']
+        self.client = Person.objects.get(pk=data_client_pk)
+        self.form_client = PersonForm(
+            data_form_client, auto_id='id_client_%s', instance=self.client)
+        if self.form_client.is_valid():
+            self.form_client.save()
             messages.success(request, core_constants.STATUS_MSG_TAGS['success'])
         else:
             messages.error(request, core_constants.STATUS_MSG_TAGS['error'])
@@ -87,7 +81,7 @@ class ClientEditView(TemplateLoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_person'] = self.form_person
-        context['form_pk'] = self.person.id
+        context['form_client'] = self.form_client
+        context['form_pk'] = self.client.id
         context['btn_edit'] = core_constants.CODE_TEXT_EDIT
         return context

@@ -7,8 +7,9 @@
 <link href="{% static "themes/global/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css" %}" rel="stylesheet">
 <script src="{% static "themes/global/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js" %}"></script>
 <script>
-    jQuery('#id_quotation_current_date').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
-    jQuery(".vertical-spin").TouchSpin({
+     (function($) {
+        $('#id_quotation_current_date').datepicker({autoclose: true, format: 'yyyy-mm-dd', language:'es'});
+        $(".vertical-spin").TouchSpin({
                 verticalbuttons: true,
                 verticalupclass: 'ti-plus',
                 verticaldownclass: 'ti-minus'
@@ -19,13 +20,14 @@
             if (vspinTrue) {
                 jQuery('.vertical-spin').prev('.bootstrap-touchspin-prefix').remove();
             }
-            jQuery("input[name='tch2']").TouchSpin({
+            $("input[name='tch2']").TouchSpin({
                 min: -1000000000,
                 max: 1000000000,
                 stepinterval: 50,
                 maxboostedstep: 10000000,
                 prefix: 's/.'
-            });
+                });
+      })(jQuery);
 </script>
 <div class="modal-dialog modal-lg">
     <div class="modal-content">

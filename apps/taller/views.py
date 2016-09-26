@@ -1,20 +1,27 @@
 from json import loads
 
 from django.contrib import messages
+from django.db import transaction
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 
 from core import constants as core_constants
 from core.mixins import TemplateLoginRequiredMixin
+from core.models import Correlative
+from core.utils.funct_formset import CoreFormset
+from .constants import *
 from .forms import (
-    BrandForm, LabourForm, TypeJobForm, VehicleForm, QuotationForm,
+    BrandForm, LabourForm, TypeLabourForm, VehicleForm, QuotationForm,
     ReportForm, TypeCheckListForm,
-    OrderForm, TypeVehicleForm)
-from .formset import (ReportDocumentFormSet)
+    CheckListForm,
+    TypeTransportForm, CheckListDetailForm)
+from .formset import (
+    ReportDocumentFormSet, CheckListPhotoFormSet,
+    CheckListInventoryFormSet, CheckListLabourFormSet, CheckListLabourEmployeeFormSet)
 from .models import (
     Brand, Labour, Vehicle, Quotation, QuotationDetail,
-    Report, TypeCheckList, TypeJob, TypeVehicle)
-
+    Report, TypeCheckList, TypeLabour, TypeTransport, ServiceCheckList, CheckListDetail,
+    LabourCheckList, LabourEmployeeCheckList)
 
 # Brand
 class BrandView(TemplateLoginRequiredMixin, ListView):
@@ -67,7 +74,7 @@ class BrandEditView(TemplateLoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         brand = request.GET['brand_id']
-        self.brand = Brand.objects.get(pk=brand)
+        self.brand = Brand.objects.get(service=brand)
         self.form_brand = BrandForm(
             auto_id='id_brand_%s', instance=self.brand)
         return super().render_to_response(self.get_context_data())
@@ -76,7 +83,7 @@ class BrandEditView(TemplateLoginRequiredMixin, TemplateView):
         data = loads(request.body.decode('utf-8'))
         data_brand_pk = data['form_pk']
         data_form_brand = data['form']
-        self.brand = Brand.objects.get(pk=data_brand_pk)
+        self.brand = Brand.objects.get(service=data_brand_pk)
         self.form_brand = BrandForm(
             data_form_brand, auto_id='id_brand_%s', instance=self.brand)
 
@@ -146,7 +153,7 @@ class LabourEditView(TemplateLoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         labour = request.GET['labour_id']
-        self.labour = Labour.objects.get(pk=labour)
+        self.labour = Labour.objects.get(service=labour)
         self.form_labour = LabourForm(
             auto_id='id_labour_%s', instance=self.labour)
         return super().render_to_response(self.get_context_data())
@@ -155,7 +162,7 @@ class LabourEditView(TemplateLoginRequiredMixin, TemplateView):
         data = loads(request.body.decode('utf-8'))
         data_labour_pk = data['form_pk']
         data_form_labour = data['form']
-        self.labour = Labour.objects.get(pk=data_labour_pk)
+        self.labour = Labour.objects.get(service=data_labour_pk)
         self.form_labour = LabourForm(
             data_form_labour, auto_id='id_labour_%s', instance=self.labour)
 
@@ -175,9 +182,9 @@ class LabourEditView(TemplateLoginRequiredMixin, TemplateView):
 
 
 # Typejob
-class TypeJobView(TemplateLoginRequiredMixin, ListView):
-    model = TypeJob
-    template_name = 'pages/taller/typejob/typejob.html'
+class TypeLabourView(TemplateLoginRequiredMixin, ListView):
+    model = TypeLabour
+    template_name = 'pages/taller/typetransport/typetransport.html'
     context_object_name = "typejob_list"
 
     def get_context_data(self, **kwargs):
@@ -186,11 +193,11 @@ class TypeJobView(TemplateLoginRequiredMixin, ListView):
         return context
 
 
-class TypeJobListView(TemplateLoginRequiredMixin, TemplateView):
-    template_name = 'pages/taller/typejob/typejob_list.html'
+class TypeLabourListView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/typetransport/typetransport_list.html'
 
     def get(self, request, *args, **kwargs):
-        self.typejob = TypeJob.objects.all()
+        self.typejob = TypeLabour.objects.all()
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
@@ -199,17 +206,17 @@ class TypeJobListView(TemplateLoginRequiredMixin, TemplateView):
         return context
 
 
-class TypeJobCreateView(TemplateLoginRequiredMixin, TemplateView):
-    template_name = 'pages/taller/typejob/typejob_form.html'
+class TypeLabourCreateView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/typetransport/typetransport_form.html'
 
     def get(self, request, *args, **kwargs):
-        self.form_typejob = TypeJobForm(auto_id='id_typejob_%s')
+        self.form_typejob = TypeLabourForm(auto_id='id_typejob_%s')
         return super().render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         data = loads(request.body.decode('utf-8'))
         data_form_typejob = data['form']
-        self.form_typejob = TypeJobForm(data=data_form_typejob, auto_id='id_typejob_%s')
+        self.form_typejob = TypeLabourForm(data=data_form_typejob, auto_id='id_typejob_%s')
         if self.form_typejob.is_valid():
             self.form_typejob.save()
         return super().render_to_response(self.get_context_data())
@@ -220,13 +227,13 @@ class TypeJobCreateView(TemplateLoginRequiredMixin, TemplateView):
         return context
 
 
-class TypeJobEditView(TemplateLoginRequiredMixin, TemplateView):
-    template_name = 'pages/taller/typejob/typejob_form.html'
+class TypeLabourEditView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/typetransport/typetransport_form.html'
 
     def get(self, request, *args, **kwargs):
         typejob = request.GET['typejob_id']
-        self.typejob = TypeJob.objects.get(pk=typejob)
-        self.form_typejob = TypeJobForm(
+        self.typejob = TypeLabour.objects.get(service=typejob)
+        self.form_typejob = TypeLabourForm(
             auto_id='id_typejob_%s', instance=self.typejob)
         return super().render_to_response(self.get_context_data())
 
@@ -234,8 +241,8 @@ class TypeJobEditView(TemplateLoginRequiredMixin, TemplateView):
         data = loads(request.body.decode('utf-8'))
         data_typejob_pk = data['form_pk']
         data_form_typejob = data['form']
-        self.typejob = TypeJob.objects.get(pk=data_typejob_pk)
-        self.form_typejob = TypeJobForm(
+        self.typejob = TypeLabour.objects.get(service=data_typejob_pk)
+        self.form_typejob = TypeLabourForm(
             data_form_typejob, auto_id='id_typejob_%s', instance=self.typejob)
 
         if self.form_typejob.is_valid():
@@ -254,10 +261,10 @@ class TypeJobEditView(TemplateLoginRequiredMixin, TemplateView):
 
 
 # Typevehicle
-class TypeVehicleView(TemplateLoginRequiredMixin, ListView):
-    model = TypeVehicle
-    template_name = 'pages/taller/typevehicle/typevehicle.html'
-    context_object_name = "typevehicle_list"
+class TypeTransportView(TemplateLoginRequiredMixin, ListView):
+    model = TypeTransport
+    template_name = 'pages/taller/typetransport/typetransport.html'
+    context_object_name = "typetransport_list"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -265,59 +272,60 @@ class TypeVehicleView(TemplateLoginRequiredMixin, ListView):
         return context
 
 
-class TypeVehicleListView(TemplateLoginRequiredMixin, TemplateView):
-    template_name = 'pages/taller/typevehicle/typevehicle_list.html'
+class TypeTransportListView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/typetransport/typetransport_list.html'
 
     def get(self, request, *args, **kwargs):
-        self.typevehicle = TypeVehicle.objects.all()
+        self.typetransport = TypeTransport.objects.all()
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['typevehicle_list'] = self.typevehicle
+        context['typetransport_list'] = self.typetransport
         return context
 
 
-class TypeVehicleCreateView(TemplateLoginRequiredMixin, TemplateView):
-    template_name = 'pages/taller/typevehicle/typevehicle_form.html'
+class TypeTransportCreateView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/typetransport/typetransport_form.html'
 
     def get(self, request, *args, **kwargs):
-        self.form_typevehicle = TypeVehicleForm(auto_id='id_typevehicle_%s')
+        self.form_typetransport = TypeTransportForm(auto_id='id_typetransport_%s')
         return super().render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         data = loads(request.body.decode('utf-8'))
-        data_form_typevehicle = data['form']
-        self.form_typevehicle = TypeVehicleForm(data=data_form_typevehicle, auto_id='id_typevehicle_%s')
-        if self.form_typevehicle.is_valid():
-            self.form_typevehicle.save()
+        data_form_typetransport = data['form']
+        self.form_typetransport = TypeTransportForm(data=data_form_typetransport, auto_id='id_typetransport_%s')
+        if self.form_typetransport.is_valid():
+            self.form_typetransport.save()
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form_typevehicle"] = self.form_typevehicle
+        context["form_typetransport"] = self.form_typetransport
         return context
 
-class TypeVehicleEditView(TemplateLoginRequiredMixin, TemplateView):
-    template_name = 'pages/taller/typevehicle/typevehicle_form.html'
+
+class TypeTransportEditView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/typetransport/typetransport_form.html'
 
     def get(self, request, *args, **kwargs):
-        typevehicle = request.GET['typevehicle_id']
-        self.typevehicle = TypeVehicle.objects.get(pk=typevehicle)
-        self.form_typevehicle = TypeVehicleForm(
-            auto_id='id_typevehicle_%s', instance=self.typevehicle)
+        typetransport = request.GET['typetransport_id']
+        self.typetransport = TypeTransport.objects.get(service=typetransport)
+        self.form_typetransport = TypeTransportForm(
+            auto_id='id_typetransport_%s', instance=self.typetransport)
         return super().render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
         data = loads(request.body.decode('utf-8'))
-        data_typevehicle_pk = data['form_pk']
-        data_form_typevehicle = data['form']
-        self.typevehicle = TypeVehicle.objects.get(pk=data_typevehicle_pk)
-        self.form_typevehicle = TypeJobForm(
-            data_form_typevehicle, auto_id='id_typevehicle_%s', instance=self.typevehicle)
+        data_typetransport_pk = data['form_pk']
+        data_form_typetransport = data['form']
+        self.typetransport = TypeTransport.objects.get(service=data_typetransport_pk)
+        self.form_typetransport = TypeLabourForm(
+            data_form_typetransport, auto_id='id_typetransport_%s', instance=self.typetransport)
 
-        if self.form_typevehicle.is_valid():
-            self.form_typevehicle.save()
+        if self.form_typetransport.is_valid():
+            self.form_typetransport.save()
             messages.success(request, core_constants.STATUS_MSG_TAGS['success'])
         else:
             messages.error(request, core_constants.STATUS_MSG_TAGS['error'])
@@ -325,8 +333,8 @@ class TypeVehicleEditView(TemplateLoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_typevehicle'] = self.form_typevehicle
-        context['form_pk'] = self.typevehicle.id
+        context['form_typetransport'] = self.form_typetransport
+        context['form_pk'] = self.typetransport.id
         context['btn_edit'] = core_constants.CODE_TEXT_EDIT
         return context
 
@@ -383,7 +391,7 @@ class TypeCheckListEditView(TemplateLoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         typechecklist = request.GET['typechecklist_id']
-        self.typechecklist = TypeCheckList.objects.get(pk=typechecklist)
+        self.typechecklist = TypeCheckList.objects.get(service=typechecklist)
         self.form_typechecklist = TypeCheckListForm(
             auto_id='id_typechecklist_%s', instance=self.typechecklist)
         return super().render_to_response(self.get_context_data())
@@ -392,7 +400,7 @@ class TypeCheckListEditView(TemplateLoginRequiredMixin, TemplateView):
         data = loads(request.body.decode('utf-8'))
         data_typechecklist_pk = data['form_pk']
         data_form_typechecklist = data['form']
-        self.typechecklist = TypeCheckList.objects.get(pk=data_typechecklist_pk)
+        self.typechecklist = TypeCheckList.objects.get(service=data_typechecklist_pk)
         self.form_typechecklist = TypeCheckListForm(
             data_form_typechecklist, auto_id='id_typechecklist_%s', instance=self.typechecklist)
 
@@ -628,7 +636,7 @@ class ReportEditView(TemplateLoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         report = request.GET['report_id']
-        self.report = Report.objects.get(pk=report)
+        self.report = Report.objects.get(service=report)
         self.form_report = ReportForm(
             auto_id='id_report_%s', instance=self.report)
         self.form_report_document = ReportDocumentFormSet(
@@ -639,7 +647,7 @@ class ReportEditView(TemplateLoginRequiredMixin, TemplateView):
         data = loads(request.body.decode('utf-8'))
         data_report_pk = data['form_pk']
         data_form_report = data['form']
-        self.report = Report.objects.get(pk=data_report_pk)
+        self.report = Report.objects.get(service=data_report_pk)
         self.form_report = ReportForm(
             data_form_report, auto_id='id_report_%s', instance=self.report)
         self.form_report_document = ReportDocumentFormSet(
@@ -666,21 +674,163 @@ class ReportEditView(TemplateLoginRequiredMixin, TemplateView):
         return context
 
 
-# Order
-class OrderRentalView(TemplateLoginRequiredMixin, TemplateView):
-    template_name = 'pages/taller/order/order.html'
+# checklist
+class ChecklistCreateView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/checklist/checklist.html'
+
+    def __init__(self, **kwargs):
+
+        self.id_checklist = 'id_checklist_%s'
+        self.id_checklist_detail = 'id_checklist_detail_%s'
+        self.checklist_inventory_prefix = 'checklist_inventory'
+        # self.id_checklist_inventory = 'id_checklist_inventory_%s'
+        self.checklist_photo_prefix = 'checklist_photo'
+        self.checklist_labour_prefix = 'checklist_labour'
+        # self.id_checklist_labour = 'id_checklist_labour_%s'
+        super().__init__(**kwargs)
 
     def get(self, request, *args, **kwargs):
-        self.order_rental = OrderForm(auto_id='id_order_%s')
-
+        current_correlative = Correlative.get_current_correlative_checklist(
+            subsidiary=self.request.user.get_subsidiary(), type_correlative=core_constants.CODE_CORRELATIVE_CHECKLIST)
+        initial_checklist = {'number_billing': current_correlative["exact_number"]}
+        self.form_checklist = CheckListForm(initial=initial_checklist, auto_id=self.id_checklist)
+        self.form_checklist_detail = CheckListDetailForm(auto_id=self.id_checklist_detail)
+        self.form_checklist_inventory = CheckListInventoryFormSet(prefix=self.checklist_inventory_prefix)
+        self.form_checklist_photo = CheckListPhotoFormSet(prefix=self.checklist_photo_prefix)
+        self.form_checklist_labour = CheckListLabourFormSet(prefix=self.checklist_labour_prefix)
         return super().render_to_response(self.get_context_data())
 
     def post(self, request, *args, **kwargs):
+        print(request.POST)
+        self.form_checklist = CheckListForm(
+            request.POST, auto_id=self.id_checklist)
+        self.form_checklist_detail = CheckListDetailForm(
+            request.POST, auto_id=self.id_checklist_detail)
+        self.form_checklist_inventory = CheckListInventoryFormSet(
+            request.POST, prefix=self.checklist_inventory_prefix)
+        self.form_checklist_photo = CheckListPhotoFormSet(
+            request.POST, request.FILES, prefix=self.checklist_photo_prefix)
+        self.form_checklist_labour = CheckListLabourFormSet(
+            request.POST, prefix=self.checklist_labour_prefix)
+
+        if (self.form_checklist.is_valid() and
+                self.form_checklist_detail.is_valid() and
+                self.form_checklist_inventory.is_valid() and
+                self.form_checklist_photo.is_valid() and
+                self.form_checklist_labour.is_valid()):
+            with transaction.atomic():
+                user = self.request.user
+                checklist = self.form_checklist.save(user=user, commit=False)
+                checklist_detail = self.form_checklist_detail.save(checklist=checklist, commit=False)
+                # self.form_checklist_inventory.save(checklist_detail=checklist_detail, commit=False)
+                CoreFormset.formset_checklist_inventory(self.form_checklist_inventory, checklist_detail)
+                CoreFormset.formset_checklist_photo(self.form_checklist_photo, checklist_detail)
+                CoreFormset.formset_checklist_labour(self.form_checklist_labour, checklist_detail)
+                # self.form_checklist_labour.save(checklist_detail=checklist_detail, commit=False)
+
+                current_correlative = Correlative.get_current_correlative_checklist(
+                    subsidiary=user.get_subsidiary(),
+                    type_correlative=core_constants.CODE_CORRELATIVE_CHECKLIST)
+                Correlative.get_correlative_update(
+                    subsidiary=user.get_subsidiary(),
+                    type_correlative=core_constants.CODE_CORRELATIVE_CHECKLIST,
+                    actual_number=current_correlative["actual_correlative"])
+                current_correlative = Correlative.get_current_correlative_checklist(
+                    subsidiary=user.get_subsidiary(), type_correlative=core_constants.CODE_CORRELATIVE_CHECKLIST)
+                initial_checklist = {'number_billing': current_correlative["exact_number"]}
+                self.form_checklist = CheckListForm(initial=initial_checklist, auto_id=self.id_checklist)
+                self.form_checklist_detail = CheckListDetailForm(auto_id=self.id_checklist_detail)
+                self.form_checklist_inventory = CheckListInventoryFormSet(prefix=self.checklist_inventory_prefix)
+                self.form_checklist_photo = CheckListPhotoFormSet(prefix=self.checklist_photo_prefix)
+                self.form_checklist_labour = CheckListLabourFormSet(prefix=self.checklist_labour_prefix)
+            messages.success(request, core_constants.STATUS_MSG_TAGS['success'])
+        else:
+            messages.error(request, core_constants.STATUS_MSG_TAGS['error'])
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form_order_rental"] = self.order_rental
-
+        context["form_checklist"] = self.form_checklist
+        context["form_checklist_detail"] = self.form_checklist_detail
+        context["formset_checklist_inventory"] = self.form_checklist_inventory
+        context["formset_checklist_photo"] = self.form_checklist_photo
+        context["formset_checklist_labour"] = self.form_checklist_labour
         return context
 
+
+# checklist-Maintenance
+class ChecklistMaintenanceView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/checklist/checklist_maintenance.html'
+
+    def get(self, request, *args, **kwargs):
+        maintenance = ServiceCheckList.objects.all()
+        self.checklist_detail_maintenance = CheckListDetail.objects.filter(service_checklist=maintenance)
+        return super().render_to_response(self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form_checklist_maintenance"] = self.checklist_detail_maintenance
+        return context
+
+
+# checklistlabour Employee
+class LabourEmployeeView(TemplateLoginRequiredMixin, ListView):
+    model = LabourCheckList
+    template_name = 'pages/taller/checklist_labour/checklist_labour.html'
+    context_object_name = "labour_employees"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title_page'] = "Labour Employee List"
+        return context
+
+
+class LabourEmployeeListView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/checklist_labour/checklist_labour_list.html'
+
+    def get(self, request, *args, **kwargs):
+        self.labour_employees = LabourCheckList.objects.all()
+        return super().render_to_response(self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['labour_employees'] = self.labour_employees
+        return context
+
+
+class LabourEmployeeTaskView(TemplateLoginRequiredMixin, TemplateView):
+    template_name = 'pages/taller/checklist_labour/checklist_labour_task_form.html'
+
+    def __init__(self, **kwargs):
+        self.labour_employee_prefix = 'labour_employee'
+        super().__init__(**kwargs)
+
+    def get(self, request, *args, **kwargs):
+        checklist_labour_id = request.GET['checklist_labour_id']
+        self.labour_checklist = LabourCheckList.objects.get(pk=checklist_labour_id)
+        self.formset_labour_employee = CheckListLabourEmployeeFormSet(
+            prefix=self.labour_employee_prefix, instance=self.labour_checklist)
+        return super().render_to_response(self.get_context_data())
+
+    def post(self, request, *args, **kwargs):
+        data = loads(request.body.decode('utf-8'))
+        print(data)
+        data_labour_employee_pk = data['form_pk']
+        data_form_labour_employee = data['form']
+        self.labour_checklist = LabourCheckList.objects.get(pk=data_labour_employee_pk)
+        self.formset_labour_employee = CheckListLabourEmployeeFormSet(
+            data_form_labour_employee, prefix=self.labour_employee_prefix)
+        if self.formset_labour_employee.is_valid():
+            CoreFormset.formset_checklist_labour_employee(
+                self.formset_labour_employee, self.labour_checklist)
+            messages.success(request, core_constants.STATUS_MSG_TAGS['success'])
+        else:
+            messages.error(request, core_constants.STATUS_MSG_TAGS['error'])
+        return super().render_to_response(self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['formset_labour_employee'] = self.formset_labour_employee
+        context['form_pk'] = self.labour_checklist.id
+        context['btn_edit'] = core_constants.CODE_TEXT_EDIT
+        return context

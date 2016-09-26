@@ -128,7 +128,7 @@ class CustomUser(AbstractBaseUser):
             ).values('submodule').annotate(dcount=Count('submodule'))
             for group_submodule in group_submodules.iterator():
                 sub_module = MenuItem.objects.get(
-                    pk=group_submodule['submodule'])
+                    service=group_submodule['submodule'])
                 sub_order = sub_module.module.order
                 sub_reference = sub_module.reference
                 dict_sub_menu = self.result[sub_order][0]['module']['submodule']
