@@ -1,6 +1,5 @@
 from django import forms
 from django.forms import ClearableFileInput
-from pylint.test.functional.singleton_comparison import f
 
 from core.models import ExchangeRate
 from .models import (
