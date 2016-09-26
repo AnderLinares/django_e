@@ -231,7 +231,7 @@ class CheckListDetail(BaseModel):
     taxi_driver = models.CharField(max_length=200, blank=True, null=True)
     date_initial = models.DateTimeField(blank=True, null=True)
     hour_initial = models.TimeField(blank=True, null=True)
-    fuel_initial = models.PositiveSmallIntegerField(blank=True, null=True, default=0)
+    fuel_initial = models.CharField(max_length=200, blank=True, null=True, choices=STATUS_CCODE_FUEL_DETAIL_OPTIONS)
     km_initial = models.DecimalField(max_digits=14, decimal_places=2, blank=True, null=True, default=0)
     kms_next_maintenance = models.DecimalField(max_digits=14, decimal_places=2, blank=True, null=True, default=0)
     observation = models.TextField(blank=True, null=True)
