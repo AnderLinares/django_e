@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load static from staticfiles %}
+{% load static %}
 <script src="{% static "themes/js/pages/taller/labour/labour.js" %}"></script>
 <table id="myTable" class="table table-striped">
     <thead>
@@ -16,7 +16,7 @@
     {% for labour in labour_list %}
         <tr>
             <td><strong>{{ forloop.counter }}</strong>.-</td>
-            <td>{{ labour.labour.name }}</td>
+            <td>{{ labour.type_labour.name }}</td>
             <td>{{ labour.name }}</td>
             <td>{{ labour.cost_price }}</td>
             <td>{{ labour.sale_price }}</td>

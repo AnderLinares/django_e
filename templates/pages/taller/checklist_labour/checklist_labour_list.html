@@ -19,12 +19,12 @@
             <td>{{ labour_employee.description|default_if_none:"" }}</td>
             <td>{{ labour_employee.get_status_labour_display }}</td>
             <td>
-                <button data-id="{{ labour_employee.id }}" class="btn btn-default btn-outline waves-effect waves-light checklist_labour_task">
-                    {% trans 'task' %}
-                </button>
-                <button data-id="{{ labour_employee.id }}" class="btn btn-default btn-outline waves-effect waves-light checklist_labour_edit">
-                    {% trans 'Edit' %}
-                </button>
+{#                <button data-id="{{ labour_employee.id }}" class="btn btn-default btn-outline waves-effect waves-light checklist_labour_task">#}
+{#                    {% trans 'task' %}#}
+{#                </button>#}
+{#                <button data-id="{{ labour_employee.id }}" class="btn btn-default btn-outline waves-effect waves-light checklist_labour_edit">#}
+{#                    {% trans 'Edit' %}#}
+{#                </button>#}
                 <button data-id="{{ labour_employee.id }}" class="btn btn-default btn-outline waves-effect waves-light checklist_labour_finished">
                     {% trans 'finisdhed ' %}
                 </button>

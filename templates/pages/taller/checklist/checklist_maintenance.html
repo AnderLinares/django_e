@@ -8,9 +8,6 @@
 {% endblock css_plugins %}
 
 {% block js %}
-    <script>
-        var URL_CHECKLIST_ADD_LABOUR = "{% url 'checklist:add-task-labour' %}";
-    </script>
 {% endblock js %}
 
 
@@ -40,7 +37,7 @@
                                                 <td>Vehicle</td>
                                                 <td>Placa</td>
                                                 <td>Type Checklist</td>
-                                                <td>Action</td>
+{#                                                <td>Action</td>#}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -48,13 +45,13 @@
                                                 <tr>
                                                     <td><strong>{{ forloop.counter }}</strong>.-</td>
                                                     <td>{{ maintenace.checklist.number_billing }}</td>
-                                                    <td>{{ maintenace.type_vehicle }}</td>
+                                                    <td>{{ maintenace.checklist.vehicle }}</td>
                                                     <td>{{ maintenace.checklist.vehicle.plaque }}</td>
                                                     <td>{{ maintenace.type_checklist }}</td>
-                                                    <td>
-                                                        <button data-id="{{ maintenace.id }}" class="fcbtn btn btn-primary btn-outline btn-1f maintenance_add_task">{% trans 'add task' %}</button>
-                                                        <button data-id="{{ maintenace.id }}" class="fcbtn btn btn-primary btn-outline btn-1f maintenance_finish_task">{% trans 'finisdhed ' %}</button>
-                                                    </td>
+{#                                                    <td>#}
+{#                                                        <button data-id="{{ maintenace.id }}" class="fcbtn btn btn-primary btn-outline btn-1f maintenance_add_task">{% trans 'add task' %}</button>#}
+{#                                                        <button data-id="{{ maintenace.id }}" class="fcbtn btn btn-primary btn-outline btn-1f maintenance_finish_task">{% trans 'finisdhed ' %}</button>#}
+{#                                                    </td>#}
                                                 </tr>
                                             {% endfor %}
                                         </tbody>

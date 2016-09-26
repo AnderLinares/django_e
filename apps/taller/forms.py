@@ -1,6 +1,5 @@
 from django import forms
 from django.forms import ClearableFileInput
-from pylint.test.functional.singleton_comparison import f
 
 from core.models import ExchangeRate
 from .models import (
@@ -281,7 +280,6 @@ class CheckListForm(forms.ModelForm):
 
 
 class CheckListDetailForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['service_checklist'].widget.attrs.update(
@@ -356,7 +354,6 @@ class PhotoCheckListForm(forms.ModelForm):
 
 
 class LabourCheckListForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['labour'].widget.attrs.update(
@@ -377,7 +374,6 @@ class LabourCheckListForm(forms.ModelForm):
 
 
 class LabourEmployeeCheckListForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['task'].widget.attrs.update(

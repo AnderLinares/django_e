@@ -6,7 +6,7 @@
         </div>
         <div class="modal-body">
             <div class="col-sm-6 col-md-12">
-                <form id="form_person" class="form-horizontal">
+                <form id="form_client" class="form-horizontal">
                     {% csrf_token %}
                     <div class="form-group">
                         <label class="control-label col-md-3">{% trans 'Client Type' %}</label>
@@ -63,9 +63,9 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">{% trans "Cancel" %}</button>
              {% if not btn_edit %}
-                <button type="button" id="save_person" class="btn btn-danger waves-effect waves-ligh">{% trans "Submit" %}</button>
+                <button type="button" id="save_client" class="btn btn-danger waves-effect waves-ligh">{% trans "Submit" %}</button>
             {% else %}
-                <button type="button" id="update_person" data-id="{{ form_pk }}" class="btn btn-danger waves-effect waves-ligh">{% trans "Update" %}</button>
+                <button type="button" id="update_client" data-id="{{ form_pk }}" class="btn btn-danger waves-effect waves-ligh">{% trans "Update" %}</button>
             {% endif %}
         </div>
     </div>
