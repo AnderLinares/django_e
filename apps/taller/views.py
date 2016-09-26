@@ -232,7 +232,7 @@ class TypeLabourEditView(TemplateLoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         typejob = request.GET['typejob_id']
-        self.typejob = TypeLabour.objects.get(service=typejob)
+        self.typejob = TypeLabour.objects.get(pk=typejob)
         self.form_typejob = TypeLabourForm(
             auto_id='id_typejob_%s', instance=self.typejob)
         return super().render_to_response(self.get_context_data())
@@ -241,7 +241,7 @@ class TypeLabourEditView(TemplateLoginRequiredMixin, TemplateView):
         data = loads(request.body.decode('utf-8'))
         data_typejob_pk = data['form_pk']
         data_form_typejob = data['form']
-        self.typejob = TypeLabour.objects.get(service=data_typejob_pk)
+        self.typejob = TypeLabour.objects.get(pk=data_typejob_pk)
         self.form_typejob = TypeLabourForm(
             data_form_typejob, auto_id='id_typejob_%s', instance=self.typejob)
 
@@ -311,7 +311,7 @@ class TypeTransportEditView(TemplateLoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         typetransport = request.GET['typetransport_id']
-        self.typetransport = TypeTransport.objects.get(service=typetransport)
+        self.typetransport = TypeTransport.objects.get(pk=typetransport)
         self.form_typetransport = TypeTransportForm(
             auto_id='id_typetransport_%s', instance=self.typetransport)
         return super().render_to_response(self.get_context_data())
@@ -320,7 +320,7 @@ class TypeTransportEditView(TemplateLoginRequiredMixin, TemplateView):
         data = loads(request.body.decode('utf-8'))
         data_typetransport_pk = data['form_pk']
         data_form_typetransport = data['form']
-        self.typetransport = TypeTransport.objects.get(service=data_typetransport_pk)
+        self.typetransport = TypeTransport.objects.get(pk=data_typetransport_pk)
         self.form_typetransport = TypeLabourForm(
             data_form_typetransport, auto_id='id_typetransport_%s', instance=self.typetransport)
 

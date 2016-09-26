@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ClearableFileInput
+from pylint.test.functional.singleton_comparison import f
 
 from core.models import ExchangeRate
 from .models import (
@@ -158,7 +159,7 @@ class QuotationForm(forms.ModelForm):
 
     def save(self, data_form_quo=None, data_form_detail=None, commit=True):
         quotation = super().save(commit=False)
-        quotation.exchange_rate = ExchangeRate.objects.get(service=1)
+        quotation.exchange_rate = ExchangeRate.objects.get(id=1)
         quotation.igv_tax = data_form_quo["igv_tax"]
         quotation.sub_total = data_form_quo["sub_total"]
         quotation.total_paid = data_form_quo["total_paid"]

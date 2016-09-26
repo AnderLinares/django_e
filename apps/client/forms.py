@@ -31,3 +31,10 @@ class PersonForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'address',
                   'home_phone', 'mobile_phone', 'document_type',
                   'document_number', 'person_type']
+
+    def save(self, user=None, *args, **kwargs):
+        client = super().save(*args, **kwargs)
+        if user:
+            client.subsidiary = user.get_subsidiary()
+            client.save()
+        return client

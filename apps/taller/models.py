@@ -183,7 +183,7 @@ class QuotationDetail(BaseModel):
     amount_price = models.DecimalField(max_digits=18, decimal_places=2, default=0)
 
     def __str__(self):
-        return "{0}-{1}".format(str(self.cotization.client), str(self.cotization.vehicle))
+        return "{0}-{1}".format(str(self.quotation.client), str(self.quotation.vehicle))
 
 
 class Report(BaseModel):

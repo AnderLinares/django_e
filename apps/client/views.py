@@ -46,7 +46,7 @@ class ClientCreateView(TemplateLoginRequiredMixin, TemplateView):
         data_form_client = data['form']
         self.form_client = PersonForm(data=data_form_client, auto_id='id_client_%s')
         if self.form_client.is_valid():
-            self.form_client.save()
+            self.form_client.save(user=self.request.user, commit=False)
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
