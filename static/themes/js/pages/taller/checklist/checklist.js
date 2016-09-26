@@ -19,26 +19,26 @@
           var checklist_client = $('#id_checklist_client').val();
           var checklist_number_contract = $('#id_checklist_number_contract').val();
 
-           // if (checklist_detail_service == "" || checklist_detail_service == null){
-           //     swal("Error!", "Choice Service !", "warning");
-           //     return false;
-           // }
-           // if (checklist_detail_type_transport == "" || checklist_detail_type_transport == null){
-           //     swal("Error!", "choice Vehicle!", "warning");
-           //      return false;
-           // }
-           // if (checklist_detail_type_checklist == "" || checklist_detail_type_checklist == null){
-           //     swal("Error!", "Choice Type Checklist!", "warning");
-           //     return false;
-           // }
-           // if (checklist_client == "" || checklist_client == null){
-           //     swal("Error!", "Choice Client Checklist!", "warning");
-           //      return false;
-           // }
-           // if (checklist_number_contract == "" || checklist_number_contract == null){
-           //     swal("Error!", "Choice Number Contract!", "warning");
-           //      return false;
-           // }
+           if (checklist_detail_service == "" || checklist_detail_service == null){
+               swal("Error!", "Choice Service !", "warning");
+               return false;
+           }
+           if (checklist_detail_type_transport == "" || checklist_detail_type_transport == null){
+               swal("Error!", "choice Vehicle!", "warning");
+                return false;
+           }
+           if (checklist_detail_type_checklist == "" || checklist_detail_type_checklist == null){
+               swal("Error!", "Choice Type Checklist!", "warning");
+               return false;
+           }
+           if (checklist_client == "" || checklist_client == null){
+               swal("Error!", "Choice Client Checklist!", "warning");
+                return false;
+           }
+           if (checklist_number_contract == "" || checklist_number_contract == null){
+               swal("Error!", "Choice Number Contract!", "warning");
+                return false;
+           }
 
            return true;
 

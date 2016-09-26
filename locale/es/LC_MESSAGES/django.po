@@ -1,0 +1,836 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-26 12:39-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/client/models.py:13 apps/customer/models.py:29
+#: apps/employee/models.py:14 apps/employee/models.py:71
+msgid "first name"
+msgstr "Nombre"
+
+#: apps/client/models.py:15 apps/customer/models.py:31
+#: apps/employee/models.py:16 apps/employee/models.py:72
+msgid "last name"
+msgstr "apellido"
+
+#: apps/customer/admin.py:77
+msgid "Permissions"
+msgstr "Permisos"
+
+#: apps/customer/forms.py:42
+msgid "Passwords don't match"
+msgstr ""
+
+#: apps/customer/forms.py:61 apps/customer/forms.py:79
+msgid "Password"
+msgstr "Contrasena"
+
+#: apps/customer/forms.py:62
+msgid ""
+"Raw passwords are not stored, so there is no way to see this user's "
+"password, but you can change the password using <a href=\"../password/"
+"\">this form</a>."
+msgstr ""
+
+#: apps/customer/forms.py:78
+msgid "Email Address"
+msgstr "correo"
+
+#: apps/customer/forms.py:82
+msgid "Please enter a correct email and password."
+msgstr ""
+
+#: apps/customer/models.py:33
+msgid "display name"
+msgstr ""
+
+#: apps/customer/models.py:38
+msgid "Groups"
+msgstr "grupos"
+
+#: apps/customer/models.py:40
+msgid ""
+"The groups this user belongs to. A user will get all permissions granted to "
+"each of their groups."
+msgstr ""
+
+#: apps/customer/models.py:48
+msgid "User Permissions"
+msgstr ""
+
+#: apps/customer/models.py:50
+msgid "Specific permissions for this user."
+msgstr ""
+
+#: apps/customer/models.py:154
+msgid "user"
+msgstr ""
+
+#: apps/customer/models.py:155
+msgid "users"
+msgstr ""
+
+#: apps/customer/models.py:200
+msgid "Thumbnail"
+msgstr ""
+
+#: apps/taller/constants.py:34
+msgid "Entry"
+msgstr "Entrada"
+
+#: apps/taller/constants.py:35
+msgid "Departure"
+msgstr "Salida"
+
+#: config/settings/base.py:121
+msgid "Spanish"
+msgstr "Español"
+
+#: core/constants.py:6
+msgid "Data saved correctly"
+msgstr "se guardo correctamente"
+
+#: core/constants.py:7
+msgid "There was an error saving information"
+msgstr ""
+
+#: core/constants.py:8
+msgid "It required to complete required fields"
+msgstr ""
+
+#: core/constants.py:16
+msgid "--Choose--"
+msgstr "--Elige--"
+
+#: core/constants.py:21
+msgid "Enabled"
+msgstr "habilidato"
+
+#: core/constants.py:22
+msgid "Disabled"
+msgstr "desahabilitado"
+
+#: core/constants.py:29
+msgid "DNI"
+msgstr ""
+
+#: core/constants.py:30
+msgid "RUC"
+msgstr ""
+
+#: core/constants.py:31
+msgid "PASSPORT"
+msgstr ""
+
+#: core/constants.py:39
+msgid "Natural"
+msgstr ""
+
+#: core/constants.py:40
+msgid "Juridical"
+msgstr "juridico"
+
+#: core/constants.py:50
+msgid "Male"
+msgstr ""
+
+#: core/constants.py:51
+msgid "Female"
+msgstr ""
+
+#: core/constants.py:62
+msgid "Single"
+msgstr ""
+
+#: core/constants.py:63
+msgid "Married"
+msgstr ""
+
+#: core/constants.py:64
+msgid "Widowed"
+msgstr ""
+
+#: core/constants.py:65
+msgid "Divorced"
+msgstr ""
+
+#: core/constants.py:66
+msgid "Separated"
+msgstr ""
+
+#: core/constants.py:76
+msgid "A1"
+msgstr ""
+
+#: core/constants.py:77
+msgid "A2"
+msgstr ""
+
+#: core/constants.py:90
+msgid "ONP"
+msgstr ""
+
+#: core/constants.py:91
+msgid "AFP"
+msgstr ""
+
+#: core/constants.py:92
+msgid "ESSALUD"
+msgstr ""
+
+#: core/constants.py:93
+msgid "EPS"
+msgstr ""
+
+#: core/constants.py:94
+msgid "SCTR-SALUD"
+msgstr ""
+
+#: core/constants.py:95
+msgid "SCTR-PENSION"
+msgstr ""
+
+#: core/constants.py:111
+msgid "VIA URBANA"
+msgstr ""
+
+#: core/constants.py:112
+msgid "VIA INTER-URBANA"
+msgstr ""
+
+#: core/constants.py:113 core/constants.py:115 core/constants.py:131
+msgid "VIA TRAVESIA"
+msgstr ""
+
+#: core/constants.py:114
+msgid "VIA CARRETERA"
+msgstr ""
+
+#: core/constants.py:116
+msgid "VIA AUTO-PISTA"
+msgstr ""
+
+#: core/constants.py:117
+msgid "VIA PEAJE"
+msgstr ""
+
+#: core/constants.py:129
+msgid "ZONA RESIDENCIAL"
+msgstr ""
+
+#: core/constants.py:130
+msgid "ZONA COMERCIAL"
+msgstr ""
+
+#: core/constants.py:144
+msgid "MUY_BAJA"
+msgstr ""
+
+#: core/constants.py:145
+msgid "BAJA"
+msgstr ""
+
+#: core/constants.py:146
+msgid "MEDIA"
+msgstr ""
+
+#: core/constants.py:147
+msgid "ALTA"
+msgstr ""
+
+#: core/constants.py:148
+msgid "MUY_ALTA"
+msgstr ""
+
+#: core/constants.py:159
+msgid "Hijo"
+msgstr ""
+
+#: core/constants.py:160
+msgid "esposo(a)"
+msgstr ""
+
+#: core/constants.py:161
+msgid "conviviente"
+msgstr ""
+
+#: core/constants.py:171
+msgid "Certificado"
+msgstr ""
+
+#: core/constants.py:172 core/constants.py:196
+msgid "Boleta"
+msgstr ""
+
+#: core/constants.py:173
+msgid "Planilla"
+msgstr ""
+
+#: core/constants.py:182
+msgid "Con antecendentes"
+msgstr ""
+
+#: core/constants.py:183
+msgid "Sin antecendentes"
+msgstr ""
+
+#: core/constants.py:195
+msgid "Factura"
+msgstr ""
+
+#: core/constants.py:197
+msgid "Cotizacion"
+msgstr ""
+
+#: core/constants.py:198 templates/pages/taller/checklist/checklist.html:71
+msgid "Checklist"
+msgstr ""
+
+#: core/constants.py:209
+msgid "Toxicologico"
+msgstr ""
+
+#: core/constants.py:210
+msgid "Alcoholemia"
+msgstr ""
+
+#: core/constants.py:211
+msgid "Toxicológico/Alcoholemia"
+msgstr ""
+
+#: core/constants.py:220
+msgid "Negativo"
+msgstr ""
+
+#: core/constants.py:221
+msgid "Positivo"
+msgstr ""
+
+#: core/constants.py:233
+msgid "PURCHASE LIQUID UNIT"
+msgstr ""
+
+#: core/constants.py:234
+msgid "PURCHASE SOLID UNIT"
+msgstr ""
+
+#: core/constants.py:235
+msgid "TRANSPORT UNIT"
+msgstr ""
+
+#: core/constants.py:236
+msgid "DELIVERY UNIT"
+msgstr ""
+
+#: core/constants.py:237
+msgid "STORAGE UNIT"
+msgstr ""
+
+#: core/utils/fields.py:16
+msgid "date created"
+msgstr ""
+
+#: core/utils/fields.py:19
+msgid "date modified"
+msgstr ""
+
+#: templates/pages/client/client.html:18
+msgid "Add Client"
+msgstr ""
+
+#: templates/pages/client/client_form.html:12
+#: templates/pages/taller/brand/brand_form.html:12
+#: templates/pages/taller/checklist_labour/checklist_labour_form.html:12
+#: templates/pages/taller/order/order.html:34
+msgid "Client Type"
+msgstr ""
+
+#: templates/pages/client/client_form.html:19
+msgid "Document Type"
+msgstr "tipo doc."
+
+#: templates/pages/client/client_form.html:26
+msgid "Document Number"
+msgstr "numero doc."
+
+#: templates/pages/client/client_form.html:33
+msgid "First Name"
+msgstr "Nombre"
+
+#: templates/pages/client/client_form.html:40
+msgid "Last Name"
+msgstr "Apellido"
+
+#: templates/pages/client/client_form.html:47
+#: templates/pages/core/subsidiary/subsidiary_form.html:26
+msgid "Address"
+msgstr "lugar"
+
+#: templates/pages/client/client_form.html:54
+msgid "Home Phone"
+msgstr "telf."
+
+#: templates/pages/client/client_form.html:64
+#: templates/pages/core/currency/currency_form.html:57
+#: templates/pages/core/exchangerate/exchangerate_form.html:60
+#: templates/pages/core/organization/organization_form.html:128
+#: templates/pages/core/subsidiary/subsidiary_form.html:50
+#: templates/pages/core/unit_measurement/unit_measurement_form.html:36
+#: templates/pages/taller/brand/brand_form.html:22
+#: templates/pages/taller/checklist/checklist_addtasklabour.html:81
+#: templates/pages/taller/checklist_labour/checklist_labour_form.html:22
+#: templates/pages/taller/checklist_labour/checklist_labour_task_form.html:53
+#: templates/pages/taller/labour/labour_form.html:43
+#: templates/pages/taller/order/order_form.html:13
+#: templates/pages/taller/quotation/quotation_form.html:183
+#: templates/pages/taller/report/report_form.html:101
+#: templates/pages/taller/typechecklist/typechecklist_form.html:22
+#: templates/pages/taller/typetransport/typetransport_form.html:22
+#: templates/pages/taller/vehicle/vehicle_form.html:217
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/pages/client/client_form.html:66
+#: templates/pages/core/currency/currency_form.html:59
+#: templates/pages/core/exchangerate/exchangerate_form.html:62
+#: templates/pages/core/organization/organization_form.html:130
+#: templates/pages/core/subsidiary/subsidiary_form.html:52
+#: templates/pages/core/unit_measurement/unit_measurement_form.html:38
+#: templates/pages/taller/brand/brand_form.html:24
+#: templates/pages/taller/checklist/checklist_addtasklabour.html:84
+#: templates/pages/taller/checklist_labour/checklist_labour_form.html:24
+#: templates/pages/taller/labour/labour_form.html:45
+#: templates/pages/taller/order/order_form.html:15
+#: templates/pages/taller/quotation/quotation_form.html:185
+#: templates/pages/taller/report/report_form.html:103
+#: templates/pages/taller/typechecklist/typechecklist_form.html:24
+#: templates/pages/taller/typetransport/typetransport_form.html:24
+#: templates/pages/taller/vehicle/vehicle_form.html:219
+msgid "Submit"
+msgstr "submitir"
+
+#: templates/pages/client/client_form.html:68
+#: templates/pages/core/currency/currency_form.html:61
+#: templates/pages/core/exchangerate/exchangerate_form.html:64
+#: templates/pages/core/organization/organization_form.html:132
+#: templates/pages/core/subsidiary/subsidiary_form.html:54
+#: templates/pages/core/unit_measurement/unit_measurement_form.html:40
+#: templates/pages/taller/brand/brand_form.html:26
+#: templates/pages/taller/checklist/checklist_addtasklabour.html:87
+#: templates/pages/taller/checklist_labour/checklist_labour_form.html:26
+#: templates/pages/taller/labour/labour_form.html:47
+#: templates/pages/taller/order/order_form.html:17
+#: templates/pages/taller/report/report_form.html:105
+#: templates/pages/taller/typechecklist/typechecklist_form.html:26
+#: templates/pages/taller/typetransport/typetransport_form.html:26
+#: templates/pages/taller/vehicle/vehicle_form.html:221
+msgid "Update"
+msgstr "Actualizar"
+
+#: templates/pages/core/currency/currency.html:19
+msgid "Add Currency"
+msgstr ""
+
+#: templates/pages/core/currency/currency_form.html:12
+msgid "SK"
+msgstr ""
+
+#: templates/pages/core/currency/currency_form.html:19
+msgid "Code"
+msgstr ""
+
+#: templates/pages/core/currency/currency_form.html:26
+#: templates/pages/core/organization/organization_form.html:24
+#: templates/pages/core/subsidiary/subsidiary_form.html:19
+#: templates/pages/core/unit_measurement/unit_measurement_form.html:19
+#: templates/pages/taller/labour/labour_form.html:19
+#: templates/pages/taller/typechecklist/typechecklist_form.html:12
+#: templates/pages/taller/typetransport/typetransport_form.html:12
+msgid "Name"
+msgstr ""
+
+#: templates/pages/core/currency/currency_form.html:33
+msgid "Is fund"
+msgstr ""
+
+#: templates/pages/core/currency/currency_form.html:40
+msgid "Is complimentary"
+msgstr ""
+
+#: templates/pages/core/currency/currency_form.html:47
+msgid "Is metal"
+msgstr ""
+
+#: templates/pages/core/exchangerate/exchangerate.html:19
+msgid "Add Exchange Rate"
+msgstr "add tipo cambio"
+
+#: templates/pages/core/exchangerate/exchangerate_form.html:22
+msgid "Currency"
+msgstr "cambio"
+
+#: templates/pages/core/exchangerate/exchangerate_form.html:29
+msgid "Exchange rate"
+msgstr ""
+
+#: templates/pages/core/exchangerate/exchangerate_form.html:36
+msgid "Start date"
+msgstr "fecha inicio"
+
+#: templates/pages/core/exchangerate/exchangerate_form.html:46
+msgid "End date"
+msgstr "fecha final"
+
+#: templates/pages/core/organization/organization_form.html:31
+msgid "Reason Social"
+msgstr "razon social"
+
+#: templates/pages/core/organization/organization_form.html:38
+msgid "address"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:45
+msgid "Initial Exercise"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:55
+msgid "Final Exercise"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:65
+msgid "Nit"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:72
+msgid "primary currency"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:81
+msgid "Legal Representative"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:88
+msgid "Accountant"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:95
+msgid "Register Accountant"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:102
+#: templates/pages/core/subsidiary/subsidiary_form.html:33
+msgid "Phone"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:109
+msgid "Mobile phone"
+msgstr ""
+
+#: templates/pages/core/organization/organization_form.html:116
+msgid "logo url"
+msgstr ""
+
+#: templates/pages/core/subsidiary/subsidiary.html:19
+msgid "Add Subsidiary"
+msgstr "add sucursal"
+
+#: templates/pages/core/subsidiary/subsidiary_form.html:12
+msgid "Organization"
+msgstr "organizacion"
+
+#: templates/pages/core/subsidiary/subsidiary_form.html:40
+msgid "Mobile Phone"
+msgstr "cell."
+
+#: templates/pages/core/unit_measurement/unit_measurement.html:19
+msgid "Add Measurement"
+msgstr "add unidad medida"
+
+#: templates/pages/core/unit_measurement/unit_measurement_form.html:12
+msgid "Measurement"
+msgstr ""
+
+#: templates/pages/core/unit_measurement/unit_measurement_form.html:26
+msgid "Symbol"
+msgstr "Simbolo"
+
+#: templates/pages/taller/brand/brand.html:19
+msgid "Add Brand"
+msgstr "agregar marca"
+
+#: templates/pages/taller/checklist/check_labour.html:38
+msgid "add task"
+msgstr ""
+
+#: templates/pages/taller/checklist/check_labour.html:40
+#: templates/pages/taller/checklist_labour/checklist_labour_list.html:29
+msgid "finisdhed "
+msgstr ""
+
+#: templates/pages/taller/checklist/checklist.html:56
+msgid "Service"
+msgstr ""
+
+#: templates/pages/taller/checklist/checklist.html:63
+msgid "Type Vehicle"
+msgstr ""
+
+#: templates/pages/taller/checklist/checklist.html:78
+#: templates/pages/taller/quotation/quotation_form.html:67
+#: templates/pages/taller/quotation/quotation_form.html:119
+#: templates/pages/taller/quotation/quotation_list.html:9
+#: templates/pages/taller/report/report_form.html:42
+msgid "Client"
+msgstr "cliente"
+
+#: templates/pages/taller/checklist/checklist.html:85
+#: templates/pages/taller/order/order.html:71
+#: templates/pages/taller/quotation/quotation_form.html:57
+#: templates/pages/taller/quotation/quotation_form.html:111
+#: templates/pages/taller/report/report_form.html:49
+msgid "Vehicle"
+msgstr "vehiculo"
+
+#: templates/pages/taller/checklist/checklist.html:92
+#: templates/pages/taller/quotation/quotation_form.html:45
+#: templates/pages/taller/quotation/quotation_form.html:103
+#: templates/pages/taller/quotation/quotation_list.html:8
+#: templates/pages/taller/report/report_form.html:34
+msgid "Date"
+msgstr ""
+
+#: templates/pages/taller/checklist/checklist.html:100
+msgid "Fuel"
+msgstr "combustible"
+
+#: templates/pages/taller/checklist/checklist.html:107
+msgid "Kms next maintenance"
+msgstr ""
+
+#: templates/pages/taller/checklist/checklist.html:116
+msgid "Number billing"
+msgstr "Numero factura"
+
+#: templates/pages/taller/checklist/checklist.html:123
+msgid "Number contract"
+msgstr "number contracto"
+
+#: templates/pages/taller/checklist/checklist.html:130
+#: templates/pages/taller/order/order.html:41
+msgid "Taxi Driver"
+msgstr "chofer"
+
+#: templates/pages/taller/checklist/checklist.html:137
+#: templates/pages/taller/order/order.html:78
+msgid "Destination"
+msgstr "destino"
+
+#: templates/pages/taller/checklist/checklist.html:145
+msgid "Hour"
+msgstr ""
+
+#: templates/pages/taller/checklist/checklist.html:153
+msgid "Km travel"
+msgstr ""
+
+#: templates/pages/taller/checklist/checklist.html:160
+#: templates/pages/taller/report/report_form.html:56
+msgid "Observation"
+msgstr ""
+
+#: templates/pages/taller/checklist_labour/checklist_labour_task_form.html:55
+msgid "save"
+msgstr ""
+
+#: templates/pages/taller/labour/labour.html:19
+msgid "Add Labour"
+msgstr ""
+
+#: templates/pages/taller/labour/labour_form.html:12
+msgid "Job Type"
+msgstr ""
+
+#: templates/pages/taller/labour/labour_form.html:26
+msgid "Cost Price"
+msgstr "costo precio"
+
+#: templates/pages/taller/labour/labour_form.html:33
+msgid "Sale Price"
+msgstr ""
+
+#: templates/pages/taller/order/order.html:24
+msgid "Type checklist"
+msgstr ""
+
+#: templates/pages/taller/order/order.html:48
+msgid "Km exit"
+msgstr ""
+
+#: templates/pages/taller/order/order.html:55
+msgid "Date Exit"
+msgstr ""
+
+#: templates/pages/taller/order/order.html:62
+msgid "Fuel exit"
+msgstr ""
+
+#: templates/pages/taller/order/order.html:85
+msgid "kms next maintenance"
+msgstr ""
+
+#: templates/pages/taller/order/order.html:92
+msgid "Hour exit"
+msgstr ""
+
+#: templates/pages/taller/order/order.html:99
+msgid "Unit number exit"
+msgstr ""
+
+#: templates/pages/taller/quotation/quotation.html:19
+msgid "Add quotation"
+msgstr "agregar cotizacion"
+
+#: templates/pages/taller/quotation/quotation_form.html:77
+msgid "Labour"
+msgstr "Trabajo"
+
+#: templates/pages/taller/quotation/quotation_form.html:87
+msgid "Price venta"
+msgstr ""
+
+#: templates/pages/taller/quotation/quotation_form.html:187
+msgid "Printer"
+msgstr ""
+
+#: templates/pages/taller/quotation/quotation_list.html:10
+#: templates/pages/taller/vehicle/vehicle_form.html:36
+msgid "Plaque"
+msgstr "placa"
+
+#: templates/pages/taller/quotation/quotation_list.html:11
+msgid "Total"
+msgstr ""
+
+#: templates/pages/taller/quotation/quotation_list.html:12
+msgid "Action"
+msgstr "Actiones"
+
+#: templates/pages/taller/report/report.html:19
+msgid "Add Report"
+msgstr ""
+
+#: templates/pages/taller/report/report_form.html:26
+msgid "report"
+msgstr ""
+
+#: templates/pages/taller/report/report_form.html:27
+msgid "report doc"
+msgstr ""
+
+#: templates/pages/taller/typechecklist/typechecklist.html:19
+msgid "Add Type Check List"
+msgstr ""
+
+#: templates/pages/taller/typetransport/typetransport.html:19
+msgid "Add Transport"
+msgstr "add transporte"
+
+#: templates/pages/taller/vehicle/vehicle.html:19
+msgid "Add vehicle"
+msgstr "add vehicle"
+
+#: templates/pages/taller/vehicle/vehicle_form.html:29
+msgid "Type Transport"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:46
+msgid "Year"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:56
+msgid "Serie motor"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:66
+msgid "Soat"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:76
+msgid "Poliza"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:86
+msgid "Technical review"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:96
+msgid "Opacity test"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:106
+msgid "Farenet test"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:116
+msgid "It belongs flotilla?"
+msgstr "is flotilla?"
+
+#: templates/pages/taller/vehicle/vehicle_form.html:126
+msgid "Brand"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:133
+msgid "Model"
+msgstr "modelo"
+
+#: templates/pages/taller/vehicle/vehicle_form.html:140
+msgid "Color"
+msgstr "color"
+
+#: templates/pages/taller/vehicle/vehicle_form.html:150
+msgid "VIN"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:160
+msgid "Expiration soat"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:170
+msgid "Expirat. poliza"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:180
+msgid "Expirat. techn. review"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:190
+msgid "Expirat. opaci. test"
+msgstr ""
+
+#: templates/pages/taller/vehicle/vehicle_form.html:201
+msgid "Expirat. far. test"
+msgstr ""
+
+#: templates/partials/breadcrumb.html:4
+#, python-format
+msgid "%(myvar)s "
+msgstr ""
+
+#: templates/registration/login.html:16
+msgid "Enter your login information"
+msgstr "Entra tu authenticacion"
