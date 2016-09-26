@@ -26,8 +26,12 @@
     "Stuk/jszip": "*",
     "sweetalert": "*",
     "bootstrap-datepicker": "*",
-    "bootstrap-colorpicker":"*",
-    "bootstrap-touchspin":"*"
+    "bootstrap-colorpicker": "*",
+    "bootstrap-touchspin": "*",
+    "jquery-wizard.js": "^0.3.1",
+    "form.validation": "*",
+    "multiselect": "^0.9.12",
+    "clockpicker": "^0.0.7"
   },
   "ignore": [
     "**/.*",

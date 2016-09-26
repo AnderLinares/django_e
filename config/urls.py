@@ -9,6 +9,9 @@ from django.contrib.staticfiles import views
 urlpatterns = [
     url(r'^', include('apps.customer.urls')),
     url(settings.ADMIN_URL, include(admin.site.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/', include('apps.taller.api.urls')),
+    url(r'^api/', include('core.api.urls')),
 ]
 
 urlpatterns += i18n_patterns(

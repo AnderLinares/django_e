@@ -1,6 +1,6 @@
 #Core
 Django
-
+djangorestframework
 # WSGI HTTP Server
 gunicorn
 
