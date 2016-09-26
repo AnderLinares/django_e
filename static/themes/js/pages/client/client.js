@@ -29,10 +29,13 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: URL_CLIENT_ADD,
-            data: JSON.stringify(parameter),
+            data: JSON.stringify(parameter)
         }).done(function(data) {
              modal_person.modal('hide');
              swal("Successfull!", "Add new Client", "success")
+             $.get(URL_CLIENT_LIST, function(data){
+                $("#list_table").html(data);
+    	     });
         })
     });
 
