@@ -1,14 +1,14 @@
 from rest_framework.serializers import ModelSerializer
 
 from core.models import (
-    Currency, ExchangeRate
-)
+    Currency, ExchangeRate, ProductBrand, ProductModel,
+    VehicleBrand, VehicleModel)
 
 
 class CurrencySerializer(ModelSerializer):
     class Meta:
         model = Currency
-        fields = ["id", "sk", "code", "name", "is_fund", "is_complimentary", "is_metal"]
+        fields = "__all__"
 
 
 class ExchangeRateSerializer(ModelSerializer):
@@ -16,4 +16,32 @@ class ExchangeRateSerializer(ModelSerializer):
 
     class Meta:
         model = ExchangeRate
-        fields = ["currency", "exchange_rate", "start_date", "end_date"]
+        fields = "__all__"
+
+
+class ProductBrandSerializer(ModelSerializer):
+    class Meta:
+        model = ProductBrand
+        fields = "__all__"
+
+
+class ProductModelSerializer(ModelSerializer):
+    brand = ProductBrandSerializer()
+
+    class Meta:
+        model = ProductModel
+        fields = "__all__"
+
+
+class VehicleBrandSerializer(ModelSerializer):
+    class Meta:
+        model = VehicleBrand
+        fields = "__all__"
+
+
+class VehicleModelSerializer(ModelSerializer):
+    brand = ProductBrandSerializer()
+
+    class Meta:
+        model = VehicleModel
+        fields = "__all__"

@@ -33,11 +33,7 @@ def combine_date_with_time(date=datetime.datetime.today(), my_time='00:00:00'):
 
 
 def date_today():
-    return datetime.datetime.now().date()
-
-
-def date_now():
-    return datetime.datetime.now()
+    return datetime.date.today
 
 
 def add_day(initial_date, num_days):

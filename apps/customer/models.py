@@ -3,54 +3,34 @@ from django.contrib.auth.models import (AbstractBaseUser, Permission)
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.mail import send_mail
 from django.db import models
-from django.db.models import Count
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
+from apps.company.models import Subsidiary, Organization
+from apps.zone.models import Country, State
 from core import constants as core_constants
-from core.models import Zone, Country, State, Organization, Team, Subsidiary
 from core.utils.fields import BaseModel
-from core.custom_upload import upload_location_profile
+from core.utils.upload_folder import upload_user_profile
 from .manager import UserManager
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 
 class CustomUser(AbstractBaseUser):
-    """ model customer(user) """
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
     )
-    first_name = models.CharField(_('first name'), max_length=40, blank=True,
+    first_name = models.CharField(max_length=40, blank=True,
                                   null=True, unique=False)
-    last_name = models.CharField(_('last name'), max_length=40, blank=True,
+    last_name = models.CharField(max_length=40, blank=True,
                                  null=True, unique=False)
     display_name = models.CharField(_('display name'), max_length=14,
                                     blank=True, null=True, unique=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    groups = models.ManyToManyField(
-        Team, verbose_name=_('Groups'), blank=True,
-        help_text=_(
-            'The groups this user belongs to. A user will get all permissions '
-            'granted to each of their groups.'
-        ),
-        related_name="user_set",
-        related_query_name="user",
-    )
-    permissions = models.ManyToManyField(
-        Permission,
-        verbose_name=_('User Permissions'),
-        blank=True,
-        help_text=_('Specific permissions for this user.'),
-        related_name="user_set",
-        related_query_name="user",
-    )
 
     objects = UserManager()
 
@@ -85,10 +65,6 @@ class CustomUser(AbstractBaseUser):
             dn = 'You'
         self.display_name = dn.strip()
 
-    def get_subsidiary(self):
-        profile = UserProfile.objects.get(user=self)
-        return profile.subsidiary
-
     def email_user(self, subject, message, from_email=None):
         send_mail(subject, message, from_email, [self.email])
 
@@ -99,47 +75,13 @@ class CustomUser(AbstractBaseUser):
         return True
 
     @property
+    def get_profile(self):
+        profile = UserProfile.objects.select_related('user').get(pk=self)
+        return profile
+
+    @property
     def is_staff(self):
         return self.is_admin
-
-    def get_groups(self):
-        return self.groups.filter(current_status=core_constants.ENABLED)
-
-    def get_menu(self):
-        group_all = self.get_groups()
-        group_modules = GroupMenu.objects.filter(group__in=group_all).values(
-            'module').annotate(dcount=Count('module'))
-        self.result = dict()
-        for group_module in group_modules.iterator():
-            module_group = group_module['module']
-            gp_modules = GroupMenu.objects.filter(module=module_group)
-            for gp_module in gp_modules.iterator():
-                order = gp_module.module.order
-                module = gp_module.module
-                if module not in self.result.keys():
-                    self.result[order] = list()
-                add_module_dict = dict(module=dict(text=module.text,
-                                                   style=module.style,
-                                                   match=module.match,
-                                                   submodule=dict()))
-                self.result[order].append(add_module_dict)
-            group_submodules = GroupSubModule.objects.filter(
-                group_module__in=gp_modules
-            ).values('submodule').annotate(dcount=Count('submodule'))
-            for group_submodule in group_submodules.iterator():
-                sub_module = MenuItem.objects.get(
-                    service=group_submodule['submodule'])
-                sub_order = sub_module.module.order
-                sub_reference = sub_module.reference
-                dict_sub_menu = self.result[sub_order][0]['module']['submodule']
-
-                if sub_module.reference not in dict_sub_menu.keys():
-                    dict_sub_menu[sub_reference] = list()
-                add_module_dict = dict(text=sub_module.text,
-                                       style=sub_module.style,
-                                       match=sub_module.match)
-                dict_sub_menu[sub_reference].append(add_module_dict)
-        return self.result
 
     def __str__(self):
         return self.email
@@ -157,7 +99,6 @@ class User(CustomUser):
 
 
 class UserProfile(BaseModel):
-    """ model user-profile(perfil usuario) """
     user = models.OneToOneField(
         User, primary_key=True, verbose_name='user',
         related_name="%(app_label)s_%(class)s_user")
@@ -168,10 +109,12 @@ class UserProfile(BaseModel):
     document_number = models.CharField(max_length=20, null=True, blank=True)
     home_phone = models.CharField(max_length=50, blank=True, null=True)
     mobile_phone = models.CharField(max_length=50, blank=True, null=True)
-    subsidiary = models.ForeignKey(Subsidiary, default='', blank=True, null=True,
-                                   related_name="%(app_label)s_%(class)s_subsidiary")
+    organization = models.ForeignKey(
+        Organization, related_name="%(app_label)s_%(class)s_organization")
+    subsidiary = models.ForeignKey(
+        Subsidiary, related_name="%(app_label)s_%(class)s_subsidiary")
     profile_image = models.ImageField(
-        upload_to=upload_location_profile, blank=True, null=True)
+        upload_to=upload_user_profile, blank=True, null=True)
 
     def __str__(self):
         return force_text(self.user.email)
@@ -203,8 +146,7 @@ class UserProfile(BaseModel):
     class Meta:
         db_table = 'user_profile'
 
-
-@receiver(post_save, sender=User)
-def create_profile_for_new_user(sender, created, instance, **kwargs):
-    if created:
-        UserProfile.objects.create(user_id=instance.id)
+# @receiver(post_save, sender=User)
+# def create_profile_for_new_user(sender, created, instance, **kwargs):
+#     if created:
+#         UserProfile.objects.create(user_id=instance.id)

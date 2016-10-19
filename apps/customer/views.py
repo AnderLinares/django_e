@@ -1,34 +1,21 @@
-from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout
 from django.contrib.auth import get_user_model
-from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, RedirectView
-from django.views.generic import TemplateView
 
 from core.middleware.thread_user import CuserMiddleware
-from core.mixins import TemplateLoginRequiredMixin
-from .forms import LoginForm
+from core.mixins import AuthListView, AuthCreateView, AuthDeleteView, AuthUpdateView
+from .forms import LoginForm, UserForm, UserProfileForm
+from .models import UserProfile
 
 User = get_user_model()
-
-
-class IndexView(TemplateView):
-    template_name = 'pages/dashboard/index.html'
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
-            return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-        else:
-            return redirect("/es/")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 class LoginView(FormView):
@@ -68,3 +55,109 @@ class LogoutView(RedirectView):
         auth_logout(request)
         CuserMiddleware.del_user()
         return super().get(request, *args, **kwargs)
+
+
+"""
+    User
+"""
+
+
+class UserList(AuthListView):
+    template_name = 'dashboard/pages/customer/user/user_list.html'
+    model = User
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["text_central"] = _("list User")
+        return context
+
+
+class UserCreation(AuthCreateView):
+    template_name = 'dashboard/pages/customer/user/user_form.html'
+    model = User
+    success_url = reverse_lazy('User:list')
+    form_class = UserForm
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        self.form = self.get_form(form_class)
+        self.user_profile_form = UserProfileForm()
+        return super().render_to_response(self.get_context_data())
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        user_profile_form = UserProfileForm(self.request.POST, self.request.FILES)
+        if form.is_valid() and user_profile_form.is_valid():
+            return self.form_valid(form, user_profile_form)
+        else:
+            return self.form_invalid(form, user_profile_form)
+
+    def form_valid(self, form, user_profile_form):
+        self.object = form.save()
+        user_profile_form.save(user=self.object, commit=False)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, user_profile_form):
+        self.form = form
+        self.user_profile_form = user_profile_form
+        return super().render_to_response(self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.form
+        context["user_profile_form"] = self.user_profile_form
+        return context
+
+
+class UserUpdate(AuthUpdateView):
+    template_name = 'dashboard/pages/customer/user/user_form.html'
+    model = User
+    success_url = reverse_lazy('User:list')
+    form_class = UserForm
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form_class = self.get_form_class()
+        self.form = self.get_form(form_class)
+        profile = UserProfile.objects.get(user=self.object)
+        self.user_profile_form = UserProfileForm(instance=profile)
+        return super().render_to_response(self.get_context_data())
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        profile = UserProfile.objects.get(user=self.object)
+        user_profile_form = UserProfileForm(
+            self.request.POST, self.request.FILES, instance=profile)
+
+        if form.is_valid() and user_profile_form.is_valid():
+            return self.form_valid(form, user_profile_form)
+        else:
+            return self.form_invalid(form, user_profile_form)
+
+    def form_valid(self, form, user_profile_form):
+        self.object = form.save()
+        user_profile_form.save(user=self.object, commit=False)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, user_profile_form):
+        self.form = form
+        self.user_profile_form = user_profile_form
+        return super().render_to_response(self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.form
+        context["user_profile_form"] = self.user_profile_form
+        return context
+
+
+class UserDelete(AuthDeleteView):
+    template_name = 'dashboard/pages/customer/user/user_confirm_delete.html'
+    model = User
+    success_url = reverse_lazy('User:list')

@@ -1,0 +1,80 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                <div class="content">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form id="Organization_form" method="post" action="" class="form" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Business Name" %}</label>
+                                    {{ form.business_name }}
+                                    <span class="help-block">{{ form.business_name.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Document Type" %}</label>
+                                    {{ form.document_type }}
+                                    <span class="help-block">{{ form.document_type.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Document Number" %}</label>
+                                    {{ form.document_number }}
+                                    <span class="help-block">{{ form.document_number.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Address" %}</label>
+                                    {{ form.address }}
+                                    <span class="help-block">{{ form.address.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Picture" %}</label>
+                                    <div class="col-lg-9">
+                                        <div class="media no-margin-top">
+                                            <div class="media-left">
+                                                <a href="{% static 'themes/img/demo/images/5.png' %}" data-popup="lightbox">
+                                                    <img src="{% static 'themes/img/demo/images/5.png' %}" style="width: 58px; height: 58px;" alt="" class="img-rounded img-preview">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                 {{ form.logo_url }}
+                                                <span class="help-block">{{ form.logo_url.errors }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Phone" %}</label>
+                                    {{ form.phone }}
+                                    <span class="help-block">{{ form.phone.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Mobile Phone" %}</label>
+                                    {{ form.mobile_phone }}
+                                    <span class="help-block">{{ form.mobile_phone.errors }}</span>
+                                </div>
+
+                                <div class="text-right">
+                                    <a class="btn btn-info" href="{% url path_url_list %}"><i class="fa fa-arrow-left"></i>{% trans "Back" %}</a>
+                                    <button type="submit" class="btn btn-info">{% trans "Submit" %} <i class="fa fa-arrow-right"></i></button>
+                                </div>
+							</form>
+                        </div>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}
+

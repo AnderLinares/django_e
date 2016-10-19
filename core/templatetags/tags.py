@@ -16,11 +16,11 @@ def javascript(filename, type='text/javascript'):
     """A simple shortcut to render a ``script`` tag to a static javascript file"""
     if '?' in filename and len(filename.split('?')) is 2:
         filename, params = filename.split('?')
-        return '<script type="%s" src="%s?%s"></script>' % (
-            type, staticfiles_storage.url(filename), params)
+        return '<script type="{0:s}" src="{1:s}?{2:s}"></script>'.format(
+            str(type), str(staticfiles_storage.url(filename)), str(params))
     else:
-        return '<script type="%s" src="%s"></script>' % (
-            type, staticfiles_storage.url(filename))
+        return '<script type="{0:s}" src="{1:s}"></script>'.format(
+            str(type), srt(staticfiles_storage.url(filename)))
 
 
 @register.simple_tag

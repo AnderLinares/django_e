@@ -58,7 +58,7 @@ class StatusCurrent(models.Model):
         abstract = True
 
 
-class ModuleModel(models.Model):
+class MenuModel(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
     style = models.CharField(max_length=200, null=True, blank=True)
     match = models.CharField(default="#", max_length=200, null=False,
@@ -85,7 +85,7 @@ class BaseModel(ManagerBase, TimeStampedModel, StatusModel):
         abstract = True
 
 
-class BaseModuleModel(BaseModel, ModuleModel):
+class BaseModuleModel(BaseModel, MenuModel):
     class Meta:
         abstract = True
 

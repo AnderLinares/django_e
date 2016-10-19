@@ -1,0 +1,68 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                <div class="content">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form id="Subsidiary_form" method="post" action="" class="form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Organization" %}</label>
+                                    {{ form.organization }}
+                                    <span class="help-block">{{ form.organization.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Subsidiary Name" %}</label>
+                                    {{ form.subsidiary_name }}
+                                    <span class="help-block">{{ form.subsidiary_name.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Store Local" %}</label>
+                                    {{ form.store_local }}
+                                    <span class="help-block">{{ form.store_local.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Representative" %}</label>
+                                    {{ form.representative }}
+                                    <span class="help-block">{{ form.representative.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Address" %}</label>
+                                    {{ form.address }}
+                                    <span class="help-block">{{ form.address.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Phone" %}</label>
+                                    {{ form.phone }}
+                                    <span class="help-block">{{ form.phone.errors }}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-semibold">{% trans "Mobile Phone" %}</label>
+                                    {{ form.mobile_phone }}
+                                    <span class="help-block">{{ form.mobile_phone.errors }}</span>
+                                </div>
+
+                                <div class="text-right">
+                                    <a class="btn btn-info" href="{% url path_url_list %}"><i class="fa fa-arrow-left"></i>{% trans "Back" %}</a>
+                                    <button type="submit" class="btn btn-info">{% trans "Submit" %} <i class="fa fa-arrow-right"></i></button>
+                                </div>
+							</form>
+                        </div>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}
+

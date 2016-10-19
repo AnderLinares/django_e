@@ -1,0 +1,48 @@
+{% load static %}
+{% load i18n %}
+
+<div class="navbar navbar-inverse">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="index-2.html"><img src="{% static "themes/img/logo_demo.png" %}" ></a>
+
+        <ul class="nav navbar-nav visible-xs-block">
+            <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav">
+            <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a>
+            </li>
+        </ul>
+
+        <p class="navbar-text"><span class="label bg-success">Online</span></p>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown language-switch">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="{% static "themes/img/flags/gb.png" %}" class="position-left" alt="">
+                    English
+                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="english"><img src="{% static "themes/img/flags/gb.png" %}" alt=""> English</a></li>
+                    <li><a class="espana"><img src="{% static "themes/img/flags/es.png" %}" alt=""> España</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown dropdown-user">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="{% static "themes/img/demo/users/face11.jpg" %}" >
+                    <span>{{ user }}</span>
+                    <i class="caret"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="{% url 'auth_logout' %}"><i class="icon-switch2"></i> Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

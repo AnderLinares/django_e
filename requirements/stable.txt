@@ -2,7 +2,7 @@
 Django
 
 # WSGI HTTP Server
-#gunicorn
+gunicorn
 
 
 # Debugging
@@ -12,9 +12,9 @@ django-debug-toolbar
 
 
 # Configuration
-#django-sites==0.9
 django-environ
 pytz
+
 
 # Models
 psycopg2
@@ -31,7 +31,7 @@ boto
 
 #Documentation
 #mkdocs
-
+djangorestframework
 
 #testing
 coverage

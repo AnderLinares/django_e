@@ -43,35 +43,6 @@ def make_breadcrumbs_module(value):
         return module.upper()
 
 
-# @register.filter
-# def make_path_remove_lang(value, language):
-#     site = get_current()
-#     current_language = language
-#     url = '/'.join(value.split('/')[2:-1])
-#     lang_path = "{0}://{1}/{2}/{3}/".format(
-#         str(site.scheme), str(site.domain), str(current_language), str(url))
-#     return lang_path
-
-
-@register.filter
-def make_breadcrumbs_user(value):
-    crumbs = ['profile', 'user', 'index']
-    home = 'administrator'
-    point_breadcrumbs = u"<i class='fa fa-circle'></i>"
-
-    link = u" <li><a href='{0:s}'>Home</a>{1:s}" \
-           u"</li>".format(reverse(home + ':' + 'index'),
-                           str(point_breadcrumbs))
-
-    for index, name in enumerate(crumbs):
-        if len(crumbs) - 1 == index:
-            point_breadcrumbs = ''
-        link += u" <li><span>{0:s}</span>" \
-                u"</li>{1:s}".format(str(name).capitalize(),
-                                     str(point_breadcrumbs))
-    return link
-
-
 @register.filter
 def subtract(value, arg):
     return value - arg

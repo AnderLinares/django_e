@@ -94,3 +94,4 @@ DEFAULT_FILE_STORAGE = 'core.custom_storages.MediaStorage'
 #     str(GS_BUCKET_NAME), str(MEDIAFILES_LOCATION)
 # )
 # DEFAULT_FILE_STORAGE = 'core.custom_storages.MediaStorage'
+

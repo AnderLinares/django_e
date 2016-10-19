@@ -19,7 +19,6 @@ try:
 except IOError:
     try:
         from django.utils.crypto import get_random_string
-
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!$%&()=+-_'
         SECRET_KEY = get_random_string(50, chars)
         with open(SECRET_FILE, 'w') as f:
@@ -43,15 +42,29 @@ DJANGO_APPS = (
 
 LOCAL_APPS = (
     'core',
+    'apps.zone',
+    'apps.team',
     'apps.menu',
+    'apps.billing',
+
+
+    'apps.company',
+    'apps.product',
+    'apps.supplier',
+    'apps.vehicle',
+
     'apps.customer',
-    'apps.dashboard',
-    'apps.employee',
-    'apps.client',
+
+    'apps.quotation',
+
     'apps.taller',
+    'apps.store',
+    'apps.logistic',
+
+
 )
 THIRD_PARTY_APPS = (
-
+    'rest_framework',
 )
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -95,6 +108,7 @@ TEMPLATES = [
     },
 ]
 
+
 # AUTH_PASSWORD_VALIDATORS = [
 #     {
 #         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -126,6 +140,10 @@ LANGUAGE_CODE = 'en-us'
 
 LOCALE_PATHS = (
     str(PROJECT_ROOT.path('locale')),
+)
+
+FIXTURE_DIRS = (
+    str(PROJECT_ROOT.path('fixtures')),
 )
 
 TIME_ZONE = 'America/Lima'

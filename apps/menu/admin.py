@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from .models import (
-    Menu, MenuItem)
+    Menu, MenuItem,
+    TeamMenu, TeamMenuItem)
 
 
 class MenuItemInline(admin.TabularInline):
@@ -12,50 +13,36 @@ class MenuItemInline(admin.TabularInline):
 
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ["module", "name", 'order', 'match', 'is_deleted']
+    list_display = ["name", 'order', 'match', 'is_deleted']
     fieldsets = [
         ["Menu", {
-            "fields": ("module", 'name', 'order', 'style', 'match')
+            "fields": ('name', 'order', 'style', 'match')
         }],
 
     ]
     inlines = [MenuItemInline, ]
 
 
-@admin.register(MenuItem)
-class SubMenuAdmin(admin.ModelAdmin):
-    list_display = ["name", 'order', 'menu_text', 'reference', 'is_deleted']
-    fieldsets = [
-        ["SubModule", {
-            "fields": ('name', 'menu', 'order', 'style', 'match', 'reference')
-        }],
+class TeamMenuItemInline(admin.TabularInline):
+    list_display = ['team_menu', 'menu_item']
+    model = TeamMenuItem
+    extra = 0
 
-    ]
-
-
-
-# class GroupSubModuleInline(admin.TabularInline):
-#     list_display = ['group_module', 'submodule']
-#     model = GroupSubModule
-#     extra = 0
-#
-#     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-#         field = super(GroupSubModuleInline, self).formfield_for_foreignkey(
-#             db_field, request, **kwargs)
-#         if db_field.name == 'submodule':
-#             if request._obj_ is not None:
-#                 field.queryset = field.queryset.filter(
-#                     module=request._obj_.module)
-#             else:
-#                 field.queryset = field.queryset.none()
-#         return field
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        field = super().formfield_for_foreignkey(db_field, request, **kwargs)
+        if db_field.name == "menu_item":
+            if request._obj is not None:
+                field.queryset = MenuItem.objects.filter(menu=request._obj.menu)
+            else:
+                field.queryset = field.queryset.none()
+        return field
 
 
-# @admin.register(GroupMenu)
-# class GroupModuleAdmin(admin.ModelAdmin):
-#     list_display = ['group', 'module']
-#     inlines = [GroupSubModuleInline, ]
-#
-#     def get_form(self, request, obj=None, **kwargs):
-#         request._obj_ = obj
-#         return super(GroupModuleAdmin, self).get_form(request, obj, **kwargs)
+@admin.register(TeamMenu)
+class TeamMenuAdmin(admin.ModelAdmin):
+    list_display = ['team', 'menu']
+    inlines = [TeamMenuItemInline, ]
+
+    def get_form(self, request, obj=None, **kwargs):
+        request._obj = obj
+        return super().get_form(request, obj, **kwargs)

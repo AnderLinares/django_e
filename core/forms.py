@@ -1,114 +1,238 @@
 from django import forms
 
 from .models import (
-    Organization, Subsidiary, Currency, ExchangeRate, UnitMeasurement
+    UnitMeasurement, PurchaseCondition, VehicleInventory,
+    VehicleEnrollment, VehicleBrand, VehicleModel, VehicleFuel,
+    ProductBrand, ProductModel,
+    Currency, ExchangeRate, Service, Store, Person
 )
-
-
-class CurrencyForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['sk'].widget.attrs.update(
-            {'placeholder': 'Sk', 'class': 'form-control'})
-        self.fields['code'].widget.attrs.update(
-            {'placeholder': 'code', 'class': 'form-control'})
-        self.fields['name'].widget.attrs.update(
-            {'placeholder': 'Name', 'class': 'form-control'})
-        self.fields['is_fund'].widget.attrs.update(
-            {'placeholder': 'is_fund', 'class': 'form-control'})
-        self.fields['is_complimentary'].widget.attrs.update(
-            {'placeholder': 'is_complimentary', 'class': 'form-control'})
-        self.fields['is_metal'].widget.attrs.update(
-            {'placeholder': 'is_metal', 'class': 'form-control'})
-
-    class Meta:
-        model = Currency
-        fields = ["sk", "code", "name", "is_fund", "is_complimentary", "is_metal"]
-
-
-class ExchangeRateForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['currency'].widget.attrs.update(
-            {'placeholder': 'Currency', 'class': 'form-control'})
-        self.fields['exchange_rate'].widget.attrs.update(
-            {'placeholder': 'Exchange rate', 'class': 'form-control'})
-        self.fields['start_date'].widget.attrs.update(
-            {'placeholder': 'Start date', 'class': 'form-control'})
-        self.fields['end_date'].widget.attrs.update(
-            {'placeholder': 'End date', 'class': 'form-control'})
-
-    class Meta:
-        model = ExchangeRate
-        fields = ["currency", "exchange_rate", "start_date", "end_date"]
-
-
-class OrganizationForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update(
-            {'placeholder': 'Name', 'class': 'form-control'})
-        self.fields['reason_social'].widget.attrs.update(
-            {'placeholder': 'Reason social', 'class': 'form-control'})
-        self.fields['initial_exercise'].widget.attrs.update(
-            {'placeholder': 'Initial exercise', 'class': 'form-control'})
-        self.fields['final_exercise'].widget.attrs.update(
-            {'placeholder': 'Final exercise ', 'class': 'form-control'})
-        self.fields['nit'].widget.attrs.update(
-            {'placeholder': 'Nit', 'class': 'form-control'})
-        self.fields['legal_representative'].widget.attrs.update(
-            {'placeholder': 'Legal representative', 'class': 'form-control'})
-        self.fields['accountant'].widget.attrs.update(
-            {'placeholder': 'Accountant', 'class': 'form-control'})
-        self.fields['register_accountant'].widget.attrs.update(
-            {'placeholder': 'Register accountant', 'class': 'form-control'})
-        self.fields['address'].widget.attrs.update(
-            {'placeholder': 'Address', 'class': 'form-control'})
-        self.fields['logo_url'].widget.attrs.update(
-            {'placeholder': 'Logo url', 'class': 'form-control'})
-        self.fields['primary_currency'].widget.attrs.update(
-            {'placeholder': 'Primary currency', 'class': 'form-control'})
-        self.fields['phone'].widget.attrs.update(
-            {'placeholder': 'Phone', 'class': 'form-control'})
-        self.fields['mobile_phone'].widget.attrs.update(
-            {'placeholder': 'Mobile phone', 'class': 'form-control'})
-
-    class Meta:
-        model = Organization
-        fields = ["name", "reason_social", "initial_exercise", "final_exercise", "nit",
-                  "legal_representative", "accountant", "register_accountant",
-                  "address", "logo_url", "primary_currency", "phone", "mobile_phone"]
-
-
-class SubsidiaryForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['organization'].widget.attrs.update(
-            {'placeholder': 'Organization', 'required': True, 'class': 'form-control'})
-        self.fields['name'].widget.attrs.update(
-            {'placeholder': 'name', 'class': 'form-control'})
-        self.fields['address'].widget.attrs.update(
-            {'placeholder': 'address', 'class': 'form-control'})
-        self.fields['phone'].widget.attrs.update(
-            {'placeholder': 'Phone', 'class': 'form-control'})
-        self.fields['mobile_phone'].widget.attrs.update(
-            {'placeholder': 'Mobile phone', 'class': 'form-control'})
-
-    class Meta:
-        model = Subsidiary
-        fields = ["organization", "name", "address", "phone", "mobile_phone"]
 
 
 class UnitMeasurementForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['type_measurement'].widget.attrs.update(
-            {'placeholder': 'Type measurement', 'required': True, 'class': 'form-control'})
+            {'placeholder': 'Type measurement', 'required': True,
+             'class': 'form-control'})
         self.fields['name'].widget.attrs.update(
-            {'placeholder': 'name', 'class': 'form-control'})
+            {'placeholder': 'name', 'required': True,
+             'class': 'form-control'})
         self.fields['symbol'].widget.attrs.update(
             {'placeholder': 'symbol', 'class': 'form-control'})
 
     class Meta:
         model = UnitMeasurement
-        fields = ["type_measurement", "name", "symbol"]
+        fields = "__all__"
+
+
+class VehicleEnrollmentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['year'].widget.attrs.update(
+            {'placeholder': 'Year', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = VehicleEnrollment
+        fields = "__all__"
+
+
+class VehicleBrandForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = VehicleBrand
+        fields = "__all__"
+
+
+class VehicleModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['brand'].widget.attrs.update(
+            {'placeholder': 'Brand', 'required': True,
+             'class': 'form-control'})
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = VehicleModel
+        fields = "__all__"
+
+
+class VehicleFuelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['unit_transport'].widget.attrs.update(
+            {'placeholder': 'Unit Transport', 'required': True,
+             'class': 'form-control'})
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = VehicleFuel
+        fields = "__all__"
+
+
+class VehicleInventoryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = VehicleInventory
+        fields = "__all__"
+
+
+class PurchaseConditionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = PurchaseCondition
+        fields = "__all__"
+
+
+class ProductBrandForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = ProductBrand
+        fields = "__all__"
+
+
+class ProductModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['brand'].widget.attrs.update(
+            {'placeholder': 'Brand', 'required': True,
+             'class': 'form-control'})
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = ProductModel
+        fields = "__all__"
+
+
+class CurrencyForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['sk'].widget.attrs.update(
+            {'placeholder': 'Sk', 'required': True,
+             'class': 'form-control'})
+        self.fields['code'].widget.attrs.update(
+            {'placeholder': 'Code', 'required': True,
+             'class': 'form-control'})
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+        self.fields['is_fund'].widget.attrs.update(
+            {'placeholder': 'is fund',
+             'class': 'styled'})
+        self.fields['is_complimentary'].widget.attrs.update(
+            {'placeholder': 'is complimentary',
+             'class': 'styled'})
+        self.fields['is_metal'].widget.attrs.update(
+            {'placeholder': 'is metal',
+             'class': 'styled'})
+
+    class Meta:
+        model = Currency
+        fields = "__all__"
+
+
+class ExchangeRateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['currency'].widget.attrs.update(
+            {'placeholder': 'currency', 'required': True,
+             'class': 'form-control'})
+        self.fields['exchange_rate'].widget.attrs.update(
+            {'placeholder': 'exchange_rate', 'required': True,
+             'class': 'form-control'})
+        self.fields['start_date'].widget.attrs.update(
+            {'placeholder': 'start_date', 'class': 'form-control datepicker'})
+        self.fields['end_date'].widget.attrs.update(
+            {'placeholder': 'end_date', 'class': 'form-control datepicker'})
+
+    class Meta:
+        model = ExchangeRate
+        fields = "__all__"
+
+
+class ServiceForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = Service
+        fields = "__all__"
+
+
+class StoreForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+        self.fields['is_principal'].widget.attrs.update(
+            {'placeholder': 'is_principal', 'class': 'styled'})
+
+    class Meta:
+        model = Store
+        fields = "__all__"
+
+
+class PersonForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update(
+            {'placeholder': 'First name', 'required': True,
+             'class': 'form-control'})
+        self.fields['last_name'].widget.attrs.update(
+            {'placeholder': 'Last_name', 'class': 'form-control'})
+        self.fields['email'].widget.attrs.update(
+            {'placeholder': 'Email', 'required': True,
+             'class': 'form-control'})
+        self.fields['address'].widget.attrs.update(
+            {'placeholder': 'Address', 'class': 'form-control'})
+        self.fields['home_phone'].widget.attrs.update(
+            {'placeholder': 'Home phone', 'required': True,
+             'class': 'form-control'})
+        self.fields['mobile_phone'].widget.attrs.update(
+            {'placeholder': 'Mobile phone', 'class': 'form-control'})
+        self.fields['document_type'].widget.attrs.update(
+            {'placeholder': 'Document type', 'required': True,
+             'class': 'form-control'})
+        self.fields['document_number'].widget.attrs.update(
+            {'placeholder': 'Document number', 'class': 'form-control'})
+        self.fields['person_tribute'].widget.attrs.update(
+            {'placeholder': 'Person Tribute', 'required': True,
+             'class': 'form-control'})
+        self.fields['is_client'].widget.attrs.update(
+            {'placeholder': 'client', 'class': 'styled'})
+        self.fields['is_taxi_driver'].widget.attrs.update(
+            {'placeholder': 'taxi driver', 'class': 'styled'})
+
+    class Meta:
+        model = Person
+        fields = "__all__"

@@ -1,0 +1,120 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                <div class="content">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-warning alert-styled-left">
+                                    <button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+                                    {% for err in form.non_field_errors %}
+                                        <span class="text-semibold">Warning! </span> {% trans err %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <form id="TeamMenu_form" method="post" action="" class="form">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Team" %}</label>
+                                            {{ form.team }}
+                                            <span class="help-block">{{ form.team.errors }}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Menu" %}</label>
+                                            {{ form.menu }}
+                                            <span class="help-block">{{ form.menu.errors }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label class="text-semibold">{% trans "Menu Permissions" %}</label><br/>
+                                            {% for chk in form.permissions_menu %}
+                                                <label class="checkbox-inline">
+                                                    {{ chk }}
+                                                </label>
+                                            {% endfor %}
+                                            <span class="help-block">{{ form.permissions_menu.errors }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {% if team_menu_item_formset.errors %}
+                                        {% for dict in team_menu_item_formset.errors %}
+                                            {% for error in dict.values %}
+                                                <div class="alert alert-warning alert-styled-left">
+                                                    <button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+                                                    <span class="text-semibold">Warning!</span>{{ error }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    <table id="id_team_menu_table" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans "Menu Item" %}</th>
+                                                <th>{% trans "Action" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for form in team_menu_item_formset.forms %}
+                                                <tr id="{{ form.prefix }}-row">
+                                                    <td>
+                                                        {% for fld in form.hidden_fields %}
+                                                            {{ fld }}
+                                                        {% endfor %}
+                                                        {% if form.instance.pk %}
+                                                            {{ form.DELETE }}
+                                                        {% endif %}
+                                                        {{ form.menu_item }}
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {{ team_menu_item_formset.management_form }}
+
+                                </div>
+
+                                <div class="text-right">
+                                    <a class="btn btn-info" href="{% url path_url_list %}"><i class="fa fa-arrow-left"></i>{% trans "Back" %}</a>
+                                    <button type="submit" class="btn btn-info">{% trans "Submit" %} <i class="fa fa-arrow-right"></i></button>
+                                </div>
+							</form>
+                        </div>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}
+
+{% block js_plugins_before %}
+	<script>
+        $(function() {
+            $('#id_team_menu_table tbody tr').formset({
+                prefix: "{{ team_menu_item_formset.prefix }}",
+                addText: 'Add Image',
+                deleteText: 'remove',
+                addCssClass: 'btn btn-primary',
+                deleteCssClass: 'btn btn-danger btn-round'
+            });
+        });
+    </script>
+{% endblock js_plugins_before %}
+

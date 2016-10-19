@@ -1,51 +1,24 @@
 {% extends 'wrapper.html' %}
-{% load static %}
 
-{% block css_plugins %}
-    <link href="{% static "themes/js/global/datatables/css/jquery.dataTables.min.css" %}" rel="stylesheet" type="text/css">
-    <link href="{% static "themes/js/global/datatables/css/buttons.dataTables.min.css" %}" rel="stylesheet" type="text/css">
-{% endblock css_plugins %}
-
-{% block js %}
-{% endblock js %}
-
-
-
-
-{% block navbar_top %}
-       {{ block.super }}
-{% endblock navbar_top %}
-
-{% block navbar_left %}
+{% block class_body %}
     {{ block.super }}
-{% endblock navbar_left %}
+{% endblock class_body %}
 
-{% block breadcrumb %}
+{% block header %}
     {{ block.super }}
-{% endblock breadcrumb %}
+{% endblock header %}
 
-{% block container %}
-{% endblock container %}
+{% block content %}
+    {{ block.super }}
+{% endblock content %}
 
 {% block footer %}
     {{ block.super }}
 {% endblock footer %}
 
+{% block js_plugins_after %}
+{% endblock js_plugins_after %}
 
-{% block js_plugins %}
-    <script src="{% static "themes/global/datatables/media/js/jquery.dataTables.min.js" %}"></script>
-    <script src="{% static "themes/global/datatables.net-buttons/js/dataTables.buttons.min.js" %}"></script>
-    <script src="{% static "themes/global/datatables.net-buttons/js/buttons.flash.min.js" %}"></script>
-    <script src="{% static "themes/global/jszip/dist/jszip.min.js" %}"></script>
-    <script src="{% static "themes/global/datatables.net-buttons/js/buttons.html5.min.js" %}"></script>
-    <script src="{% static "themes/global/datatables.net-buttons/js/buttons.print.min.js" %}"></script>
-    <script src="{% static "themes/global/pdfmake/build/pdfmake.min.js" %}"></script>
-    <script src="{% static "themes/global/pdfmake/build/vfs_fonts.js" %}"></script>
-{% endblock js_plugins %}
-
-
-{% block js_app %}
-{% endblock js_app %}
-
-
+{% block js_plugins_before %}
+{% endblock js_plugins_before %}
 

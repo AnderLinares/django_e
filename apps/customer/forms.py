@@ -1,10 +1,14 @@
+from html import escape
+
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.forms import ClearableFileInput
 from django.utils.translation import ugettext_lazy as _
 
 from .models import (
-    User)
+    User, UserProfile
+)
 
 
 class UserCreationAdminForm(forms.ModelForm):
@@ -114,3 +118,114 @@ class LoginForm(forms.Form):
 
     def get_user(self):
         return self.user_cache
+
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.HiddenInput(), required=False)
+    password1 = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(widget=forms.PasswordInput())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update(
+            {'placeholder': 'Email', 'required': True,
+             'class': 'form-control'})
+        self.fields['password1'].widget.attrs.update(
+            {'placeholder': 'Password', 'class': 'form-control',
+             'onfocus': "if(this.getAttribute('type')==='text') "
+                        "this.setAttribute('type','password'); "
+                        "this.setAttribute('value','')"
+             })
+        self.fields['password2'].widget.attrs.update(
+            {'placeholder': 'Repeat Password', 'class': 'form-control',
+             'onfocus': "if(this.getAttribute('type')==='text')"
+                        " this.setAttribute('type','password'); "
+                        "this.setAttribute('value','')"
+             })
+        self.fields['first_name'].widget.attrs.update(
+            {'placeholder': 'First Name', 'class': 'form-control'})
+        self.fields['last_name'].widget.attrs.update(
+            {'placeholder': 'Last Name', 'class': 'form-control'})
+        self.fields['is_active'].widget.attrs.update(
+            {'placeholder': 'is active', 'class': 'styled'})
+        self.fields['is_admin'].widget.attrs.update(
+            {'placeholder': 'is admin', 'class': 'styled'})
+
+        if self.instance.id:
+            self.fields['email'].widget.attrs.update({'readonly': True})
+            self.fields['password1'].required = False
+            self.fields['password2'].required = False
+
+    class Meta:
+        model = User
+        fields = "__all__"
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 or password2:
+            if password1 != password2:
+                msg = _("Passwords don't match")
+                self.add_error('password1', msg)
+                self.add_error('password2', msg)
+        return password2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if self.cleaned_data["password1"]:
+            user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
+
+class CustomClearableFileInput(ClearableFileInput):
+    template_with_initial = (
+        '<div class="media-left">'
+        '   <a href="%(initial_url)s"  data-popup="lightbox">'
+        '       <img src="/media/%(initial)s " class="img-rounded img-preview" />'
+        '   </a> '
+        '</div>'
+        '%(clear_template)s <div class="media-body"> %(input)s </div>'
+    )
+
+    template_with_clear = '%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
+
+
+class UserProfileForm(forms.ModelForm):
+    profile_image = forms.ImageField(widget=CustomClearableFileInput, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['address'].widget.attrs.update(
+            {'placeholder': 'address', 'class': 'form-control'})
+        self.fields['document_type'].widget.attrs.update(
+            {'placeholder': 'document_type', 'required': True,
+             'class': 'form-control'})
+        self.fields['document_number'].widget.attrs.update(
+            {'placeholder': 'document_number', 'required': True,
+             'class': 'form-control'})
+        self.fields['home_phone'].widget.attrs.update(
+            {'placeholder': 'home_phone', 'class': 'form-control'})
+        self.fields['mobile_phone'].widget.attrs.update(
+            {'placeholder': 'mobile_phone', 'class': 'form-control'})
+        self.fields['organization'].widget.attrs.update(
+            {'placeholder': 'organization', 'required': True,
+             'class': 'form-control'})
+        self.fields['subsidiary'].widget.attrs.update(
+            {'placeholder': 'subsidiary', 'required': True,
+             'class': 'form-control'})
+        self.fields['profile_image'].widget.attrs.update(
+            {'placeholder': 'profile_image', 'class': 'file-styled'})
+
+    class Meta:
+        model = UserProfile
+        fields = ["address", "document_type", "document_number", "home_phone",
+                  "mobile_phone", "organization", "subsidiary", "profile_image"]
+
+    def save(self, user=None, *args, **kwargs):
+        profile = super().save(*args, **kwargs)
+        if user:
+            profile.user = user
+        profile.save()
+        return profile

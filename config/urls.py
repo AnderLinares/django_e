@@ -4,22 +4,16 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
-from django.contrib.staticfiles import views
+
 
 urlpatterns = [
     url(r'^', include('apps.customer.urls')),
     url(settings.ADMIN_URL, include(admin.site.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/', include('apps.taller.api.urls')),
-    url(r'^api/', include('core.api.urls')),
 ]
 
 urlpatterns += i18n_patterns(
-    url(r'^', include('apps.dashboard.urls')),
-    url(r'^admin/', include('apps.client.urls')),
-    url(r'^admin/', include('apps.taller.urls')),
-    url(r'^admin/', include('core.urls')),
-    url(r'^quotation/', include('apps.taller.urls')),
+    url(r'', include('dashboard.urls')),
     url(settings.ADMIN_URL, include(admin.site.urls)),
 )
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,158 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+{% load filter %}
+
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                <div class="content" id="print_qt">
+                    <div class="panel panel-white">
+						<div class="panel-heading">
+                            <div class="heading-elements">
+                                <div class="heading-btn">
+                                    <button type="button" id="btnPrint" class="btn btn-info"><i class="icon-printer"></i> Print</button>
+                                </div>
+                            </div>
+                            <br>
+						</div>
+                        <div class="row" id="print_qt">
+
+                            <div class="panel-body no-padding-bottom">
+                                <div class="row text-right">
+                                    <img src="{% static "themes/img/preloader.empty.png" %}" class="content-group mt-10" alt="" style="width: 120px;">
+                                </div>
+                                <div class="row">
+                                    {{ object.date }}
+                                </div>
+                                <div class="row">
+                                    <br /><br />
+                                    <h4 class="text-center">
+                                        <span class="text-semibold text-center">COTIZACION </span> - {{ object.code_qt_store }}
+                                    </h4>
+                                    <br /><br />
+                                </div>
+                                <div class="row">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <td class="text-semibold">Nombre de la Empresa:</td>
+                                            <td>{{ object.supplier.business_name }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">Contacto:</td>
+                                            <td>{{ object.supplier.contact }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-semibold">Ruc:</td>
+                                            <td>{{ object.supplier.document_number }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">Telefono:</td>
+                                            <td>{{ object.supplier.phone_contact }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-semibold">Address:</td>
+                                            <td>{{ object.supplier.address }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">Solicitante:</td>
+                                            <td>{{ object.applicant.first_name }} {{ object.applicant.last_name }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                     <p class="text-left">
+                                         <br>
+                                         Respetado sr(a) se solicita una cotizacion de precios de los siguientes productos:
+                                     </p>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-lg table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-1">#</th>
+                                                <th class="col-sm-1">Product</th>
+                                                <th class="col-sm-1">Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {%  for qt in qt_list %}
+                                                <tr>
+                                                    <td><b>{{ forloop.counter }}.-</b></td>
+                                                    <td>{{ qt.product }}</td>
+                                                    <td>{{ qt.quantity }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row invoice-payment">
+                                    <div class="col-sm-7">
+                                        <div class="content-group">
+                                            <h6>Persona Authorizada</h6>
+                                            <div class="mb-15 mt-15">
+                                                <img src="{% static "themes/img/signature.png" %}" class="display-block" style="width: 150px;"  alt="">
+                                            </div>
+
+                                            <ul class="list-condensed list-unstyled text-muted">
+                                                <li>{{ object.applicant.first_name }} {{ object.applicant.last_name }}</li>
+                                                <li>{{ object.applicant.email }}</li>
+                                                <li>Lima - {{ object.applicant.get_profile.mobile_phone }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+
+                    <br />
+                    <div class="text-right">
+                        <a class="btn btn-info" href="{% url path_url_list %}"><i class="fa fa-arrow-left"></i>{% trans "Back" %}</a>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}
+
+{% block js_plugins_after %}
+	<script type="text/javascript" src="{% static "themes/global/pickadate/lib/compressed/picker.js" %}"></script>
+	<script type="text/javascript" src="{% static "themes/global/pickadate/lib/compressed/picker.date.js" %}"></script>
+    <script type="text/javascript" src="{% static "themes/global/pickadate/lib/compressed/picker.date.js" %}"></script>
+    <script type="text/javascript" src="{% static "themes/global/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js" %}"></script>
+{% endblock js_plugins_after %}
+
+{% block js_plugins_before %}
+    <script src="{% static "themes/js/formserializer.js" %}"></script>
+    <script src="{% static "themes/js/pages/quotation/quotation.js" %}"></script>
+	<script>
+        $(function() {
+            $('.datepicker').pickadate({
+               format: 'yyyy-mm-dd',
+               formatSubmit: 'yyyy-mm-dd'
+            });
+            $(".touchspin-step").TouchSpin({
+                min: 1,
+                max: 100,
+                step: 1
+            });
+        });
+    </script>
+{% endblock js_plugins_before %}
