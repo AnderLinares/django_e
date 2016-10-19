@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-15 10:14-0500\n"
+"POT-Creation-Date: 2016-10-19 03:16-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,15 +63,15 @@ msgstr "Por favor, introduzca un correo electrónico y la contraseña correcta."
 msgid "display name"
 msgstr ""
 
-#: apps/customer/models.py:91
+#: apps/customer/models.py:96
 msgid "user"
 msgstr "Usuario"
 
-#: apps/customer/models.py:92
+#: apps/customer/models.py:97
 msgid "users"
 msgstr "Usuarios"
 
-#: apps/customer/models.py:138
+#: apps/customer/models.py:143
 msgid "Thumbnail"
 msgstr "Miniatura"
 
@@ -106,6 +106,10 @@ msgstr "Lista Producto SubCategoría"
 #: apps/product/views.py:95
 msgid "list Product"
 msgstr "Lista Producto"
+
+#: apps/quotation/views.py:23
+msgid "list QuotationStore"
+msgstr "Lista Almacén"
 
 #: apps/store/apps.py:6
 msgid "store"
@@ -151,7 +155,7 @@ msgstr "Lista de País"
 msgid "list State"
 msgstr "Lista de Estado"
 
-#: config/settings/base.py:136
+#: config/settings/base.py:135
 msgid "Spanish"
 msgstr "Español"
 
@@ -181,6 +185,7 @@ msgstr "Español"
 #: templates/dashboard/pages/product/product/product_list.html:19
 #: templates/dashboard/pages/product/productcategory/productcategory_list.html:19
 #: templates/dashboard/pages/product/productsubcategory/productsubcategory_list.html:19
+#: templates/dashboard/pages/quotation/qt_store/qt_store_list.html:20
 #: templates/dashboard/pages/supplier/supplier/supplier_list.html:19
 #: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_list.html:19
 #: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_list.html:19
@@ -471,10 +476,16 @@ msgid "Delete Record"
 msgstr "Eliminar Registro"
 
 #: core/mixins.py:67
+#, fuzzy
+#| msgid "Delete Record"
+msgid "Detail Record"
+msgstr "Registro Detalle"
+
+#: core/mixins.py:75
 msgid "Update Record"
 msgstr "Actualizar Registro"
 
-#: core/mixins.py:75
+#: core/mixins.py:83 core/mixins.py:91
 msgid "Create Record"
 msgstr "Crear Registro"
 
@@ -591,7 +602,7 @@ msgstr "Codigo"
 #: templates/dashboard/pages/product/productsubcategory/productsubcategory_list.html:31
 #: templates/dashboard/pages/team/module/module_form.html:29
 #: templates/dashboard/pages/team/module/module_list.html:30
-#: templates/dashboard/pages/team/team/team_form.html:27
+#: templates/dashboard/pages/team/team/team_form.html:22
 #: templates/dashboard/pages/team/team/team_list.html:30
 #: templates/dashboard/pages/zone/country/country_form.html:26
 #: templates/dashboard/pages/zone/country/country_list.html:31
@@ -640,12 +651,15 @@ msgstr "Es Metal"
 #: templates/dashboard/pages/product/product/product_form.html:111
 #: templates/dashboard/pages/product/productcategory/productcategory_form.html:27
 #: templates/dashboard/pages/product/productsubcategory/productsubcategory_form.html:32
+#: templates/dashboard/pages/quotation/qt_store/qt_store_detail.html:127
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:122
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:69
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:87
 #: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_form.html:34
 #: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_form.html:34
 #: templates/dashboard/pages/team/groupmodule/groupmodule_form.html:37
 #: templates/dashboard/pages/team/module/module_form.html:40
-#: templates/dashboard/pages/team/team/team_form.html:37
+#: templates/dashboard/pages/team/team/team_form.html:32
 #: templates/dashboard/pages/vehicle/vehicle/vehicle_form.html:230
 #: templates/dashboard/pages/zone/country/country_form.html:47
 #: templates/dashboard/pages/zone/state/state_form.html:44
@@ -679,12 +693,14 @@ msgstr "Atras"
 #: templates/dashboard/pages/product/product/product_form.html:112
 #: templates/dashboard/pages/product/productcategory/productcategory_form.html:28
 #: templates/dashboard/pages/product/productsubcategory/productsubcategory_form.html:33
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:123
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:70
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:88
 #: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_form.html:35
 #: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_form.html:35
 #: templates/dashboard/pages/team/groupmodule/groupmodule_form.html:38
 #: templates/dashboard/pages/team/module/module_form.html:41
-#: templates/dashboard/pages/team/team/team_form.html:38
+#: templates/dashboard/pages/team/team/team_form.html:33
 #: templates/dashboard/pages/vehicle/vehicle/vehicle_form.html:231
 #: templates/dashboard/pages/zone/country/country_form.html:48
 #: templates/dashboard/pages/zone/state/state_form.html:45
@@ -731,6 +747,8 @@ msgstr "Es Metal"
 #: templates/dashboard/pages/product/product/product_list.html:33
 #: templates/dashboard/pages/product/productcategory/productcategory_list.html:31
 #: templates/dashboard/pages/product/productsubcategory/productsubcategory_list.html:32
+#: templates/dashboard/pages/quotation/qt_store/qt_store_list.html:33
+#: templates/dashboard/pages/quotation/qt_taller/organization_list.html:35
 #: templates/dashboard/pages/supplier/supplier/supplier_list.html:33
 #: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_list.html:31
 #: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_list.html:32
@@ -747,6 +765,7 @@ msgstr "Accion"
 
 #: templates/dashboard/pages/admin/exchangerate/exchangerate_form.html:22
 #: templates/dashboard/pages/admin/exchangerate/exchangerate_list.html:30
+#: templates/partials/siderbar-menu.html:25
 msgid "Currency"
 msgstr "Moneda"
 
@@ -794,6 +813,8 @@ msgstr "Teléfono"
 #: templates/dashboard/pages/company/organization/organization_list.html:34
 #: templates/dashboard/pages/company/subsidiary/subsidiary_form.html:51
 #: templates/dashboard/pages/customer/user/user_form.html:130
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:63
+#: templates/dashboard/pages/quotation/qt_taller/organization_list.html:34
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:73
 msgid "Mobile Phone"
 msgstr "Celular"
@@ -801,6 +822,7 @@ msgstr "Celular"
 #: templates/dashboard/pages/admin/person/person_form.html:46
 #: templates/dashboard/pages/company/organization/organization_form.html:27
 #: templates/dashboard/pages/customer/user/user_form.html:105
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:27
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:32
 #: templates/dashboard/pages/supplier/supplier/supplier_list.html:31
 msgid "Document Type"
@@ -809,6 +831,7 @@ msgstr "Tipo Documento"
 #: templates/dashboard/pages/admin/person/person_form.html:51
 #: templates/dashboard/pages/company/organization/organization_form.html:32
 #: templates/dashboard/pages/customer/user/user_form.html:122
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:32
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:48
 #: templates/dashboard/pages/supplier/supplier/supplier_list.html:32
 msgid "Document Number"
@@ -876,6 +899,7 @@ msgstr "Unidad Transporte"
 #: templates/dashboard/pages/company/subsidiary/subsidiary_form.html:21
 #: templates/dashboard/pages/company/subsidiary/subsidiary_list.html:30
 #: templates/dashboard/pages/customer/user/user_form.html:139
+#: templates/partials/siderbar-menu.html:71
 msgid "Organization"
 msgstr "Organización"
 
@@ -884,6 +908,7 @@ msgstr "Organización"
 #: templates/dashboard/pages/customer/user/user_form.html:156
 #: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_form.html:27
 #: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_list.html:31
+#: templates/partials/siderbar-menu.html:72
 msgid "Subsidiary"
 msgstr "Sucursal"
 
@@ -922,6 +947,8 @@ msgstr "Actual"
 
 #: templates/dashboard/pages/company/organization/organization_form.html:22
 #: templates/dashboard/pages/company/organization/organization_list.html:30
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:22
+#: templates/dashboard/pages/quotation/qt_taller/organization_list.html:30
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:24
 #: templates/dashboard/pages/supplier/supplier/supplier_list.html:30
 msgid "Business Name"
@@ -930,26 +957,32 @@ msgstr "Nombre Empresa"
 #: templates/dashboard/pages/company/organization/organization_form.html:37
 #: templates/dashboard/pages/company/subsidiary/subsidiary_form.html:41
 #: templates/dashboard/pages/customer/user/user_form.html:147
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:37
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:41
 msgid "Address"
 msgstr "Dirección"
 
 #: templates/dashboard/pages/company/organization/organization_form.html:42
 #: templates/dashboard/pages/product/product/product_form.html:90
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:42
 msgid "Picture"
 msgstr "Foto"
 
 #: templates/dashboard/pages/company/organization/organization_form.html:58
 #: templates/dashboard/pages/company/organization/organization_list.html:33
 #: templates/dashboard/pages/company/subsidiary/subsidiary_form.html:46
+#: templates/dashboard/pages/quotation/qt_taller/organization_form.html:58
+#: templates/dashboard/pages/quotation/qt_taller/organization_list.html:33
 msgid "Phone"
 msgstr "Teléfono"
 
 #: templates/dashboard/pages/company/organization/organization_list.html:31
+#: templates/dashboard/pages/quotation/qt_taller/organization_list.html:31
 msgid "Doc. Type"
 msgstr "Tipo Documento"
 
 #: templates/dashboard/pages/company/organization/organization_list.html:32
+#: templates/dashboard/pages/quotation/qt_taller/organization_list.html:32
 msgid "Doc. Number"
 msgstr "Número Documento"
 
@@ -985,12 +1018,14 @@ msgstr "Grupos"
 #: templates/dashboard/pages/customer/profile/profile_list.html:31
 #: templates/dashboard/pages/team/groupmodule/groupmodule_form.html:32
 #: templates/dashboard/pages/team/groupmodule/groupmodule_list.html:31
-#: templates/dashboard/pages/team/team/team_form.html:32
+#: templates/dashboard/pages/team/team/team_form.html:27
 #: templates/dashboard/pages/team/team/team_list.html:31
+#: templates/partials/siderbar-menu.html:53
 msgid "Module"
 msgstr "Módulo"
 
 #: templates/dashboard/pages/customer/user/user_form.html:29
+#: templates/partials/siderbar-menu.html:94
 msgid "User"
 msgstr "Usuario"
 
@@ -1036,6 +1071,8 @@ msgstr "Match"
 #: templates/dashboard/pages/menu/menuitem/menuitem_list.html:30
 #: templates/dashboard/pages/menu/teammenu/teammenu_form.html:38
 #: templates/dashboard/pages/menu/teammenu/teammenu_list.html:31
+#: templates/partials/siderbar-menu.html:59
+#: templates/partials/siderbar-menu.html:62
 msgid "Menu"
 msgstr "Lista Menú"
 
@@ -1046,6 +1083,8 @@ msgstr "Referencia"
 
 #: templates/dashboard/pages/menu/teammenu/teammenu_form.html:33
 #: templates/dashboard/pages/menu/teammenu/teammenu_list.html:30
+#: templates/partials/siderbar-menu.html:51
+#: templates/partials/siderbar-menu.html:54
 msgid "Team"
 msgstr "Grupo"
 
@@ -1098,8 +1137,86 @@ msgid "Purchase Price"
 msgstr "Precio Compra"
 
 #: templates/dashboard/pages/product/productsubcategory/productsubcategory_list.html:30
+#: templates/partials/siderbar-menu.html:45
 msgid "Category"
 msgstr "Categoría"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:26
+
+msgid "Code Qt."
+msgstr "Codigo Cotiz."
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:37
+#: templates/dashboard/pages/quotation/qt_store/qt_store_list.html:32
+#, fuzzy
+#| msgid "End Date"
+msgid "Date"
+msgstr "Fecha Final"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:47
+msgid "Applicant"
+msgstr "Solicitante"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:58
+#, fuzzy
+#| msgid "list Supplier"
+msgid "Product with Supplier"
+msgstr "Producto con Proveedores"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:61
+#: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_form.html:22
+#: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_list.html:30
+#: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_form.html:22
+#: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_list.html:30
+#: templates/partials/siderbar-menu.html:77
+#: templates/partials/siderbar-menu.html:79
+msgid "Supplier"
+msgstr "Proveedores"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:66
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:93
+#: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_form.html:27
+#: templates/partials/siderbar-menu.html:47
+msgid "Product"
+msgstr "Producto"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:70
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:97
+
+msgid "Add"
+msgstr "Agregar"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:80
+msgid "Product with Category"
+msgstr "Producto con Categoria"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:83
+#, fuzzy
+#| msgid "Category"
+msgid "Categoria"
+msgstr "Categoría"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:88
+#, fuzzy
+#| msgid "Category"
+msgid "Subcategoria"
+msgstr "SubCategoría"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:110
+msgid " Category  / Product Name "
+msgstr "Categoria / N. Producto"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:111
+msgid " Quantity "
+msgstr "Cantidad"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_form.html:112
+msgid " Action "
+msgstr "Accion"
+
+#: templates/dashboard/pages/quotation/qt_store/qt_store_list.html:31
+msgid "Code Quotation Store"
+msgstr "Code cotiz."
 
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:64
 msgid "Contact Name"
@@ -1108,17 +1225,6 @@ msgstr "Nombre Contacto"
 #: templates/dashboard/pages/supplier/supplier/supplier_form.html:80
 msgid "Phone Contact"
 msgstr "Telf. Contacto"
-
-#: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_form.html:22
-#: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_list.html:30
-#: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_form.html:22
-#: templates/dashboard/pages/supplier/suppliersubsidiary/suppliersubsidiary_list.html:30
-msgid "Supplier"
-msgstr "Proveedores"
-
-#: templates/dashboard/pages/supplier/supplierproduct/supplierproduct_form.html:27
-msgid "Product"
-msgstr "Producto"
 
 #: templates/dashboard/pages/vehicle/vehicle/vehicle_form.html:40
 #: templates/dashboard/pages/vehicle/vehicle/vehicle_list.html:34
@@ -1201,11 +1307,14 @@ msgstr "Placa"
 #: templates/dashboard/pages/zone/country/country_list.html:30
 #: templates/dashboard/pages/zone/state/state_form.html:29
 #: templates/dashboard/pages/zone/state/state_list.html:30
+#: templates/partials/siderbar-menu.html:35
+#: templates/partials/siderbar-menu.html:37
 msgid "Zone"
 msgstr "Zona"
 
 #: templates/dashboard/pages/zone/country/country_form.html:36
 #: templates/dashboard/pages/zone/country/country_list.html:33
+#: templates/partials/siderbar-menu.html:39
 msgid "State"
 msgstr "Estado"
 
@@ -1216,6 +1325,7 @@ msgstr "Iso Codigo"
 
 #: templates/dashboard/pages/zone/state/state_form.html:34
 #: templates/dashboard/pages/zone/state/state_list.html:31
+#: templates/partials/siderbar-menu.html:38
 msgid "Country"
 msgstr "País"
 
@@ -1230,6 +1340,123 @@ msgstr "Analitica"
 #: templates/partials/page-header.html:17
 msgid "Accessibility"
 msgstr "Accesibilidad"
+
+#: templates/partials/siderbar-menu.html:11
+msgid "Administration"
+msgstr "Administracion"
+
+#: templates/partials/siderbar-menu.html:13
+msgid "UnitMeasurement"
+msgstr "Listado de Mediciones"
+
+#: templates/partials/siderbar-menu.html:15
+msgid "VehicleEnrollment"
+msgstr "Lista de Inscripción de Vehículos"
+
+#: templates/partials/siderbar-menu.html:16
+msgid "VehicleBrand"
+msgstr "Marca de Vehículo"
+
+#: templates/partials/siderbar-menu.html:17
+msgid "VehicleModel"
+msgstr "Modelo de Vehículo"
+
+#: templates/partials/siderbar-menu.html:18
+msgid "VehicleFuel"
+msgstr "Lista Combustible de Vehículos"
+
+#: templates/partials/siderbar-menu.html:19
+msgid "VehicleInventory"
+msgstr "Lista Inventario del Vehículos"
+
+#: templates/partials/siderbar-menu.html:20
+msgid "PurchaseCondition"
+msgstr "Lista condición de compra"
+
+#: templates/partials/siderbar-menu.html:22
+msgid "ProductBrand"
+msgstr "Lista Marca de Producto"
+
+#: templates/partials/siderbar-menu.html:23
+msgid "ProductModel"
+msgstr "Lista Modelo de Producto"
+
+#: templates/partials/siderbar-menu.html:26
+msgid "ExchangeRate"
+msgstr "Tipo Cambio"
+
+#: templates/partials/siderbar-menu.html:28
+msgid "Service"
+msgstr "Lista Servicios"
+
+#: templates/partials/siderbar-menu.html:29
+msgid "Store"
+msgstr "Almacén"
+
+#: templates/partials/siderbar-menu.html:30
+
+msgid "Client"
+msgstr "Cliente"
+
+#: templates/partials/siderbar-menu.html:43
+msgid "Articulos"
+msgstr ""
+
+#: templates/partials/siderbar-menu.html:46
+msgid "SubCategory"
+msgstr "SubCategoría"
+
+#: templates/partials/siderbar-menu.html:61
+
+msgid "Menu-Permissions"
+msgstr "Permisos Menu"
+
+#: templates/partials/siderbar-menu.html:63
+msgid "SubMenu"
+msgstr "Lista Menú"
+
+#: templates/partials/siderbar-menu.html:64
+msgid "Team Menu"
+msgstr "Lista Group Menu"
+
+#: templates/partials/siderbar-menu.html:69
+msgid "Company"
+msgstr ""
+
+#: templates/partials/siderbar-menu.html:73
+msgid "Correlative"
+msgstr "Lista Correlativos"
+
+#: templates/partials/siderbar-menu.html:80
+
+msgid "SupplierSubsidiary"
+msgstr "Lista Proveedores con Sucursales"
+
+#: templates/partials/siderbar-menu.html:81
+#, fuzzy
+#| msgid "list SupplierProduct"
+msgid "SupplierProduct"
+msgstr "Lista Proveedores con Producto"
+
+#: templates/partials/siderbar-menu.html:85
+msgid "Vehicle"
+msgstr "Lista Vehículos"
+
+#: templates/partials/siderbar-menu.html:87
+msgid "Vehicles"
+msgstr "Lista Vehículos"
+
+#: templates/partials/siderbar-menu.html:92
+msgid "Customers"
+msgstr "Usuarios"
+
+#: templates/partials/siderbar-menu.html:99
+msgid "Quotation"
+msgstr "Cotizacion"
+
+#: templates/partials/siderbar-menu.html:101
+msgid "cotizacion Almacen"
+msgstr "Cotizacion Almacen"
 
 #: templates/registration/login.html:42
 msgid "Please correct the error below."
