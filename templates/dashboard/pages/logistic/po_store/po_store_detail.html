@@ -42,36 +42,36 @@
                                 </div>
                                 <div class="row">
                                     <div class="row">
-                                        <h4 class="text-center">
-                                            <span class="text-semibold text-center">Cotizacion </span> - {{ object.code_qt_store }}
-                                        </h4>
+                                        <h3 class="text-center">
+                                            <span class="text-semibold text-center">Orden de Compra </span> - {{ object.code_po_store }}
+                                        </h3>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <table class="table table-striped">
                                         <tr>
-                                            <td class="text-semibold">Nombre de la Empresa:</td>
+                                            <td class="text-semibold">{% trans "Business Name" %}:</td>
                                             <td>{{ object.supplier.business_name }}</td>
                                             <td></td>
                                             <td></td>
-                                            <td class="text-semibold">Contacto:</td>
+                                            <td class="text-semibold">{% trans "Contact" %}:</td>
                                             <td>{{ object.supplier.contact }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-semibold">Ruc:</td>
+                                            <td class="text-semibold">{% trans "Ruc" %}:</td>
                                             <td>{{ object.supplier.document_number }}</td>
                                             <td></td>
                                             <td></td>
-                                            <td class="text-semibold">Telefono:</td>
+                                            <td class="text-semibold">{% trans "Phone Contact" %}:</td>
                                             <td>{{ object.supplier.phone_contact }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-semibold">Address:</td>
+                                            <td class="text-semibold">{% trans "Address" %}:</td>
                                             <td>{{ object.supplier.address }}</td>
                                             <td></td>
                                             <td></td>
-                                            <td class="text-semibold">Solicitante:</td>
+                                            <td class="text-semibold">{% trans "Applicant" %}:</td>
                                             <td>{{ object.applicant.first_name }} {{ object.applicant.last_name }}</td>
                                         </tr>
                                     </table>
@@ -79,7 +79,7 @@
                                 <div class="row">
                                      <p class="text-left">
                                          <br>
-                                         Respetado sr(a) se solicita una cotizacion de precios de los siguientes productos:
+                                         Respetado sr(a) se solicita una orden de compra de los siguientes productos:
                                      </p>
                                 </div>
                             </div>
@@ -89,18 +89,39 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-sm-1">#</th>
-                                                <th class="col-sm-1">Product</th>
-                                                <th class="col-sm-1">Quantity</th>
+                                                <th class="col-sm-1">{% trans "Product" %}</th>
+                                                <th class="col-sm-1">{% trans "Quantity" %}</th>
+                                                <th class="col-sm-1">{% trans "Price" %}</th>
+                                                <th class="col-sm-1">{% trans "Discount" %}<br>%</th>
+                                                <th class="col-sm-1">{% trans "Import" %}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {%  for qt in qt_list %}
+                                            {%  for po in po_list %}
                                                 <tr>
                                                     <td><b>{{ forloop.counter }}.-</b></td>
-                                                    <td>{{ qt.product }}</td>
-                                                    <td>{{ qt.quantity }}</td>
+                                                    <td>{{ po.description }}</td>
+                                                    <td>{{ po.quantity }}</td>
+                                                    <td>{{ po.unit_price }}</td>
+                                                    <td>{{ po.discount }}</td>
+                                                    <td>{{ po.amount_price }}</td>
                                                 </tr>
                                             {% endfor %}
+                                             <tr>
+                                                <td colspan="4"></td>
+                                                <td>{% trans "SUBTOTAL" %}</td>
+                                                <td>{{ object.sub_total }}</td>
+                                             </tr>
+                                             <tr>
+                                                <td colspan="4"></td>
+                                                <td>{% trans "IGV" %}(18%)</td>
+                                                <td>{{ object.igv_total }}</td>
+                                             </tr>
+                                             <tr>
+                                                <td colspan="4"></td>
+                                                <td>{% trans "TOTAL" %}</td>
+                                                <td>{{ object.total_paid }}</td>
+                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -109,7 +130,7 @@
                                 <div class="row invoice-payment">
                                     <div class="col-sm-7">
                                         <div class="content-group">
-                                            <h6>Persona Authorizada</h6>
+                                            <h6>{% trans "Authorized Person" %}</h6>
                                             <div class="mb-15 mt-15">
                                                 <img src="{% static "themes/img/global/signature.png" %}" class="display-block" style="width: 150px;"  alt="">
                                             </div>
@@ -139,7 +160,6 @@
     {% endblock page-content-wrapper %}
 {% endblock %}
 
-
 {% block js_plugins_before %}
-    <script src="{% static "themes/js/pages/quotation/quotation.js" %}"></script>
+    <script src="{% static "themes/js/pages/logistic/logistic.js" %}"></script>
 {% endblock js_plugins_before %}

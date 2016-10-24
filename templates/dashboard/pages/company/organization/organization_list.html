@@ -14,12 +14,6 @@
             {% block sidebar_page_content %}
                 <div class="content">
                     <div class="panel panel-default">
-{#                        <div class="panel-heading">#}
-{#                            <div class="heading-elements">#}
-{#                                <a class="btn btn-primary heading-btn" href="{% url path_url_create %}">{% trans "Create" %}</a>#}
-{#                            </div>#}
-{#                            <br/>#}
-{#                        </div>#}
 
                         <div class="panel-body">
                             <div class="table-responsive" style="display: block;">
@@ -30,8 +24,6 @@
                                         <th>{% trans "Business Name" %}</th>
                                         <th>{% trans "Doc. Type" %}</th>
                                         <th>{% trans "Doc. Number" %}</th>
-                                        <th>{% trans "Phone" %}</th>
-                                        <th>{% trans "Mobile Phone" %}</th>
                                         <th>{% trans "Action" %}</th>
                                     </tr>
                                     </thead>
@@ -42,8 +34,6 @@
                                             <td>{{ object.business_name }}</td>
                                             <td>{{ object.get_document_type_display }}</td>
                                             <td>{{ object.document_number }}</td>
-                                            <td>{{ object.phone }}</td>
-                                            <td>{{ object.mobile_phone }}</td>
                                             <td>
                                                 <a href="{% url path_url_update  pk=object.id %}"><i class="icon-pencil7"></i></a> &nbsp;
                                                 <a href="{% url path_url_delete pk=object.id %}"><i class="icon-trash"></i></a>

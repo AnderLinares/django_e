@@ -8,7 +8,7 @@
             <li><a href="javascript:void(0)"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
 
             <li>
-                <a href="#"><i class="icon-grid"></i> <span>{% trans "Administracion" %}</span></a>
+                <a href="#"><i class="icon-grid"></i> <span>{% trans "Administration" %}</span></a>
                 <ul>
                     <li><a href="{% url 'UnitMeasurement:list' %}">{% trans "UnitMeasurement" %}</a></li>
 
@@ -40,7 +40,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="icon-grid"></i> <span>{% trans "Articulos" %}</span></a>
+                <a href="#"><i class="icon-grid"></i> <span>{% trans "Product" %}</span></a>
                 <ul>
                     <li><a href="{% url 'Category:list' %}">{% trans "Category" %}</a></li>
                     <li><a href="{% url 'Subcategory:list' %}">{% trans "SubCategory" %}</a></li>
@@ -82,7 +82,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="icon-grid"></i> <span>{% trans "Vehicle" %}</span></a>
+                <a href="#"><i class="icon-grid"></i> <span>{% trans "Vehicles" %}</span></a>
                 <ul>
                    <li><a href="{% url 'Vehicle:list' %}">{% trans "Vehicles" %}</a></li>
                 </ul>
@@ -98,15 +98,15 @@
             <li>
                 <a href="#"><i class="icon-grid"></i> <span>{% trans "Quotation" %}</span></a>
                 <ul>
-                    <li><a href="{% url 'QuotationStore:list' %}">{% trans "cotizacion Almacen" %}</a></li>
+                    <li><a href="{% url 'QuotationStore:list' %}">{% trans "quote providers" %}</a></li>
                 </ul>
             </li>
-{#            <li>#}
-{#                <a href="#"><i class="icon-grid"></i> <span>{% trans "Logistica" %}</span></a>#}
-{#                <ul>#}
-{#                    <li><a href="components_modals.html">{% trans "Modals" %}</a></li>#}
-{#                </ul>#}
-{#            </li>#}
+            <li>
+                <a href="#"><i class="icon-grid"></i> <span>{% trans "Logistics" %}</span></a>
+                <ul>
+                    <li><a href="{% url 'PurchaseOrder:list' %}">{% trans "Purchase order" %}</a></li>
+                </ul>
+            </li>
 {#            <li>#}
 {#                <a href="#"><i class="icon-grid"></i> <span>{% trans "Contabilidad" %}</span></a>#}
 {#                <ul>#}

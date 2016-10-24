@@ -164,15 +164,17 @@
                                                 <label class="text-semibold">{% trans "Profile Image" %}</label>
                                                 <div class="col-lg-9">
                                                     <div class="media no-margin-top">
-{#                                                        <div class="media-left">#}
-{#                                                            <a href="{% static 'themes/img/demo/images/5.png' %}" data-popup="lightbox">#}
-{#                                                                <img src="{% static 'themes/img/demo/images/5.png' %}" style="width: 58px; height: 58px;" alt="" class="img-rounded img-preview">#}
-{#                                                            </a>#}
-{#        												</div>#}
-{#                                                        <div class="media-body">#}
-                                                            {{ user_profile_form.profile_image }}
-                                                            <span class="help-block">{{ user_profile_form.profile_image.errors }}</span>
-{#                                                        </div>#}
+                                                        <div class="media no-margin-top">
+                                                            <div class="media-left">
+                                                                <a href="{{ user_profile_form.instance.get_logo_profile_url }}" data-popup="lightbox">
+                                                                    <img src="{{ user_profile_form.instance.get_logo_profile_url }}" style="width: 58px; height: 58px;" alt="" class="img-rounded img-preview">
+                                                                </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                {{ user_profile_form.logo_profile }}
+                                                                <span class="help-block">{{ user_profile_form.logo_profile.errors }}</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 										    </div>

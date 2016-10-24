@@ -43,12 +43,12 @@
                                     <div class="col-lg-9">
                                         <div class="media no-margin-top">
                                             <div class="media-left">
-                                                <a href="{% static 'themes/img/demo/images/5.png' %}" data-popup="lightbox">
-                                                    <img src="{% static 'themes/img/demo/images/5.png' %}" style="width: 58px; height: 58px;" alt="" class="img-rounded img-preview">
+                                                <a href="{{ form.instance.get_logo_organization_url }}" data-popup="lightbox">
+                                                    <img src="{{ form.instance.get_logo_organization_url }}" style="width: 58px; height: 58px;" alt="" class="img-rounded img-preview">
                                                 </a>
                                             </div>
                                             <div class="media-body">
-                                                 {{ form.logo_url }}
+                                                 {{ form.logo_organization }}
                                                 <span class="help-block">{{ form.logo_url.errors }}</span>
                                             </div>
                                         </div>

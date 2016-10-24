@@ -14,12 +14,7 @@
             {% block sidebar_page_content %}
                 <div class="content">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="heading-elements">
-                                <a class="btn btn-primary heading-btn" href="{% url path_url_create %}">{% trans "Create" %}</a>
-                            </div>
-                            <br/>
-                        </div>
+                        {% include "partials/button_create.html" %}
 
                         <div class="panel-body">
                             <div class="table-responsive" style="display: block;">

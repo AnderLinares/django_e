@@ -18,18 +18,19 @@
                 <div class="content">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <form id="Quotation_Store_form" method="post" class="form" enctype="multipart/form-data">
+                            <form id="Purchase_Order_form" method="post" class="form" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="text-semibold">{% trans "Code Qt." %}</label>
-                                            {{ form.code_qt_store }}
-                                            <span class="help-block">{{ form.code_qt_store.errors }}</span>
+                                            <label class="text-semibold">{% trans "Code OC." %}</label>
+                                            {{ form.code_po_store }}
+                                            <span class="help-block">{{ form.code_po_store.errors }}</span>
                                         </div>
 
                                     </div>
-                                    <div class="col-md-6"></div>
+                                    <div class="col-md-6">
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -47,6 +48,22 @@
                                             <label class="text-semibold">{% trans "Applicant" %}</label>
                                             {{ form.applicant }}
                                             <span class="help-block">{{ form.applicant.errors }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Currency" %}</label>
+                                            {{ form.currency }}
+                                            <span class="help-block">{{ form.currency.errors }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Purchase Condition" %}</label>
+                                            {{ form.purchase_condition }}
+                                            <span class="help-block">{{ form.purchase_condition.errors }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -107,12 +124,32 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>{% trans " Category  / Product Name " %}</th>
-                                                    <th>{% trans " Quantity " %}</th>
-                                                    <th>{% trans " Action " %}</th>
+                                                    <th class="text-center">{% trans "Category" %}<br>{% trans "Product Name" %}</th>
+                                                    <th class="text-center">{% trans "Quantity" %}</th>
+                                                    <th class="text-center">{% trans "Price" %}<br>{% trans "Purchase" %}</th>
+                                                    <th class="text-center">{% trans "Discount" %}<br>%</th>
+                                                    <th class="text-center">{% trans "Import" %}</th>
+                                                    <th class="text-center">{% trans "Action" %}</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="tbody_quotation_row">
+                                            <tbody id="tbody_po_store_row">
+                                            </tbody>
+                                            <tbody id="tbody_po_store_row_total">
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td>{% trans "SUBTOTAL" %}{{ form.igv_tax|addcss:"hidden" }}</td>
+                                                    <td>{{ form.sub_total }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td>{% trans "IGV" %}(18%)</td>
+                                                    <td>{{ form.igv_total }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td>{% trans "TOTAL" %}</td>
+                                                    <td>{{ form.total_paid }}</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -140,7 +177,7 @@
 
 {% block js_plugins_before %}
     <script src="{% static "themes/js/formserializer.js" %}"></script>
-    <script src="{% static "themes/js/pages/quotation/quotation.js" %}"></script>
+    <script src="{% static "themes/js/pages/logistic/logistic.js" %}"></script>
 	<script>
         $(function() {
             $('.datepicker').pickadate({

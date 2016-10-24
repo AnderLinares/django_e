@@ -23,7 +23,7 @@
                                 </div>
                             {% endif %}
 
-                            <form id="Product_form" method="post" action="" class="form">
+                            <form id="Product_form" method="post" action="" class="form" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-6">
@@ -91,14 +91,13 @@
 											<div class="col-lg-9">
 												<div class="media no-margin-top">
 													<div class="media-left">
-                                                        <a href="{% static 'themes/img/demo/images/5.png' %}" data-popup="lightbox">
-                                                            <img src="{% static 'themes/img/demo/images/5.png' %}" style="width: 58px; height: 58px;" alt="" class="img-rounded img-preview">
+                                                        <a href="{{ form.instance.get_logo_product_url }}" data-popup="lightbox">
+                                                            <img src="{{ form.instance.get_logo_product_url }}" style="width: 58px; height: 58px;" alt="" class="img-rounded img-preview">
                                                         </a>
-{#														<a href="assets/images/demo/users/face10.jpg" data-popup="lightbox"><img src="assets/images/demo/users/face10.jpg" style="width: 58px; height: 58px;" class="img-rounded img-preview" alt=""></a>#}
 													</div>
 													<div class="media-body">
-														{{ form.picture }}
-														<span class="help-block">{{ form.picture.errors }}</span>
+														{{ form.logo_product }}
+														<span class="help-block">{{ form.logo_product.errors }}</span>
 													</div>
 												</div>
 											</div>

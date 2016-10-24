@@ -215,7 +215,22 @@
                                                     {% if form.instance.pk %}
                                                         {{ form.DELETE }}
                                                     {% endif %}
-                                                    {{ form.image }}
+
+                                                    <div class="col-lg-9">
+                                                        <div class="media no-margin-top">
+                                                            <div class="media-left">
+                                                                <a href="{{ form.instance.get_logo_vehicle_url }}" data-popup="lightbox">
+                                                                    <img src="{{ form.instance.get_logo_vehicle_url }}" style="width: 58px; height: 58px;" alt="" class="img-rounded img-preview">
+                                                                </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                {{ form.logo_vehicle }}
+                                                                <span class="help-block">{{ form.logo_vehicle.errors }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
                                                 </td>
                                                 <td></td>
                                             </tr>
