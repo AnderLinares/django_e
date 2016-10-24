@@ -48,9 +48,9 @@ class VehicleCreation(AuthCreateView):
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        vehicle_detail_form = VehicleDetailForm(self.request.POST)
+        vehicle_detail_form = VehicleDetailForm(request.POST)
         vehicle_image_formset = VehicleImageFormSet(
-            self.request.POST, self.request.FILES, prefix=self.prefix_vehicle_image)
+            request.POST, request.FILES, prefix=self.prefix_vehicle_image)
         if form.is_valid() and vehicle_detail_form.is_valid() and vehicle_image_formset.is_valid():
             return self.form_valid(form, vehicle_detail_form, vehicle_image_formset)
         else:

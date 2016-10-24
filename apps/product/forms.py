@@ -1,6 +1,7 @@
 from django import forms
 
 from core.models import ProductModel
+from core.utils.clearable_fileinput import CustomClearableFileInput
 from .models import (
     ProductCategory, ProductSubCategory, Product,
     ProductDetail
@@ -35,6 +36,8 @@ class ProductSubCategoryForm(forms.ModelForm):
 
 
 class ProductForm(forms.ModelForm):
+    logo_product = forms.ImageField(widget=CustomClearableFileInput, required=False)
+
     def __init__(self, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
@@ -56,7 +59,7 @@ class ProductForm(forms.ModelForm):
         self.fields['purchase_price'].widget.attrs.update(
             {'placeholder': 'Purchase Price', 'required': True,
              'class': 'form-control'})
-        self.fields['picture'].widget.attrs.update(
+        self.fields['logo_product'].widget.attrs.update(
             {'placeholder': 'Picture', 'class': 'file-styled'})
 
         category_id = self.data.get("product_category", None)

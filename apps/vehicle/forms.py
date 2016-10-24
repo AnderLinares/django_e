@@ -1,6 +1,7 @@
 from django import forms
 
 from core.models import VehicleModel
+from core.utils.clearable_fileinput import CustomClearableFileInput
 from .models import Vehicle, VehicleDetail, VehicleImage
 
 
@@ -48,8 +49,6 @@ class VehicleForm(forms.ModelForm):
 class VehicleDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields['vehicle'].widget.attrs.update(
-        #     {'placeholder': 'Vehicle', 'class': 'form-control'})
         self.fields['serie_motor'].widget.attrs.update(
             {'placeholder': 'Serie Motor', 'class': 'form-control'})
         self.fields['soat'].widget.attrs.update(
@@ -88,28 +87,14 @@ class VehicleDetailForm(forms.ModelForm):
 
 
 class VehicleImageForm(forms.ModelForm):
-
-    def full_clean(self):
-        return super().full_clean()
-
-    def clean(self):
-        return super().clean()
+    logo_vehicle = forms.ImageField(widget=CustomClearableFileInput, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['image'].widget.attrs.update(
+        self.fields['logo_vehicle'].widget.attrs.update(
             {'placeholder': 'Image', 'class': 'form-control'})
 
     class Meta:
         model = VehicleImage
         fields = "__all__"
 
-
-    #     fields = ["image"]
-    #
-    # def save(self, vehicle=None, commit=True):
-    #     vehicle_image = super().save(commit=False)
-    #     if vehicle:
-    #         vehicle_image.vehicle = vehicle
-    #     vehicle_image.save()
-    #     return vehicle_image

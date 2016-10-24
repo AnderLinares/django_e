@@ -1,8 +1,12 @@
+
 from django.db import models
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from core import constants as core_constants
 from core.models import ProductBrand, ProductModel, UnitMeasurement
 from core.utils.fields import BaseModel
+from core.utils.upload_folder import upload_product_image
+from django.conf import settings
 
 
 class ProductCategory(BaseModel):
@@ -42,7 +46,13 @@ class Product(BaseModel):
             core_constants.CODE_MEASUREMENT_PURCHASE_SOLID_UNIT]})
     sale_price = models.DecimalField(max_digits=8, decimal_places=2, default=0, null=True, blank=True)
     purchase_price = models.DecimalField(max_digits=8, decimal_places=2, default=0, null=True, blank=True)
-    picture = models.ImageField(upload_to='product/', blank=True, null=True)
+    logo_product = models.ImageField(upload_to=upload_product_image, blank=True, null=True)
+
+    def get_logo_product_url(self):
+        if self.logo_product:
+            return self.logo_product.url
+        else:
+            return static('themes/img/logo/default-logo.jpg')
 
     class Meta:
         unique_together = ["product_category", "product_subcategory", "name"]

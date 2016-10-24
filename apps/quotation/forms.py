@@ -2,8 +2,8 @@ import datetime
 
 from django import forms
 
-from apps.company.models import Correlative
 from apps.customer.models import User
+from apps.product.models import ProductCategory
 from .models import QuotationStore, QuotationStoreDetail
 
 
@@ -11,6 +11,9 @@ class QuotationStoreForm(forms.ModelForm):
     applicant = forms.ModelChoiceField(
         queryset=User.objects.all(), empty_label=None, widget=forms.Select(
             attrs={'placeholder': 'User', 'required': True, 'class': 'form-control'}))
+    category = forms.ModelChoiceField(
+        queryset=ProductCategory.objects.all(), widget=forms.Select(
+            attrs={'class': 'form-control'}), required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

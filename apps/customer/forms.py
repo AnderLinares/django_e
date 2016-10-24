@@ -1,11 +1,9 @@
-from html import escape
-
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django.forms import ClearableFileInput
 from django.utils.translation import ugettext_lazy as _
 
+from core.utils.clearable_fileinput import CustomClearableFileInput
 from .models import (
     User, UserProfile
 )
@@ -179,21 +177,8 @@ class UserForm(forms.ModelForm):
         return user
 
 
-class CustomClearableFileInput(ClearableFileInput):
-    template_with_initial = (
-        '<div class="media-left">'
-        '   <a href="%(initial_url)s"  data-popup="lightbox">'
-        '       <img src="/media/%(initial)s " class="img-rounded img-preview" />'
-        '   </a> '
-        '</div>'
-        '%(clear_template)s <div class="media-body"> %(input)s </div>'
-    )
-
-    template_with_clear = '%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
-
-
 class UserProfileForm(forms.ModelForm):
-    profile_image = forms.ImageField(widget=CustomClearableFileInput, required=False)
+    logo_profile = forms.ImageField(widget=CustomClearableFileInput, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -215,13 +200,13 @@ class UserProfileForm(forms.ModelForm):
         self.fields['subsidiary'].widget.attrs.update(
             {'placeholder': 'subsidiary', 'required': True,
              'class': 'form-control'})
-        self.fields['profile_image'].widget.attrs.update(
-            {'placeholder': 'profile_image', 'class': 'file-styled'})
+        self.fields['logo_profile'].widget.attrs.update(
+            {'placeholder': 'image', 'class': 'file-styled'})
 
     class Meta:
         model = UserProfile
         fields = ["address", "document_type", "document_number", "home_phone",
-                  "mobile_phone", "organization", "subsidiary", "profile_image"]
+                  "mobile_phone", "organization", "subsidiary", "logo_profile"]
 
     def save(self, user=None, *args, **kwargs):
         profile = super().save(*args, **kwargs)

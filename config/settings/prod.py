@@ -1,10 +1,13 @@
 from .base import *
+from .base import MIDDLEWARE_CLASSES, INSTALLED_APPS
 
-ALLOWED_HOSTS = ["*"]
+
 env_file = str(PROJECT_ROOT.path('security/environ_prod.env'))
 environ.Env.read_env(str(env_file))
 
 DEBUG = env.bool('DEBUG_PROD')
+ALLOWED_HOSTS = ["*"]
+
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 TEMPLATES[0]['OPTIONS']['loaders'] = [
     ('django.template.loaders.cached.Loader',

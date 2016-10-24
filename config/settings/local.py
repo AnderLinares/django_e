@@ -24,7 +24,7 @@ CACHES = {
 }
 
 DJANGO_APPS = (
-    # 'debug_toolbar',
+    'debug_toolbar',
 )
 THIRD_PARTY_APPS = ()
 LOCAL_APPS = ()
@@ -32,7 +32,7 @@ LOCAL_APPS = ()
 INSTALLED_APPS += DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE_CLASSES += (
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.versions.VersionsPanel',

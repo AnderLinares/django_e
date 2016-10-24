@@ -4,7 +4,7 @@ from .models import (
     Bank, ContributionSystem, Currency, ExchangeRate, Person, VehicleFuel,
     Service, Specialty, TypeContributionSystem, UnitMeasurement,
     VehicleBrand, VehicleModel, VehicleEnrollment, VehicleInventory, Store,
-    ProductBrand, ProductModel
+    ProductBrand, ProductModel, TaxConfiguration
 )
 
 admin.site.register(Bank)
@@ -25,3 +25,4 @@ admin.site.register(Store)
 admin.site.register(ProductBrand)
 admin.site.register(ProductModel)
 
+admin.site.register(TaxConfiguration)

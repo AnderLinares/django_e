@@ -1,9 +1,11 @@
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db import models
 
 from apps.billing.models import TypeDocument
 from core import constants as core_constants
 from core.models import Store
 from core.utils.fields import BaseModel
+from core.utils.upload_folder import upload_organization_image
 
 
 class Organization(BaseModel):
@@ -14,12 +16,18 @@ class Organization(BaseModel):
         choices=[core_constants.SIS_DOCUMENT_RUC_STRING])
     document_number = models.CharField(max_length=20, null=False, blank=False)
     address = models.CharField(max_length=200, blank=True, null=True)
-    logo_url = models.ImageField(upload_to="organization/", blank=True, null=True)
+    logo_organization = models.ImageField(upload_to=upload_organization_image, blank=True, null=True)
     phone = models.CharField(max_length=50, blank=True, null=True)
     mobile_phone = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         unique_together = ["business_name", "document_number"]
+
+    def get_logo_organization_url(self):
+        if self.logo_organization:
+            return self.logo_organization.url
+        else:
+            return static('themes/img/logo/default-logo.jpg')
 
     def __str__(self):
         return self.business_name

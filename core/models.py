@@ -1,7 +1,5 @@
 from django.db import models
-from django.urls import reverse
 
-from django.utils.translation import ugettext_lazy as _
 from core import constants as core_constants
 from core.utils.fields import BaseModel, BaseModel2
 
@@ -69,6 +67,22 @@ class PurchaseCondition(BaseModel):
 
     class Meta:
         unique_together = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class TaxConfiguration(BaseModel):
+    name = models.CharField(max_length=200, null=True, blank=True)
+    value = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+
+    class Meta:
+        unique_together = ["name"]
+
+    @staticmethod
+    def get_igv_value():
+        tax = TaxConfiguration.objects.get(name="IGV")
+        return tax.value
 
     def __str__(self):
         return self.name

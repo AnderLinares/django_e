@@ -113,8 +113,7 @@ class ProductCreation(AuthCreateView):
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        product_detail_form = ProductDetailForm(request.POST)
-
+        product_detail_form = ProductDetailForm(request.POST, request.FILES)
         if form.is_valid() and product_detail_form.is_valid():
             return self.form_valid(form, product_detail_form)
         else:
@@ -126,9 +125,8 @@ class ProductCreation(AuthCreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form, product_detail_form):
-        form_class = self.get_form_class()
-        self.form = self.get_form(form_class)
-        self.product_detail_form = ProductDetailForm()
+        self.form = form
+        self.product_detail_form = ProductDetailForm
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
@@ -169,9 +167,8 @@ class ProductUpdate(AuthUpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form, product_detail_form):
-        form_class = self.get_form_class()
-        self.form = self.get_form(form_class)
-        self.product_detail_form = ProductDetailForm()
+        self.form = form
+        self.product_detail_form = ProductDetailForm
         return super().render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):

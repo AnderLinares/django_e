@@ -2,7 +2,7 @@ import os
 
 from django.db import models
 
-# Create your models here.
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
@@ -60,9 +60,14 @@ class VehicleDetail(BaseModel):
 class VehicleImage(BaseModel):
     """ model Vehicle(vehiculo) """
     vehicle = models.ForeignKey(
-        Vehicle,related_name="%(app_label)s_%(class)s_vehicle",
-        blank=True, null=True, on_delete=False)
-    image = models.ImageField(upload_to=upload_vehicle_image, null=False, blank=False)
+        Vehicle, related_name="%(app_label)s_%(class)s_vehicle", blank=True, null=True)
+    logo_vehicle = models.ImageField(upload_to=upload_vehicle_image, null=True, blank=True)
+
+    def get_logo_vehicle_url(self):
+        if self.logo_vehicle:
+            return self.logo_vehicle.url
+        else:
+            return static('themes/img/logo/default-logo.jpg')
 
     def __str__(self):
         return self.vehicle.plaque
@@ -73,4 +78,4 @@ def vehicle_image_delete(sender, instance, **kwargs):
     if instance.image:
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
-        instance.image.delete(False)
+        instance.image.delete()

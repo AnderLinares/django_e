@@ -1,9 +1,12 @@
 from django import forms
 
+from core.utils.clearable_fileinput import CustomClearableFileInput
 from .models import Organization, Subsidiary, Correlative
 
 
 class OrganizationForm(forms.ModelForm):
+    logo_organization = forms.ImageField(widget=CustomClearableFileInput, required=False)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['business_name'].widget.attrs.update(
@@ -17,7 +20,7 @@ class OrganizationForm(forms.ModelForm):
              'class': 'form-control'})
         self.fields['address'].widget.attrs.update(
             {'placeholder': 'Address', 'class': 'form-control'})
-        self.fields['logo_url'].widget.attrs.update(
+        self.fields['logo_organization'].widget.attrs.update(
             {'placeholder': 'Logo', 'class': 'file-styled'})
         self.fields['phone'].widget.attrs.update(
             {'placeholder': 'Phone', 'class': 'form-control'})
@@ -62,9 +65,6 @@ class CorrelativeForm(forms.ModelForm):
         self.fields['organization'].widget.attrs.update(
             {'placeholder': 'Organization', 'required': True,
              'class': 'form-control'})
-        self.fields['subsidiary'].widget.attrs.update(
-            {'placeholder': 'Subsidiary', 'required': True,
-             'class': 'form-control'})
         self.fields['type_document'].widget.attrs.update(
             {'placeholder': 'Type Document', 'required': True,
              'class': 'form-control'})
@@ -94,6 +94,10 @@ class CorrelativeForm(forms.ModelForm):
             if organization_id:
                 self.fields['subsidiary'] = forms.ModelChoiceField(
                     queryset=Subsidiary.objects.filter(organization=organization_id))
+
+        self.fields['subsidiary'].widget.attrs.update(
+            {'placeholder': 'Subsidiary', 'required': True,
+             'class': 'form-control'})
 
     class Meta:
         model = Correlative

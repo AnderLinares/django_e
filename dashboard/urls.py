@@ -17,6 +17,7 @@ urlpatterns = [
 
     url(r'^quotation/', include('apps.quotation.urls')),
 
+    url(r'^logistic/', include('apps.logistic.urls')),
 
     url(r'^api/', include('core.api.urls')),
     url(r'^api/', include('apps.zone.api.urls')),

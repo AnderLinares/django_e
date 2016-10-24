@@ -113,7 +113,7 @@ class UserProfile(BaseModel):
         Organization, related_name="%(app_label)s_%(class)s_organization")
     subsidiary = models.ForeignKey(
         Subsidiary, related_name="%(app_label)s_%(class)s_subsidiary")
-    profile_image = models.ImageField(
+    logo_profile = models.ImageField(
         upload_to=upload_user_profile, blank=True, null=True)
 
     def __str__(self):
@@ -125,11 +125,11 @@ class UserProfile(BaseModel):
     def get_user_email(self):
         return self.user.email
 
-    def profile_image_exists(self):
-        if self.profile_image:
-            return self.profile_image.url
+    def get_logo_profile_url(self):
+        if self.logo_profile:
+            return self.logo_profile.url
         else:
-            return static('assets/img/uncompressed/default_profile.png')
+            return static('themes/img/logo/default-profile.jpg')
 
     def thumb(self):
         if self.profile_image:

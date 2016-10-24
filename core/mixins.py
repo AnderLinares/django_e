@@ -9,15 +9,6 @@ from django.views.generic import (
 )
 
 
-CRUD_TUPLE = ("create", "list", "update", "delete")
-CRUD_DICT = {
-    CRUD_TUPLE[0]: CRUD_TUPLE[0],
-    CRUD_TUPLE[1]: CRUD_TUPLE[1],
-    CRUD_TUPLE[2]: CRUD_TUPLE[2],
-    CRUD_TUPLE[3]: CRUD_TUPLE[3]
-}
-
-
 class TemplateLoginRequiredMixin(LoginRequiredMixin, TemplateView):
     login_url = '/login/'
 
