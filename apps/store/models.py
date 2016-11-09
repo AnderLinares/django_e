@@ -3,7 +3,6 @@ from django.db import models
 from apps.company.models import Subsidiary
 from apps.customer.models import UserProfile
 from apps.product.models import Product
-from apps.taller.models import PurchaseOrderStore
 from apps.vehicle.models import Vehicle
 from core.models import Store
 from core.utils.fields import BaseModel
