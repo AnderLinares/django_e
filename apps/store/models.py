@@ -1,13 +1,12 @@
 from django.db import models
 
-# Create your models here.
 from apps.company.models import Subsidiary
-from core.utils.fields import BaseModel
 from apps.customer.models import UserProfile
-from apps.taller.models import PurchaseOrderStore
-from core.models import Store
 from apps.product.models import Product
+from apps.taller.models import PurchaseOrderStore
 from apps.vehicle.models import Vehicle
+from core.models import Store
+from core.utils.fields import BaseModel
 
 
 class ReferenceGuideTallerOrder(BaseModel):
