@@ -13,11 +13,16 @@ urlpatterns = [
     url(r'^supplier/', include('apps.supplier.urls')),
     url(r'^vehicle/', include('apps.vehicle.urls')),
 
+    url(r'^taller/', include('apps.taller.urls')),
+
     url(r'^customer/', include('apps.customer._urls')),
 
     url(r'^quotation/', include('apps.quotation.urls')),
 
     url(r'^logistic/', include('apps.logistic.urls')),
+
+
+
 
     url(r'^api/', include('core.api.urls')),
     url(r'^api/', include('apps.zone.api.urls')),
@@ -25,5 +30,6 @@ urlpatterns = [
     url(r'^api/', include('apps.company.api.urls')),
 
     url(r'^api/', include('apps.supplier.api.urls')),
+    url(r'^api/', include('apps.vehicle.api.urls')),
 
 ]

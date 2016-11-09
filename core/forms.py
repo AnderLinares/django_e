@@ -4,8 +4,69 @@ from .models import (
     UnitMeasurement, PurchaseCondition, VehicleInventory,
     VehicleEnrollment, VehicleBrand, VehicleModel, VehicleFuel,
     ProductBrand, ProductModel,
-    Currency, ExchangeRate, Service, Store, Person
-)
+    Currency, ExchangeRate, Service, Store, Person,
+    LabourCategory, Labour,
+    ConsultService, HandWorkCategory, HandWork)
+
+
+class HandWorkCategoryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = HandWorkCategory
+        fields = "__all__"
+
+
+class HandWorkForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['handwork_category'].widget.attrs.update(
+            {'placeholder': 'handwork category', 'required': True,
+             'class': 'form-control'})
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+        self.fields['currency'].widget.attrs.update(
+            {'placeholder': 'currency', 'required': True,
+             'class': 'form-control'})
+        self.fields['price'].widget.attrs.update(
+            {'placeholder': 'price', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = HandWork
+        fields = "__all__"
+
+
+class LabourCategoryForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = LabourCategory
+        fields = "__all__"
+
+
+class LabourForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['labour_category'].widget.attrs.update(
+            {'placeholder': 'Labour Category', 'required': True,
+             'class': 'form-control'})
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = Labour
+        fields = "__all__"
 
 
 class UnitMeasurementForm(forms.ModelForm):
@@ -235,4 +296,22 @@ class PersonForm(forms.ModelForm):
 
     class Meta:
         model = Person
+        fields = "__all__"
+
+
+class ConsultServiceForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update(
+            {'placeholder': 'Name', 'required': True,
+             'class': 'form-control'})
+        self.fields['url_service'].widget.attrs.update(
+            {'placeholder': 'Url Service', 'required': True,
+             'class': 'form-control'})
+        self.fields['description'].widget.attrs.update(
+            {'placeholder': 'Description', 'required': True,
+             'class': 'form-control'})
+
+    class Meta:
+        model = ConsultService
         fields = "__all__"

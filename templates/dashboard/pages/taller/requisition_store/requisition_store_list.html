@@ -1,0 +1,60 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                <div class="content">
+                    <div class="panel panel-default">
+                        {% include "partials/button_create.html" %}
+
+                        <div class="panel-body">
+                            <div class="table-responsive" style="display: block;">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="bg-blue">
+                                        <th>#</th>
+                                        <th>{% trans "Code SPT." %}</th>
+                                        <th>{% trans "Date" %}</th>
+                                        <th>{% trans "Status" %}</th>
+                                        <th>{% trans "Action" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for object in object_list %}
+                                        <tr>
+                                            <td><b>{{ forloop.counter }} .-</b></td>
+                                            <td>{{ object.code_spt }}</td>
+                                            <td>{{ object.date_created }}</td>
+                                            <td>{{ object.get_status_requisition_display }}</td>
+                                            <td>
+                                                <a class="label label-flat border-primary text-primary-600 label-icon" data-popup="tooltip" title="" data-original-title="{% trans "Requisition Detail" %}" href="{{ object.get_absolute_detail_url }}"><i class="icon-eye"></i></a>
+                                                {% if not object.status_requisition == 'SENT'  %}
+                                                    <a class="label label-flat border-primary text-primary-600 label-icon" data-popup="tooltip" title="" data-original-title="{% trans "Requisition Edit " %}" href="{% url path_url_update  pk=object.id %}"><i class="icon-pencil7"></i></a> &nbsp;
+                                                    <a class="label label-flat border-primary text-primary-600 label-icon" data-popup="tooltip" title="" data-original-title="{% trans "Requisition Delete " %}" href="{% url path_url_delete pk=object.id %}"><i class="icon-trash"></i></a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="4">No items.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            {% include 'partials/pagination.html' %}
+                        </div>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}

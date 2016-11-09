@@ -13,17 +13,9 @@ urlpatterns = [
 
     url(r'',
         include([
-            url(r'^subcategory/$', views.ProductSubCategoryAPIListView.as_view(), name='subcategory'),
-            url(r'^subcategory/(?P<pk>[0-9]+)/$', views.ProductSubCategoryAPIView.as_view(), name='subcategory-detail'),
-            url(r'^subcategory/(?P<category>[0-9]+)/category/$', views.ProductSubCategoryCategoryAPIListView.as_view(), name='subcategory-category'),
-
-        ], namespace='api-subcategory')),
-
-    url(r'',
-        include([
             url(r'^product/$', views.ProductAPIListView.as_view(), name='product'),
             url(r'^product/(?P<pk>[0-9]+)/$', views.ProductAPIView.as_view(), name='product-detail'),
-            url(r'^product/(?P<category>[0-9]+)/(?P<subcategory>[0-9]+)/$', views.ProductCategorySubCategoryAPIListView.as_view(), name='product-categoria-subcategory'),
+            url(r'^product/(?P<category>[0-9]+)/category/$', views.ProductCategoryCategoryAPIListView.as_view(), name='product-category'),
         ], namespace='api-product')),
 
 ]

@@ -22,7 +22,7 @@ class VehicleForm(forms.ModelForm):
              'class': 'form-control'})
         self.fields['color'].widget.attrs.update(
             {'placeholder': 'Color', 'required': True,
-             'class': 'form-control colorpicker-basic'})
+             'class': 'form-control colorpicker-full', "data-preferred-format": "hex"})
         self.fields['type_vehicle'].widget.attrs.update(
             {'placeholder': 'Type Vehicle', 'required': True,
              'class': 'form-control'})
@@ -49,8 +49,12 @@ class VehicleForm(forms.ModelForm):
 class VehicleDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['serie_motor'].widget.attrs.update(
-            {'placeholder': 'Serie Motor', 'class': 'form-control'})
+        self.fields['number_motor'].widget.attrs.update(
+            {'placeholder': 'Number Motor', 'class': 'form-control'})
+        self.fields['number_serie'].widget.attrs.update(
+            {'placeholder': 'Number Serie', 'class': 'form-control'})
+        self.fields['number_vin'].widget.attrs.update(
+            {'placeholder': 'Number Vin', 'class': 'form-control'})
         self.fields['soat'].widget.attrs.update(
             {'placeholder': 'Soat', 'class': 'form-control'})
         self.fields['expiration_soat'].widget.attrs.update(
@@ -74,7 +78,7 @@ class VehicleDetailForm(forms.ModelForm):
 
     class Meta:
         model = VehicleDetail
-        fields = ["serie_motor", "soat", "expiration_soat", "poliza", "expiration_poliza",
+        fields = ["number_motor", "number_serie", "number_vin", "soat", "expiration_soat", "poliza", "expiration_poliza",
                   "technical_review", "expiration_technical_review", "opacity_test",
                   "expiration_opacity_test", "farenet_test", "expiration_farenet_test"]
 

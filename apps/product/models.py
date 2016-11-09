@@ -1,12 +1,10 @@
-
-from django.db import models
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.db import models
 
 from core import constants as core_constants
 from core.models import ProductBrand, ProductModel, UnitMeasurement
 from core.utils.fields import BaseModel
 from core.utils.upload_folder import upload_product_image
-from django.conf import settings
 
 
 class ProductCategory(BaseModel):
@@ -19,23 +17,9 @@ class ProductCategory(BaseModel):
         return self.name
 
 
-class ProductSubCategory(BaseModel):
-    product_category = models.ForeignKey(
-        ProductCategory, related_name="%(app_label)s_%(class)s_product_category")
-    name = models.CharField(max_length=100, null=False, blank=False)
-
-    class Meta:
-        unique_together = ["product_category", "name"]
-
-    def __str__(self):
-        return self.name
-
-
 class Product(BaseModel):
     product_category = models.ForeignKey(
         ProductCategory, related_name="%(app_label)s_%(class)s_product_category")
-    product_subcategory = models.ForeignKey(
-        ProductSubCategory, related_name="%(app_label)s_%(class)s_product_subcategory")
     name = models.CharField(max_length=200, null=False, blank=False)
     brand = models.ForeignKey(ProductBrand, related_name="%(app_label)s_%(class)s_brand")
     model = models.ForeignKey(ProductModel, related_name="%(app_label)s_%(class)s_model")
@@ -54,9 +38,6 @@ class Product(BaseModel):
         else:
             return static('themes/img/logo/default-logo.jpg')
 
-    class Meta:
-        unique_together = ["product_category", "product_subcategory", "name"]
-
     def __str__(self):
         return self.name
 
@@ -68,8 +49,6 @@ class ProductDetail(BaseModel):
     origin = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(max_length=200, null=True, blank=True)
 
-    class Meta:
-        unique_together = ["product", "series"]
 
     def __str__(self):
         return self.product.name

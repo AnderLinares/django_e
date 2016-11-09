@@ -5,11 +5,11 @@ $(document).ready(function() {
         var _this = $(this).val();
         $.ajax({
             type: "GET",
-            url: "/api/subcategory/"+_this+"/category/"
+            url: "/api/category/"+_this
         }).done(function(data) {
-            $('#id_product_subcategory').html("");
+            $('#id_product').html("");
             $.each(data,function(index, itemData){
-               $('#id_product_subcategory').append(
+               $('#id_product').append(
                    $('<option>', {
                        value: itemData.id,
                        text : itemData.name

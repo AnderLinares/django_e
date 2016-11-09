@@ -1,0 +1,138 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                 <div class="content">
+                    <div class="panel panel-white">
+						<div class="panel-heading">
+                            <div class="heading-elements">
+                                <div class="heading-btn">
+                                    <button type="button" id="btnPrint" class="btn btn-info"><i class="icon-printer"></i> Print</button>
+                                </div>
+                            </div>
+                            <br>
+						</div>
+                        <div class="row" id="print_qt">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <table class="table no-border">
+                                        <tr>
+                                            <td><img src="{% static "themes/img/logo/logo_american4.png" %}" class="img-circle" alt="" /></td>
+                                            <td class="text-right">
+                                                <h3>American Renta a Car: <span class="text-semibold text-center">{% trans "Requisition Order Material" %}</span></h3>
+                                                {{ object.date_created }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td class="text-semibold">{% trans "Code"%}</td>
+                                            <td>{{ object.code_spt }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">{% trans "Applicant" %}</td>
+                                            <td>{{ object.applicant }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-semibold">{% trans "Client" %}</td>
+                                            <td>{{ object.client }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                       <table class="table">
+                                           <thead>
+                                             <tr>
+                                               <th>#</th>
+                                               <th>{% trans "Vehicle" %}</th>
+                                               <th>{% trans "Product" %}</th>
+                                               <th>{% trans "Quantity" %}</th>
+                                               <th>{% trans "Is Urgent" %}</th>
+                                               <th>{% trans "Observation" %}</th>
+                                             </tr>
+                                           </thead>
+                                           <tbody>
+                                                {% for rq in requisition_store_list %}
+                                                   <tr>
+                                                       <td>{{ forloop.counter }}</td>
+                                                       <td>{{ rq.vehicle.plaque }}</td>
+                                                       <td>{{ rq.product }}</td>
+                                                       <td>{{ rq.quantity }}</td>
+                                                       <td>
+                                                           {% if rq.is_urgent  %}
+                                                               <span class="badge badge-primary"><i class="icon-check"></i></span>
+{#                                                                <button type="button" class="btn btn-primary btn-icon btn-rounded"><i class="icon-check"></i></button>#}
+                                                            {% endif %}
+                                                       </td>
+                                                        <td>{{ rq.observation }}</td>
+                                                   </tr>
+                                                {% endfor %}
+                                           </tbody>
+                                       </table>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row ">
+                                        <div class="col-sm-7">
+                                            <div class="content-group">
+                                                <h6>Persona Authorizada</h6>
+                                                <ul class="list-condensed list-unstyled text-muted">
+                                                    <li>{{ object.applicant.first_name }} {{ object.applicant.last_name }}</li>
+                                                    <li>{{ object.applicant.email }}</li>
+                                                    <li>Lima - {{ object.applicant.get_profile.mobile_phone }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+
+                    <br />
+                    <div class="text-right">
+                        <a class="btn btn-info" href="{% url path_url_list %}"><i class="fa fa-arrow-left"></i>{% trans "Back" %}</a>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}
+
+{% block js_plugins_before %}
+    <script>
+        $(function() {
+            function printDiv(divName) {
+                 var printContents = document.getElementById(divName).innerHTML;
+                 var originalContents = document.body.innerHTML;
+                 document.body.innerHTML = printContents;
+                 window.print();
+                 document.body.innerHTML = originalContents;
+            }
+            $("#btnPrint").on('click', function (e) {
+                e.preventDefault();
+                printDiv('print_qt')
+            });
+        });
+    </script>
+{% endblock js_plugins_before %}

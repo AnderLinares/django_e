@@ -1,0 +1,194 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+{% load filter %}
+
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                <div class="content">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form id="Quotation_Maintenance_form" method="post" class="form" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Code COM." %}</label>
+                                            {{ form.code_qt_maintenance }}
+                                            <span class="help-block">{{ form.code_qt_maintenance.errors }}</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Applicant" %}</label>
+                                            {{ form.applicant }}
+                                            <span class="help-block">{{ form.applicant.errors }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Date" %}</label>
+                                             <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                                {{ form.date }}
+                                            </div>
+                                            <span class="help-block">{{ form.date.errors }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Vehicle" %}</label>
+                                            {{ form.vehicle }}
+                                            <span class="help-block">{{ form.vehicle.errors }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Client" %}</label>
+                                            {{ form.client }}
+                                            <span class="help-block">{{ form.client.errors }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="row">
+                                    <fieldset>
+                                        <legend class="text-semibold">
+                                            <i class="icon-archive"></i> {% trans "Add Product" %}
+                                        </legend>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="text-semibold">{% trans "P. Category" %}</label>
+                                                {{ form.frm_product_category }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="text-semibold">{% trans "Product" %}</label>
+                                                {{ form.frm_product }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="display-block"></label></br>
+                                            <button type="button" id="add_product" class="btn btn-primary">Agregar</button>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <fieldset>
+                                        <legend class="text-semibold">
+                                            <i class="icon-archive"></i> {% trans "Add HandWord" %}
+                                        </legend>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="text-semibold">{% trans "HandWord Category" %}</label>
+                                                {{ form.frm_handwork_category }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="text-semibold">{% trans "HandWork" %}</label>
+                                                {{ form.frm_handwork }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="display-block"></label></br>
+                                            <button type="button" id="add_handwork" class="btn btn-primary">Agregar</button>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <table id="id_table_qt_maintenance" class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">{% trans "Description" %}</th>
+                                                    <th class="text-center">{% trans "Quantity" %}</th>
+                                                    <th class="text-center">{% trans "Price" %}</th>
+                                                    <th class="text-center">{% trans "Import" %}</th>
+                                                    <th class="text-center">{% trans "Action" %}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody_maintenance_product_row">
+                                            </tbody>
+                                            <tbody id="tbody_maintenance_handwork_row">
+                                            </tbody>
+
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td>{% trans "SUBTOTAL" %}</td>
+                                                <td>{{ form.sub_total }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td>{% trans "IGV" %}(18%)</td>
+                                                <td>{{ form.igv_total }}{{ form.frm_igv_tax }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td>{% trans "TOTAL" %}</td>
+                                                <td>{{ form.total_paid }}</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="text-right">
+                                    <a class="btn btn-info" href="{% url path_url_list %}"><i class="fa fa-arrow-left"></i>{% trans "Back" %}</a>
+                                    <a href="javascript:void(0)" id="submit_form" class="btn btn-info">{% trans "Submit" %} <i class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}
+
+{% block js_plugins_after %}
+	<script type="text/javascript" src="{% static "themes/global/pickadate/lib/compressed/picker.js" %}"></script>
+	<script type="text/javascript" src="{% static "themes/global/pickadate/lib/compressed/picker.date.js" %}"></script>
+    <script type="text/javascript" src="{% static "themes/global/pickadate/lib/compressed/picker.date.js" %}"></script>
+    <script type="text/javascript" src="{% static "themes/global/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js" %}"></script>
+{% endblock js_plugins_after %}
+
+{% block js_plugins_before %}
+    <script src="{% static "themes/js/formserializer.js" %}"></script>
+    <script src="{% static "themes/js/pages/quotation/quotation_maintenance.js" %}"></script>
+	<script>
+        $(function() {
+            $('.datepicker').pickadate({
+               format: 'yyyy-mm-dd',
+               formatSubmit: 'yyyy-mm-dd'
+            });
+            $(".touchspin-step").TouchSpin({
+                min: 1,
+                max: 100,
+                step: 1
+            });
+        });
+    </script>
+{% endblock js_plugins_before %}

@@ -88,9 +88,25 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="text-semibold">{% trans "Serie Motor" %}</label>
-                                            {{ vehicle_detail_form.serie_motor }}
-                                            <span class="help-block">{{ vehicle_detail_form.serie_motor.errors }}</span>
+                                            <label class="text-semibold">{% trans "Number Motor" %}</label>
+                                            {{ vehicle_detail_form.number_motor }}
+                                            <span class="help-block">{{ vehicle_detail_form.number_motor.errors }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Number Vin" %}</label>
+                                            {{ form.number_vin }}
+                                            <span class="help-block">{{ form.number_vin.errors }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="text-semibold">{% trans "Number Serie" %}</label>
+                                            {{ vehicle_detail_form.number_serie }}
+                                            <span class="help-block">{{ vehicle_detail_form.number_serie.errors }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -269,7 +285,7 @@
                format: 'yyyy-mm-dd',
                formatSubmit: 'yyyy-mm-dd'
             });
-            $(".colorpicker-basic").spectrum();
+            $(".colorpicker-full").spectrum();
 
             $('#id_contact_info_table tbody tr').formset({
                 prefix: "{{ vehicle_image_formset.prefix }}",

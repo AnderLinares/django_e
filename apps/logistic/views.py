@@ -47,10 +47,8 @@ class PurchaseOrderCreation(AuthTemplateCreateView):
         data_form_detail = data["form_detail"]
         form = PurchaseOrderForm(data=data_form)
         if form.is_valid():
-            print("valid")
             return self.frm_valid(form, data_form_detail)
         else:
-            print("invalid")
             return self.frm_invalid(form)
 
     def frm_valid(self, form, form_detail):

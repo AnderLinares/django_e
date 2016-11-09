@@ -4,6 +4,76 @@ from core import constants as core_constants
 from core.utils.fields import BaseModel, BaseModel2
 
 
+class Currency(BaseModel):
+    sk = models.CharField(max_length=30, blank=True, null=True)
+    code = models.CharField(max_length=10, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    is_fund = models.BooleanField(default=False)
+    is_complimentary = models.BooleanField(default=False)
+    is_metal = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ["sk", "code", "name"]
+
+    def __str__(self):
+        return self.name
+
+
+class ExchangeRate(BaseModel):
+    currency = models.ForeignKey(Currency,
+                                 related_name="%(app_label)s_%(class)s_currency")
+    exchange_rate = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    start_date = models.DateTimeField(null=True)
+    end_date = models.DateTimeField(blank=True, null=True, default=None)
+
+    def __str__(self):
+        return "{0}-{1}".format(str(self.currency.name), str(self.exchange_rate))
+
+
+class HandWorkCategory(BaseModel):
+    name = models.CharField(max_length=200, null=True, blank=True)
+
+    class Meta:
+        unique_together = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class HandWork(BaseModel):
+    handwork_category = models.ForeignKey(HandWorkCategory, related_name="%(app_label)s_%(class)s_handwork_category")
+    name = models.CharField(max_length=200, null=True, blank=True)
+    currency = models.ForeignKey(Currency, related_name="%(app_label)s_%(class)s_currency")
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0, null=True, blank=True)
+
+    class Meta:
+        unique_together = ["handwork_category", "name"]
+
+    def __str__(self):
+        return self.name
+
+
+class LabourCategory(BaseModel):
+    name = models.CharField(max_length=200, null=True, blank=True)
+
+    class Meta:
+        unique_together = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class Labour(BaseModel):
+    labour_category = models.ForeignKey(LabourCategory, related_name="%(app_label)s_%(class)s_labour_category")
+    name = models.CharField(max_length=200, null=True, blank=True)
+
+    class Meta:
+        unique_together = ["labour_category", "name"]
+
+    def __str__(self):
+        return self.name
+
+
 class UnitMeasurement(BaseModel):
     type_measurement = models.CharField(max_length=20, choices=core_constants.TYPE_UNIT_MEASUREMENT_OPTIONS)
     name = models.CharField(max_length=120, null=False, blank=False)
@@ -111,32 +181,6 @@ class ProductModel(BaseModel):
         return self.name
 
 
-class Currency(BaseModel):
-    sk = models.CharField(max_length=30, blank=True, null=True)
-    code = models.CharField(max_length=10, blank=True, null=True)
-    name = models.CharField(max_length=100, blank=True, null=True)
-    is_fund = models.BooleanField(default=False)
-    is_complimentary = models.BooleanField(default=False)
-    is_metal = models.BooleanField(default=False)
-
-    class Meta:
-        unique_together = ["sk", "code", "name"]
-
-    def __str__(self):
-        return self.name
-
-
-class ExchangeRate(BaseModel):
-    currency = models.ForeignKey(Currency,
-                                 related_name="%(app_label)s_%(class)s_currency")
-    exchange_rate = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    start_date = models.DateTimeField(null=True)
-    end_date = models.DateTimeField(blank=True, null=True, default=None)
-
-    def __str__(self):
-        return "{0}-{1}".format(str(self.currency.name), str(self.exchange_rate))
-
-
 class TypeContributionSystem(BaseModel):
     type_contribution = models.CharField(max_length=20, choices=core_constants.TYPE_CONTRIBUTION_SYSTEM__OPTIONS)
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -227,4 +271,16 @@ class Person(BaseModel):
         unique_together = ["email"]
 
     def __str__(self):
-        return "{0}-{1}".format(self.first_name, self.get_person_type_display())
+        return "{0}-{1}".format(self.first_name, self.get_person_tribute_display())
+
+
+class ConsultService(BaseModel):
+    name = models.CharField(max_length=100, null=False, blank=False)
+    url_service = models.URLField(null=False, blank=False)
+    description = models.TextField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ["name", "url_service"]
+
+    def __str__(self):
+        return self.name

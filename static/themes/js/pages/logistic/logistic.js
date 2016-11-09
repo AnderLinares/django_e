@@ -225,11 +225,7 @@ $(document).ready(function() {
         return result
     };
 
-    _tbody.on('click', '.bootstrap-touchspin-down', function(event) {
-        var _this = $(this);
-        touchspin_load(_this)
-    });
-    _tbody.on('click', '.bootstrap-touchspin-up', function(event) {
+    _tbody.on('click', '.bootstrap-touchspin-down, .bootstrap-touchspin-up', function(event) {
         var _this = $(this);
         touchspin_load(_this)
     });

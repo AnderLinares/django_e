@@ -3,10 +3,155 @@ from django.utils.translation import ugettext_lazy as _
 
 from .forms import UnitMeasurementForm, VehicleEnrollmentForm, VehicleModelForm, VehicleBrandForm, VehicleFuelForm, \
     PurchaseConditionForm, ProductModelForm, ProductBrandForm, CurrencyForm, ExchangeRateForm, VehicleInventoryForm, \
-    PersonForm, StoreForm, ServiceForm
+    PersonForm, StoreForm, ServiceForm, LabourCategoryForm, LabourForm, ConsultServiceForm, HandWorkCategoryForm, \
+    HandWorkForm
 from .mixins import AuthListView, AuthCreateView, AuthUpdateView, AuthDeleteView
 from .models import UnitMeasurement, VehicleEnrollment, VehicleBrand, VehicleModel, VehicleFuel, PurchaseCondition, \
-    ProductBrand, ProductModel, Currency, ExchangeRate, VehicleInventory, Person, Store, Service
+    ProductBrand, ProductModel, Currency, ExchangeRate, VehicleInventory, Person, Store, Service, Labour, \
+    ConsultService, LabourCategory, HandWorkCategory, HandWork
+
+"""
+    HandWorkCategory
+"""
+
+
+class HandWorkCategoryList(AuthListView):
+    template_name = 'dashboard/pages/admin/handworkcategory/handworkcategory_list.html'
+    model = HandWorkCategory
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["text_central"] = _("list HandWorkCategory")
+        return context
+
+
+class HandWorkCategoryCreation(AuthCreateView):
+    template_name = 'dashboard/pages/admin/handworkcategory/handworkcategory_form.html'
+    model = HandWorkCategory
+    success_url = reverse_lazy('HandWorkCategory:list')
+    form_class = HandWorkCategoryForm
+
+
+class HandWorkCategoryUpdate(AuthUpdateView):
+    template_name = 'dashboard/pages/admin/handworkcategory/handworkcategory_form.html'
+    model = HandWorkCategory
+    success_url = reverse_lazy('HandWorkCategory:list')
+    form_class = HandWorkCategoryForm
+
+
+class HandWorkCategoryDelete(AuthDeleteView):
+    template_name = 'dashboard/pages/admin/handworkcategory/handworkcategory_confirm_delete.html'
+    model = HandWorkCategory
+    success_url = reverse_lazy('HandWorkCategory:list')
+
+
+"""
+    HandWork
+"""
+
+
+class HandWorkList(AuthListView):
+    template_name = 'dashboard/pages/admin/handwork/handwork_list.html'
+    model = HandWork
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["text_central"] = _("list HandWork")
+        return context
+
+
+class HandWorkCreation(AuthCreateView):
+    template_name = 'dashboard/pages/admin/handwork/handwork_form.html'
+    model = HandWork
+    success_url = reverse_lazy('HandWork:list')
+    form_class = HandWorkForm
+
+
+class HandWorkUpdate(AuthUpdateView):
+    template_name = 'dashboard/pages/admin/handwork/handwork_form.html'
+    model = HandWork
+    success_url = reverse_lazy('HandWork:list')
+    form_class = HandWorkForm
+
+
+class HandWorkDelete(AuthDeleteView):
+    template_name = 'dashboard/pages/admin/handwork/handwork_confirm_delete.html'
+    model = HandWork
+    success_url = reverse_lazy('HandWork:list')
+
+"""
+    LabourCategory
+"""
+
+
+class LabourCategoryList(AuthListView):
+    template_name = 'dashboard/pages/admin/labourcategory/labourcategory_list.html'
+    model = LabourCategory
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["text_central"] = _("list LabourCategory")
+        return context
+
+
+class LabourCategoryCreation(AuthCreateView):
+    template_name = 'dashboard/pages/admin/labourcategory/labourcategory_form.html'
+    model = LabourCategory
+    success_url = reverse_lazy('LabourCategory:list')
+    form_class = LabourCategoryForm
+
+
+class LabourCategoryUpdate(AuthUpdateView):
+    template_name = 'dashboard/pages/admin/labourcategory/labourcategory_form.html'
+    model = LabourCategory
+    success_url = reverse_lazy('LabourCategory:list')
+    form_class = LabourCategoryForm
+
+
+class LabourCategoryDelete(AuthDeleteView):
+    template_name = 'dashboard/pages/admin/labourcategory/labourcategory_confirm_delete.html'
+    model = LabourCategory
+    success_url = reverse_lazy('LabourCategory:list')
+
+
+"""
+    Labour
+"""
+
+
+class LabourList(AuthListView):
+    template_name = 'dashboard/pages/admin/labour/labour_list.html'
+    model = Labour
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["text_central"] = _("list Labour")
+        return context
+
+
+class LabourCreation(AuthCreateView):
+    template_name = 'dashboard/pages/admin/labour/labour_form.html'
+    model = Labour
+    success_url = reverse_lazy('Labour:list')
+    form_class = LabourForm
+
+
+class LabourUpdate(AuthUpdateView):
+    template_name = 'dashboard/pages/admin/labour/labour_form.html'
+    model = Labour
+    success_url = reverse_lazy('Labour:list')
+    form_class = LabourForm
+
+
+class LabourDelete(AuthDeleteView):
+    template_name = 'dashboard/pages/admin/labour/labour_confirm_delete.html'
+    model = Labour
+    success_url = reverse_lazy('Labour:list')
+
 
 """
     UnitMeasurement
@@ -352,7 +497,7 @@ class CurrencyCreation(AuthCreateView):
     template_name = 'dashboard/pages/admin/currency/currency_form.html'
     model = Currency
     success_url = reverse_lazy('Currency:list')
-    form_class = ProductModelForm
+    form_class = CurrencyForm
 
 
 class CurrencyUpdate(AuthUpdateView):
@@ -510,3 +655,39 @@ class PersonDelete(AuthDeleteView):
     template_name = 'dashboard/pages/admin/person/person_confirm_delete.html'
     model = Person
     success_url = reverse_lazy('Person:list')
+
+
+"""
+    ConsultService
+"""
+
+
+class ConsultServiceList(AuthListView):
+    template_name = 'dashboard/pages/admin/consult_service/consult_service_list.html'
+    model = ConsultService
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["text_central"] = _("list ConsultService")
+        return context
+
+
+class ConsultServiceCreation(AuthCreateView):
+    template_name = 'dashboard/pages/admin/consult_service/consult_service_form.html'
+    model = ConsultService
+    success_url = reverse_lazy('ConsultService:list')
+    form_class = ConsultServiceForm
+
+
+class ConsultServiceUpdate(AuthUpdateView):
+    template_name = 'dashboard/pages/admin/consult_service/consult_service_form.html'
+    model = ConsultService
+    success_url = reverse_lazy('ConsultService:list')
+    form_class = ConsultServiceForm
+
+
+class ConsultServiceDelete(AuthDeleteView):
+    template_name = 'dashboard/pages/admin/consult_service/consult_service_confirm_delete.html'
+    model = ConsultService
+    success_url = reverse_lazy('ConsultService:list')

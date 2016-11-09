@@ -2,7 +2,7 @@ from django.db import models
 
 from apps.company.models import Organization
 from apps.customer.models import User
-from apps.product.models import ProductCategory, ProductSubCategory, Product
+from apps.product.models import ProductCategory, Product
 from apps.supplier.models import Supplier, SupplierProduct
 from core.models import Currency, ExchangeRate, Store, PurchaseCondition
 from core.utils.fields import BaseModel

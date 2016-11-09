@@ -1,0 +1,178 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                 <div class="content">
+                    <div class="panel panel-white">
+						<div class="panel-heading">
+                            <div class="heading-elements">
+                                <div class="heading-btn">
+                                    <button type="button" id="btnPrint" class="btn btn-info"><i class="icon-printer"></i> Print</button>
+                                </div>
+                            </div>
+                            <br>
+						</div>
+                        <div class="row" id="print_qt">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <table class="table no-border">
+                                        <tr>
+                                            <td><img src="{% static "themes/img/logo/logo_american4.png" %}" class="img-circle" alt="" /></td>
+                                            <td class="text-right">
+                                                <h3>American Renta a Car: <span class="text-semibold text-center">Acta de Vehiculo</span></h3>
+                                                {{ object.date_created }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="table table-condensed">
+                                        <tr>
+                                            <td class="text-semibold">Cliente:</td>
+                                            <td colspan="5">{{ object.person }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-semibold">{% trans "Km Exit"%}</td>
+                                            <td>{{ object.km_exit|default_if_none:"" }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">{% trans "Km Entry" %}</td>
+                                            <td>{{ object.km_entry }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-semibold">{% trans "Date Exit" %}</td>
+                                            <td>{{ object.date_exit|default_if_none:"" }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">{% trans "Date Entry" %}</td>
+                                            <td>{{ object.date_entry }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-semibold">{% trans "Hour Exit" %}</td>
+                                            <td>{{ object.hour_exit|default_if_none:"" }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">{% trans "Hour Entryt" %}</td>
+                                            <td>{{ object.hour_entry }}</td>
+                                        </tr>
+                                         <tr>
+                                            <td class="text-semibold">{% trans "Brand"%}</td>
+                                            <td>{{ object.vehicle.brand }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">{% trans "Color"%}</td>
+                                            <td>
+                                                <span class="label label-icon" style="background-color: {{ object.vehicle.color }}"><i class="icon-car"></i></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-semibold">{% trans "Model"%}</td>
+                                            <td>{{ object.vehicle.model }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="text-semibold">{% trans "Año"%}</td>
+                                            <td>{{ object.vehicle.year_car }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <p class="text-bold text-uppercase">{% trans "Inventory Entry" %}</p>
+                                        {%  for invent in inventory_list %}
+                                            <div class="form-group">
+                                               <label>{{ invent.get_inventory_entry_list }}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="table-responsive">
+                                        <p class="text-bold text-uppercase">{% trans "Inventory Exit" %}</p>
+                                        {%  for invent in inventory_list %}
+                                            <div class="form-group">
+                                               <label>{{ invent.get_inventory_exit_list }}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="table-responsive">
+                                        {%  for obsv in observation_list %}
+                                            {% if obsv.observation_inspection %}
+                                                <p class="text-bold text-uppercase">{% trans "Obsv. Inspection" %}</p>
+                                                <div class="form-group">
+                                                   <label>{{ obsv.observation_inspection }}</label>
+                                                </div>
+                                            {% endif %}
+                                            {% if obsv.observation_evaluation %}
+                                                <p class="text-bold text-uppercase">{% trans "Obsv. Evaluation" %}</p>
+                                                <div class="form-group">
+                                                   <label>{{ obsv.observation_evaluation }}</label>
+                                                </div>
+                                            {% endif %}
+                                            {% if obsv.observation_correction %}
+                                                <p class="text-bold text-uppercase">{% trans "Obsv Correction" %}</p>
+                                                <div class="form-group">
+                                                   <label>{{ obsv.observation_correction }}</label>
+                                                </div>
+                                            {% endif %}
+                                            {% if obsv.observation_conclusion %}
+                                                <p class="text-bold text-uppercase">{% trans "Obsv. Conclusion" %}</p>
+                                                <div class="form-group">
+                                                   <label>{{ obsv.observation_conclusion }}</label>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-sm-7">
+                                            <div class="content-group">
+                                                <h6>Persona Authorizada</h6>
+                                                <ul class="list-condensed list-unstyled text-muted">
+                                                    <li>{{ object.applicant.first_name }} {{ object.applicant.last_name }}</li>
+                                                    <li>{{ object.applicant.email }}</li>
+                                                    <li>Lima - {{ object.applicant.get_profile.mobile_phone }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+
+                    <br />
+                    <div class="text-right">
+                        <a class="btn btn-info" href="{% url path_url_list %}"><i class="fa fa-arrow-left"></i>{% trans "Back" %}</a>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}
+
+{% block js_plugins_before %}
+    <script>
+        $(function() {
+            function printDiv(divName) {
+                 var printContents = document.getElementById(divName).innerHTML;
+                 var originalContents = document.body.innerHTML;
+                 document.body.innerHTML = printContents;
+                 window.print();
+                 document.body.innerHTML = originalContents;
+            }
+            $("#btnPrint").on('click', function (e) {
+                e.preventDefault();
+                printDiv('print_qt')
+            });
+        });
+    </script>
+{% endblock js_plugins_before %}

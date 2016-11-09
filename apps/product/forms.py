@@ -3,7 +3,7 @@ from django import forms
 from core.models import ProductModel
 from core.utils.clearable_fileinput import CustomClearableFileInput
 from .models import (
-    ProductCategory, ProductSubCategory, Product,
+    ProductCategory, Product,
     ProductDetail
 )
 
@@ -17,21 +17,6 @@ class ProductCategoryForm(forms.ModelForm):
 
     class Meta:
         model = ProductCategory
-        fields = "__all__"
-
-
-class ProductSubCategoryForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['product_category'].widget.attrs.update(
-            {'placeholder': 'Product Category', 'required': True,
-             'class': 'form-control'})
-        self.fields['name'].widget.attrs.update(
-            {'placeholder': 'Name', 'required': True,
-             'class': 'form-control'})
-
-    class Meta:
-        model = ProductSubCategory
         fields = "__all__"
 
 
@@ -62,27 +47,18 @@ class ProductForm(forms.ModelForm):
         self.fields['logo_product'].widget.attrs.update(
             {'placeholder': 'Picture', 'class': 'file-styled'})
 
-        category_id = self.data.get("product_category", None)
         brand_id = self.data.get("brand", None)
 
         if self.instance.id:
-            self.fields['product_subcategory'].queryset = ProductSubCategory.objects.filter(
-                product_category=self.instance.product_category)
             self.fields['model'].queryset = ProductModel.objects.filter(
                 brand=self.instance.brand)
         else:
-            self.fields['product_subcategory'] = forms.ChoiceField(choices=(('', '----------'),))
             self.fields['model'] = forms.ChoiceField(choices=(('', '----------'),))
-            if category_id:
-                self.fields['product_subcategory'] = forms.ModelChoiceField(
-                    queryset=ProductSubCategory.objects.filter(product_category=category_id))
+
             if brand_id:
                 self.fields['model'] = forms.ModelChoiceField(
                     queryset=ProductModel.objects.filter(brand=brand_id))
 
-        self.fields['product_subcategory'].widget.attrs.update(
-            {'placeholder': 'Product Subcategory', 'required': True,
-             'class': 'form-control'})
         self.fields['model'].widget.attrs.update(
             {'placeholder': 'Model', 'required': True,
              'class': 'form-control'})

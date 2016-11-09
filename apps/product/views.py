@@ -4,9 +4,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from core.mixins import AuthListView, AuthUpdateView, AuthDeleteView, AuthCreateView
 from .forms import (
-    ProductCategoryForm, ProductSubCategoryForm, ProductForm, ProductDetailForm
+    ProductCategoryForm, ProductForm, ProductDetailForm
 )
-from .models import (ProductCategory, ProductSubCategory, Product, ProductDetail)
+from .models import (ProductCategory, Product, ProductDetail)
 
 """
     ProductCategory
@@ -42,42 +42,6 @@ class ProductCategoryDelete(AuthDeleteView):
     template_name = 'dashboard/pages/product/productcategory/productcategory_confirm_delete.html'
     model = ProductCategory
     success_url = reverse_lazy('Category:list')
-
-
-"""
-    ProductSubCategory
-"""
-
-
-class ProductSubCategoryList(AuthListView):
-    template_name = 'dashboard/pages/product/productsubcategory/productsubcategory_list.html'
-    model = ProductSubCategory
-    paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["text_central"] = _("list Product Subcategory")
-        return context
-
-
-class ProductSubCategoryCreation(AuthCreateView):
-    template_name = 'dashboard/pages/product/productsubcategory/productsubcategory_form.html'
-    model = ProductSubCategory
-    success_url = reverse_lazy('Subcategory:list')
-    form_class = ProductSubCategoryForm
-
-
-class ProductSubCategoryUpdate(AuthUpdateView):
-    template_name = 'dashboard/pages/product/productsubcategory/productsubcategory_form.html'
-    model = ProductSubCategory
-    success_url = reverse_lazy('Subcategory:list')
-    form_class = ProductSubCategoryForm
-
-
-class ProductSubCategoryDelete(AuthDeleteView):
-    template_name = 'dashboard/pages/product/productcategory/productcategory_confirm_delete.html'
-    model = ProductSubCategory
-    success_url = reverse_lazy('Subcategory:list')
 
 
 """

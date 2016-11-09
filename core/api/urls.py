@@ -31,9 +31,11 @@ urlpatterns = [
 
     url(r'',
         include([
-            url(r'^vehicle-brand/$', views.VehicleBrandAPIListView.as_view(), name='vehicle-brand'),
-            url(r'^vehicle-brand/(?P<pk>[0-9]+)/$', views.VehicleBrandAPIView.as_view(), name='vehicle-brand-detail'),
-        ], namespace='api-vehicle-brand')),
+            url(r'^vehicle-model/$', views.VehicleModelAPIListView.as_view(), name='vehicle-model'),
+            url(r'^vehicle-model/(?P<pk>[0-9]+)/$', views.VehicleModelAPIView.as_view(), name='vehicle-model-detail'),
+            url(r'^vehicle-model/(?P<brand>[0-9]+)/brand/$', views.VehicleModelBrandAPIListView.as_view(),
+                name='vehicle-model-brand'),
+        ], namespace='api-vehicle-model')),
 
     url(r'',
         include([
@@ -42,6 +44,38 @@ urlpatterns = [
             url(r'^vehicle-model/(?P<brand>[0-9]+)/brand/$', views.VehicleModelBrandAPIListView.as_view(), name='vehicle-model-brand'),
         ], namespace='api-vehicle-model')),
 
+    url(r'',
+        include([
+            url(r'^vehicle-enrollment/$', views.VehicleEnrollmentAPIListView.as_view(), name='vehicle-enrollment'),
+            url(r'^vehicle-enrollment/(?P<pk>[0-9]+)/$', views.VehicleEnrollmentAPIView.as_view(), name='vehicle-enrollment-detail'),
+        ], namespace='api-vehicle-enrollment')),
+
+    url(r'',
+        include([
+            url(r'^labour-category/$', views.LabourCategoryAPIListView.as_view(), name='labour-category'),
+            url(r'^labour/(?P<pk>[0-9]+)/$', views.LabourCategoryAPIView.as_view(), name='labour-category-detail'),
+        ], namespace='api-labour-category')),
+
+    url(r'',
+        include([
+            url(r'^labour/$', views.LabourAPIListView.as_view(), name='labour'),
+            url(r'^labour/(?P<pk>[0-9]+)/$', views.LabourAPIView.as_view(), name='labour-detail'),
+            url(r'^labour/(?P<labour_category>[0-9]+)/labour/$', views.LabourCategoryLabourAPIView.as_view(), name='labour-category-labour-detail'),
+        ], namespace='api-labour')),
+
+
+    url(r'',
+        include([
+            url(r'^handwork-category/$', views.HandWorkCategoryAPIListView.as_view(), name='handwork-category'),
+            url(r'^handwork-category/(?P<pk>[0-9]+)/$', views.HandWorkCategoryAPIView.as_view(), name='handwork-category-detail'),
+        ], namespace='api-handwork-category')),
+
+    url(r'',
+        include([
+            url(r'^handwork/$', views.HandWorkAPIListView.as_view(), name='Handwork'),
+            url(r'^handwork/(?P<pk>[0-9]+)/$', views.HandWorkAPIView.as_view(), name='Handwork-detail'),
+            url(r'^handwork/(?P<handworkcategory>[0-9]+)/category/$', views.HandWorkCategoryHandWorkAPIView.as_view(), name='Handwork-category-Handwork-detail'),
+        ], namespace='api-handwork')),
 
 ]
 

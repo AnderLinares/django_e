@@ -1,0 +1,60 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load i18n %}
+{% block content %}
+    {% block page-content-siderbar %}
+        {{ block.super }}
+    {% endblock page-content-siderbar %}
+
+    {% block page-content-wrapper %}
+        <div class="content-wrapper">
+            {% block sidebar_page_header %}
+                 {{ block.super }}
+            {% endblock sidebar_page_header %}
+
+            {% block sidebar_page_content %}
+                <div class="content">
+                    <div class="panel panel-default">
+                        {% include "partials/button_create.html" %}
+
+                        <div class="panel-body">
+                            <div class="table-responsive" style="display: block;">
+                                <table class="table">
+                                    <thead>
+                                    <tr class="bg-blue">
+                                        <th>#</th>
+                                        <th>{% trans "Code ADV." %}</th>
+                                        <th>{% trans "Plaque" %}</th>
+                                        <th>{% trans "Cliente" %}</th>
+                                        <th>{% trans "Action" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for object in object_list %}
+                                        <tr>
+                                            <td><b>{{ forloop.counter }} .-</b></td>
+                                            <td>{{ object.code_adv_taller }}</td>
+                                            <td>{{ object.vehicle }}</td>
+                                            <td>{{ object.person }}</td>
+                                            <td>
+                                                {% if not object.type_solicitude_exit == "EXIT" %}
+                                                    <a class="label label-flat border-primary text-primary-600 label-icon" href="{% url path_url_update  pk=object.id %}">Salida</a>
+                                                    <a class="label label-flat border-danger text-danger-600 label-icon" href="{% url path_url_delete pk=object.id %}"><i class="icon-trash"></i></a>
+                                                {% endif %}
+                                                <a class="label label-flat border-primary text-primary-600 label-icon" href="{{ object.get_absolute_url }}"><i class="icon-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="4">No items.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            {% include 'partials/pagination.html' %}
+                        </div>
+                    </div>
+                </div>
+            {% endblock sidebar_page_content %}
+        </div>
+    {% endblock page-content-wrapper %}
+{% endblock %}

@@ -2,7 +2,26 @@ from rest_framework.serializers import ModelSerializer
 
 from core.models import (
     Currency, ExchangeRate, ProductBrand, ProductModel,
-    VehicleBrand, VehicleModel)
+    VehicleBrand, VehicleModel, VehicleEnrollment,
+    Labour, LabourCategory,
+    HandWork, HandWorkCategory)
+
+
+class HandWorkCategorySerializer(ModelSerializer):
+    class Meta:
+        model = HandWorkCategory
+        fields = "__all__"
+
+
+class HandWorkSerializer(ModelSerializer):
+    # handwork_category = HandWorkCategorySerializer()
+
+    class Meta:
+        model = HandWork
+        fields = "__all__"
+
+
+
 
 
 class CurrencySerializer(ModelSerializer):
@@ -44,4 +63,22 @@ class VehicleModelSerializer(ModelSerializer):
 
     class Meta:
         model = VehicleModel
+        fields = "__all__"
+
+
+class VehicleEnrollmentSerializer(ModelSerializer):
+    class Meta:
+        model = VehicleEnrollment
+        fields = "__all__"
+
+
+class LabourCategorySerializer(ModelSerializer):
+    class Meta:
+        model = LabourCategory
+        fields = "__all__"
+
+
+class LabourSerializer(ModelSerializer):
+    class Meta:
+        model = Labour
         fields = "__all__"

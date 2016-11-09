@@ -30,13 +30,15 @@ class Vehicle(BaseModel):
         unique_together = ["unit_transport", "brand", "model", "plaque"]
 
     def __str__(self):
-        return "{0}-{1}-{2}-{3}".format(str(self.unit_transport), str(self.brand), str(self.model), str(self.year_car))
+        return self.plaque
 
 
 class VehicleDetail(BaseModel):
     """ model Vehicle(vehiculo) """
     vehicle = models.OneToOneField(Vehicle, related_name="%(app_label)s_%(class)s_vehicle")
-    serie_motor = models.CharField(max_length=200, null=True, blank=True)
+    number_motor = models.CharField(max_length=200, null=True, blank=True)
+    number_vin = models.CharField(max_length=200, null=True, blank=True)
+    number_serie = models.CharField(max_length=200, null=True, blank=True)
     soat = models.CharField(max_length=100, blank=True, null=True)
     expiration_soat = models.DateTimeField(blank=True, null=True)
     poliza = models.CharField(max_length=100, blank=True, null=True)
@@ -52,9 +54,7 @@ class VehicleDetail(BaseModel):
         unique_together = ["vehicle"]
 
     def __str__(self):
-        return "{0}-{1}-{2}-{3}".format(
-            str(self.vehicle.unit_transport), str(self.vehicle.brand), str(self.vehicle.model),
-            str(self.vehicle.year_car))
+        return "{0}-{1}".format(str(self.vehicle.unit_transport), str(self.vehicle.plaque))
 
 
 class VehicleImage(BaseModel):

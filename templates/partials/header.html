@@ -1,6 +1,8 @@
 {% load static %}
 {% load i18n %}
-
+{% get_current_language as LANGUAGE_CODE %}
+{% get_language_info for LANGUAGE_CODE as lang %}
+{% get_available_languages as languages %}
 <div class="navbar navbar-inverse">
     <div class="navbar-header">
         <a class="navbar-brand" href="javascript:void(0)"><img src="{% static "themes/img/logo/logo_american3.png" %}" ></a>
@@ -17,19 +19,19 @@
             </li>
         </ul>
 
-        <p class="navbar-text"><span class="label bg-success">Online</span></p>
-
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown language-switch">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="{% static "themes/img/flags/gb.png" %}" class="position-left" alt="">
-                    English
+                    {{ lang.name_local }}
                     <span class="caret"></span>
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li><a class="english"><img src="{% static "themes/img/flags/gb.png" %}" alt=""> English</a></li>
-                    <li><a class="espana"><img src="{% static "themes/img/flags/es.png" %}" alt=""> España</a></li>
+                    {% for language in languages %}
+                        <li class="{% ifequal current_language language.0 %}active{% endifequal %}">
+                            <a href="/./{{ language.0 }}/" title="{{ language.1 }}">{{ language.1 }} </a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </li>
 

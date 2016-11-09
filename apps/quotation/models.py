@@ -1,7 +1,7 @@
 from django.db import models
 
 from apps.customer.models import User
-from apps.product.models import ProductCategory, ProductSubCategory, Product
+from apps.product.models import ProductCategory, Product
 from apps.supplier.models import Supplier
 from apps.vehicle.models import Vehicle
 from core.models import Person, Currency, ExchangeRate
@@ -9,33 +9,29 @@ from core.utils.fields import BaseModel
 
 
 class QuotationMaintenance(BaseModel):
+    code_qt_maintenance = models.CharField(max_length=200, null=True, blank=True)
+    applicant = models.ForeignKey(User, related_name="%(app_label)s_%(class)s_applicant")
+    date = models.DateField()
     client = models.ForeignKey(Person, related_name="%(app_label)s_%(class)s_client")
     vehicle = models.ForeignKey(Vehicle, related_name="%(app_label)s_%(class)s_vehicle")
-    currency = models.ForeignKey(Currency, blank=True, null=True,
-                                 related_name="%(app_label)s_%(class)s_exchange_rate")
-    exchange_rate = models.ForeignKey(ExchangeRate, blank=True, null=True,
-                                      related_name="%(app_label)s_%(class)s_exchange_rate")
-    igv_tax = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    igv_total = models.DecimalField(max_digits=18, decimal_places=2, default=0)
     sub_total = models.DecimalField(max_digits=18, decimal_places=2, default=0)
     total_paid = models.DecimalField(max_digits=18, decimal_places=2, default=0)
-    date = models.DateField()
 
     def __str__(self):
-        return "{0}-{1}".format(str(self.client.first_name), str(self.vehicle.plaque))
+        return "{0}-{1}".format(str(self.code_qt_maintenance), str(self.vehicle))
 
 
 class QuotationMaintenanceDetail(BaseModel):
     quotation_maintenance = models.ForeignKey(
         QuotationMaintenance, related_name="%(app_label)s_%(class)s_quotation_maintenance")
-    product = models.ForeignKey(
-        Product, related_name="%(app_label)s_%(class)s_product")
     description = models.CharField(max_length=255, null=True, blank=True)
-    quantity = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    quantity = models.PositiveSmallIntegerField(default=1)
     unit_price = models.DecimalField(max_digits=18, decimal_places=2, default=0)
     amount_price = models.DecimalField(max_digits=18, decimal_places=2, default=0)
 
     def __str__(self):
-        return "{0}-{1}".format(str(self.quotation.client), str(self.quotation.vehicle_plaque))
+        return self.quotation_maintenance
 
 
 class QuotationStore(BaseModel):
